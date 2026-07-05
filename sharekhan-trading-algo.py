@@ -11,7 +11,7 @@ from contextlib import asynccontextmanager
 from dotenv import load_dotenv
 
 load_dotenv()
-
+app = FastAPI() 
 # ==============================================================================
 # 1. SHAREKHAN & TELEGRAM CONFIGURATION
 # ==============================================================================
