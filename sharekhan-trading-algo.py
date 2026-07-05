@@ -230,4 +230,38 @@ async def root_gateway_endpoint():
         "net_pnl_cash": total_net_pnl,
         "last_telemetry_status": last_action_status
     })  # <--- MAKE SURE THIS SAYS }) TO CLOSE THE DICTIONARY AND FUNCTION!
+from fastapi import Request
 
+@app.post("/auth/postback")
+async def sharekhan_postback_receiver(request: Request):
+    """Listens for execution, rejection, and modification status alerts pushed from Sharekhan"""
+    try:
+        # Reads the raw incoming payload structure pushed from the broker
+        payload = await request.json()
+        
+        # Stream the update message directly into your Render server dashboard log terminal
+        print(f"📥 [Postback Alert] Order Status Update Received: {json.dumps(payload)}")
+        
+        # Parse critical order keys from the payload mapping matrix
+        order_id = payload.get("orderId", "N/A")
+        order_status = payload.get("status", "UNKNOWN")
+        scrip_code = payload.get("scripCode", "N/A")
+        trade_action = payload.get("action", "N/A")  # BUY or SELL
+        
+        # Send a formatted, instant notification to your Telegram tracking bot channel
+        alert_msg = (
+            f"🔔 *SHAREKHAN ORDER UPDATE*\n"
+            f"• ID: `{order_id}`\n"
+            f"• Asset Code: `{scrip_code}`\n"
+            f"• Action: *{trade_action}*\n"
+            f"• Current Status: `{order_status}`"
+        )
+        send_telegram_alert(alert_msg)
+        
+        # Return a clean HTTP 200 response to acknowledge receipt to the broker
+        return JSONResponse(status_code=200, content={"status": "Success", "message": "Postback logged cleanly"})
+        
+    except Exception as e:
+        print(f"❌ Failed to parse incoming execution postback payload: {e}")
+        return JSONResponse(status_code=400, content={"status": "Error", "message": str(e)})
+        
