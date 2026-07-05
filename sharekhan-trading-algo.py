@@ -228,3 +228,6 @@ async def root_gateway_endpoint():
         "trading_paused": is_trading_paused,
         "current_exposure": current_position,
         "net_pnl_cash": total_net_pnl,
+        "last_telemetry_status": last_action_status
+    }) # <- This closing block was missing or misaligned!
+
