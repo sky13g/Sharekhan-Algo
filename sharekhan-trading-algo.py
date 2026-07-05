@@ -227,3 +227,7 @@ async def root_gateway_endpoint():
         "engine_active": is_engine_running,
         "trading_paused": is_trading_paused,
         "current_exposure": current_position,
+        "net_pnl_cash": total_net_pnl,
+        "last_telemetry_status": last_action_status
+    })  # <--- MAKE SURE THIS SAYS }) TO CLOSE THE DICTIONARY AND FUNCTION!
+
