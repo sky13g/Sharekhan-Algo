@@ -217,6 +217,9 @@ async def telegram_command_listener_loop():
 # ==============================================================================
 # 4. HTTP AUTOMATED AUTHENTICATION & WEBSOCKET ENDPOINTS
 # ==============================================================================
+# ==============================================================================
+# 4. HTTP AUTOMATED AUTHENTICATION & WEBSOCKET ENDPOINTS
+# ==============================================================================
 @app.get("/")
 async def root_gateway_endpoint():
     """Serves home route matrix metrics, satisfying Render's default health checking pings"""
@@ -229,39 +232,67 @@ async def root_gateway_endpoint():
         "current_exposure": current_position,
         "net_pnl_cash": total_net_pnl,
         "last_telemetry_status": last_action_status
-    })  # <--- MAKE SURE THIS SAYS }) TO CLOSE THE DICTIONARY AND FUNCTION!
-from fastapi import Request
+    })
 
-@app.post("/auth/postback")
-async def sharekhan_postback_receiver(request: Request):
-    """Listens for execution, rejection, and modification status alerts pushed from Sharekhan"""
+@app.get("/auth/login")
+async def initiate_sharekhan_login():
+    """Generates the official compliant retail customer authorization routing layout"""
+    if not SK_API_KEY:
+        return JSONResponse(status_code=400, content={"error": "SHAREKHAN_API_KEY environment parameter is missing."})
+    
+    # Updated multi-parameter routing string incorporating mandatory tracking variables
+    sharekhan_login_url = (
+        f"https://sharekhan.com?"
+        f"api_key={SK_API_KEY}&"
+        f"state=12345&"
+        f"version_id=1005"
+    )
+    return RedirectResponse(url=sharekhan_login_url)
+
+@app.get("/auth/callback")
+async def sharekhan_callback_capture(requestToken: str = None):
+    """Listens for the automated broker redirect, extracts requestToken, and unlocks engine memory"""
+    global last_action_status
+    
+    if not requestToken:
+        return JSONResponse(status_code=400, content={"status": "Failed", "message": "No requestToken caught inside query headers."})
+    
+    last_action_status = "📥 Callback intercepted successfully. Running token swap sequence..."
+    send_telegram_alert("📥 *CALLBACK RECEIVED*\nProcessing dynamic authentication tokens via script automation...")
+    
+    # Passes intercepted token directly into token exchange engine routine
+    process_sharekhan_session_generation(requestToken)
+    
+    return HTMLResponse(content="""
+    <html>
+        <head><title>Algo Authentication Successful</title></head>
+        <body style="font-family: sans-serif; text-align: center; padding-top: 50px; background-color: #f4f7f6;">
+            <div style="display: inline-block; padding: 30px; background: white; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                <h2 style="color: #2ecc71;">✓ Authorization Captured Successfully</h2>
+                <p style="color: #34495e;">The Sharekhan request token has been registered in script memory.</p>
+                <p style="color: #7f8c8d; font-size: 14px;">Your algorithmic system is now unlocked and parsing live market charts.</p>
+                <br>
+                <a href="/" style="background: #3498db; color: white; padding: 10px 20px; text-decoration: none; border-radius: 4px;">Go to Dashboard</a>
+            </div>
+        </body>
+    </html>
+    """)
+
+@app.websocket("/ws")
+async def websocket_endpoint(websocket: WebSocket):
+    """Establishes duplex real-time chart status connections for visualization monitors"""
+    await websocket.accept()
+    connected_clients.append(websocket)
     try:
-        # Reads the raw incoming payload structure pushed from the broker
-        payload = await request.json()
-        
-        # Stream the update message directly into your Render server dashboard log terminal
-        print(f"📥 [Postback Alert] Order Status Update Received: {json.dumps(payload)}")
-        
-        # Parse critical order keys from the payload mapping matrix
-        order_id = payload.get("orderId", "N/A")
-        order_status = payload.get("status", "UNKNOWN")
-        scrip_code = payload.get("scripCode", "N/A")
-        trade_action = payload.get("action", "N/A")  # BUY or SELL
-        
-        # Send a formatted, instant notification to your Telegram tracking bot channel
-        alert_msg = (
-            f"🔔 *SHAREKHAN ORDER UPDATE*\n"
-            f"• ID: `{order_id}`\n"
-            f"• Asset Code: `{scrip_code}`\n"
-            f"• Action: *{trade_action}*\n"
-            f"• Current Status: `{order_status}`"
-        )
-        send_telegram_alert(alert_msg)
-        
-        # Return a clean HTTP 200 response to acknowledge receipt to the broker
-        return JSONResponse(status_code=200, content={"status": "Success", "message": "Postback logged cleanly"})
-        
-    except Exception as e:
-        print(f"❌ Failed to parse incoming execution postback payload: {e}")
-        return JSONResponse(status_code=400, content={"status": "Error", "message": str(e)})
-        
+        while True:
+            payload = {
+                "status": last_action_status,
+                "position": current_position,
+                "pnl": total_net_pnl,
+                "paused": is_trading_paused
+            }
+            await websocket.send_json(payload)
+            await asyncio.sleep(1)
+    except WebSocketDisconnect:
+        connected_clients.remove(websocket)
+    
