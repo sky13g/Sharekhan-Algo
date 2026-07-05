@@ -6,7 +6,7 @@ from datetime import datetime, timezone
 import pandas as pd
 import requests
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
-from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse
 from contextlib import asynccontextmanager
 from dotenv import load_dotenv
 
@@ -161,7 +161,7 @@ def get_active_options_scrip_code(strike_price, option_type):
         if res.status_code == 200:
             instruments = res.json().get("data", [])
             if len(instruments) > 0:
-                return instruments[0].get("scripCode")
+                return instruments.get("scripCode")
     except Exception:
         pass
     return None
@@ -215,7 +215,7 @@ async def telegram_command_listener_loop():
             await asyncio.sleep(5)
 
 # ==============================================================================
-# 4. HTTP & WEBSOCKET ROUTE ENDPOINTS
+# 4. HTTP AUTOMATED AUTHENTICATION & WEBSOCKET ENDPOINTS
 # ==============================================================================
 @app.get("/")
 async def root_gateway_endpoint():
@@ -227,7 +227,3 @@ async def root_gateway_endpoint():
         "engine_active": is_engine_running,
         "trading_paused": is_trading_paused,
         "current_exposure": current_position,
-        "net_pnl_cash": total_net_pnl,
-        "last_telemetry_status": last_action_status
-    }) # <- This closing block was missing or misaligned!
-
