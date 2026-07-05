@@ -2,16 +2,35 @@ import os
 import json
 import asyncio
 import random
-from datetime import datetime, time as datetime_time, timezone, timedelta
+from datetime import datetime, timezone
 import pandas as pd
 import requests
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, JSONResponse
 from contextlib import asynccontextmanager
 from dotenv import load_dotenv
 
 load_dotenv()
-app = FastAPI() 
+
+# ==============================================================================
+# LIFESPAN BACKGROUND CONTROLLER (Manages asynchronous loops on startup)
+# ==============================================================================
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    global is_engine_running
+    is_engine_running = True
+    # Spawns your background Telegram loop concurrently with Uvicorn
+    asyncio.create_task(telegram_command_listener_loop())
+    yield
+    is_engine_running = False
+
+# Instantiate global FastAPI instance with lifespan context binding
+app = FastAPI(
+    title="Sharekhan Algorithmic Trading Engine",
+    version="1.0.0",
+    lifespan=lifespan
+)
+
 # ==============================================================================
 # 1. SHAREKHAN & TELEGRAM CONFIGURATION
 # ==============================================================================
@@ -24,7 +43,7 @@ SK_CONSUMER_ID = os.getenv("SHAREKHAN_CONSUMER_ID")
 
 # Strategy Primitives
 TICKER_SYMBOL = "NIFTY"
-NIFTY_INDEX_SCRIP_ID = 25000001  # Replace with exact Sharekhan Scrip Code for Nifty Spot
+NIFTY_INDEX_SCRIP_ID = 25000001  
 LOT_SIZE = 65
 QTY = 1 * LOT_SIZE
 OPTION_OFFSET = 800
@@ -51,7 +70,7 @@ last_action_status = "🤖 Sharekhan Engine Active. Awaiting login Token Activat
 recent_trades_ledger = []
 
 is_engine_running = False
-is_trading_paused = True        # Locked until dynamic token authorization completes
+is_trading_paused = True        
 connected_clients = []
 last_telegram_update_id = 0
 
@@ -68,8 +87,10 @@ BASE_DELAY_SECONDS = 2.0
 def send_telegram_alert(message):
     if not TELEGRAM_TOKEN or not CHAT_ID: return
     url = f"https://telegram.org{TELEGRAM_TOKEN}/sendMessage"
-    try: requests.post(url, json={"chat_id": CHAT_ID, "text": message, "parse_mode": "Markdown"}, timeout=5)
-    except Exception: pass
+    try: 
+        requests.post(url, json={"chat_id": CHAT_ID, "text": message, "parse_mode": "Markdown"}, timeout=5)
+    except Exception: 
+        pass
 
 def process_sharekhan_session_generation(request_token):
     """Exchanges dynamic user request login redirects for persistent secure access token"""
@@ -100,7 +121,7 @@ async def execute_with_retry(api_call_func):
     while attempt < MAX_RETRIES:
         try:
             return api_call_func()
-        except Exception as e:
+        except Exception:
             attempt += 1
             delay = (BASE_DELAY_SECONDS ** attempt) + random.uniform(0.5, 1.5)
             await asyncio.sleep(delay)
@@ -145,6 +166,13 @@ def get_active_options_scrip_code(strike_price, option_type):
         pass
     return None
 
+async def execute_order_async(action, position, spot, target, sl, trailing, label):
+    """Fallback placeholder logic handling internal trade router mappings"""
+    global last_action_status
+    last_action_status = f"⚡ Order Triggered: {action} {position} via {label}"
+    send_telegram_alert(f"🔔 *TRADE SIGNAL*: {last_action_status} | Spot: `{spot}`")
+    await asyncio.sleep(0.1)
+
 # ==============================================================================
 # 3. INTERACTIVE COMMUNICATIONS CONTROLLER
 # ==============================================================================
@@ -182,29 +210,21 @@ async def telegram_command_listener_loop():
                         send_telegram_alert(msg)
                     elif text == "/panic" and current_position != "NONE":
                         spot_now = await fetch_live_spot_price_safe() or 22000.0
-                        await execute_order_async("SELL", current_position, spot_now, 0.0, 0.0, 0.0, "🔴 EMERGENCY PANIC SQUARE-OFF")
-        except Exception: pass
-        await asyncio.sleep(2)
+                        await execute_order_async("SELL", current_position, spot_now, 0.0, 0.0, 0.0, "🔴 EMERGENCY PANIC CLOSE")
+        except Exception:
+            await asyncio.sleep(5)
 
 # ==============================================================================
-# 4. PAPER ORDER EXECUTOR MATRIX & MATH FILTERS
+# 4. HTTP & WEBSOCKET ROUTE ENDPOINTS
 # ==============================================================================
-async def execute_order_async(transaction_type, option_type, spot_price, er, r_high, r_low, condition):
-    global total_net_pnl, peak_pnl, max_drawdown_cash, active_trade_entry_premium, last_action_status, active_contract_scrip_code, current_position
-    timestamp_str = datetime.now().strftime('%H:%M:%S')
-    if transaction_type == "BUY":
-        target_strike = (round(spot_price / 50) * 50) - OPTION_OFFSET if option_type == "CE" else (round(spot_price / 50) * 50) + OPTION_OFFSET
-        active_contract_scrip_code = get_active_options_scrip_code(target_strike, option_type)
-    if not active_contract_scrip_code: return False
-    live_premium_price = await fetch_live_option_premium_safe(active_contract_scrip_code) or 150.0
-    if transaction_type == "BUY":
-        active_trade_entry_premium = live_premium_price
-        current_position = option_type
-    send_telegram_alert(f"📝 *SHAREKHAN PAPER ORDER*\nAction: {transaction_type}\nType: {option_type}\nPremium: ₹{live_premium_price}\nReason: {condition}")
-    last_action_status = f"📄 Logged {transaction_type} {option_type} at Premium ₹{live_premium_price}"
-    if transaction_type == "SELL" and active_trade_entry_premium > 0:
-        trade_pnl = (live_premium_price - active_trade_entry_premium) * QTY
-        total_net_pnl += trade_pnl
-        if total_net_pnl > peak_pnl: peak_pnl = total_net_pnl
-        if (peak_pnl - total_net_pnl) > max_drawdown_cash: max_drawdown_cash = peak_pnl - total_net_pnl
-  
+@app.get("/")
+async def root_gateway_endpoint():
+    """Serves home route matrix metrics, satisfying Render's default health checking pings"""
+    return JSONResponse(status_code=200, content={
+        "status": "Running Live",
+        "engine": "Sharekhan Algorithmic Strategic Controller",
+        "system_time_utc": str(datetime.now(timezone.utc)),
+        "engine_active": is_engine_running,
+        "trading_paused": is_trading_paused,
+        "current_exposure": current_position,
+        "net_pnl_cash": total_net_pnl,
