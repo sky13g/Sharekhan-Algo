@@ -58,6 +58,17 @@ scrip_master_df = None
 # ==============================================================================
 app = FastAPI() 
 
+@app.get("/")
+async def homepage_health_check():
+    ist_zone = timezone(timedelta(hours=5, minutes=30))
+    return {
+        "status": "Online",
+        "engine": "Sharekhan Algo Trading System",
+        "current_time_ist": datetime.now(ist_zone).strftime('%Y-%m-%d %H:%M:%S'),
+        "authenticated": is_authenticated,
+        "current_position": current_position
+}
+
 @app.post("/telegram-webhook")
 async def process_telegram_incoming_message(request: Request):
     global latest_submitted_otp
