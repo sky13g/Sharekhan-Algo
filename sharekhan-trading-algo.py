@@ -5,7 +5,9 @@ import asyncio
 from datetime import datetime, time as datetime_time, timezone, timedelta
 import pandas as pd  
 import requests  
-import yfinance as yf  
+import struct
+import json
+import websockets
 from fastapi import FastAPI, Request  
 from contextlib import asynccontextmanager  
 from dotenv import load_dotenv 
@@ -25,6 +27,7 @@ SHAREKHAN_LOGIN_ID = os.getenv("SHAREKHAN_LOGIN_ID")
 SHAREKHAN_PASSWORD = os.getenv("SHAREKHAN_PASSWORD")
 
 SHAREKHAN_BASE_URL = "https://sharekhan.com"
+SHAREKHAN_STREAM_URL = "wss://://sharekhan.com"
 SESSION_TOKEN_FILE = "/tmp/sharekhan_session.txt"
 
 TICKER_SYMBOL = "^NSEI"  
@@ -42,9 +45,12 @@ active_trade_details = {"symbol": None, "scrip_code": None, "entry_price": 0.0, 
 trade_history_ledger = []
 daily_analytics_summary = {"total_trades": 0, "winning_trades": 0, "losing_trades": 0, "gross_pnl": 0.0}
 
+# Global Memory Variables for Real-Time Analytics
 cached_spot = 0.0
 cached_ema5 = 0.0
 cached_ema10 = 0.0
+rolling_tick_prices = []  # Stores high-frequency raw tick floats
+minute_close_history = []  # Acts as an in-memory database of 1-minute close prices
 
 access_token = None
 is_authenticated = False
@@ -54,7 +60,7 @@ request_token_cache = None
 scrip_master_df = None
 
 # ==============================================================================
-# 2. FASTAPI INITIALIZATION & EXPOSED ROUTES (ISOLATED FIRST TO ELIMINATE PARSING ERRORS)
+# 2. FASTAPI INITIALIZATION & GLOBAL ROUTES
 # ==============================================================================
 app = FastAPI() 
 
@@ -63,11 +69,15 @@ async def homepage_health_check():
     ist_zone = timezone(timedelta(hours=5, minutes=30))
     return {
         "status": "Online",
-        "engine": "Sharekhan Algo Trading System",
+        "engine": "Sharekhan Ultra-Low Latency Tick Engine",
         "current_time_ist": datetime.now(ist_zone).strftime('%Y-%m-%d %H:%M:%S'),
-        "authenticated": is_authenticated,
-        "current_position": current_position
-}
+        "broker_authenticated": is_authenticated,
+        "active_exposure": current_position,
+        "live_spot_ltp": cached_spot,
+        "ema_5": round(cached_ema5, 2),
+        "ema_10": round(cached_ema10, 2),
+        "candles_in_memory": len(minute_close_history)
+    }
 
 @app.post("/telegram-webhook")
 async def process_telegram_incoming_message(request: Request):
@@ -105,13 +115,12 @@ async def process_telegram_incoming_message(request: Request):
     return {"status": "processed"}
 
 # ==============================================================================
-# 3. TELEGRAM UTILITY & WEBHOOK INITIALIZATION (CORRECTED WITH MANDATORY /bot PREFIX)
+# 3. TELEGRAM UTILITY & WEBHOOK INITIALIZATION
 # ==============================================================================
 def send_telegram_alert(message):  
     if not TELEGRAM_TOKEN or not CHAT_ID:  
         print(f"[Telegram Log]: {message}")  
         return  
-    # FIXED: Added the missing /bot prefix into the API address string
     url = f"https://telegram.org{TELEGRAM_TOKEN}/sendMessage"  
     payload = {"chat_id": CHAT_ID, "text": message, "parse_mode": "Markdown"}  
     try: 
@@ -122,7 +131,6 @@ def send_telegram_alert(message):
 def setup_telegram_webhook():
     if not TELEGRAM_TOKEN or not RENDER_URL: return
     webhook_endpoint = f"{RENDER_URL.rstrip('/')}/telegram-webhook"
-    # FIXED: Added the missing /bot prefix into the Webhook initialization address string
     url = f"https://telegram.org{TELEGRAM_TOKEN}/setWebhook"
     try: 
         requests.post(url, json={"url": webhook_endpoint}, timeout=5)
@@ -144,7 +152,7 @@ def generate_text_chart():
     ]
     mapping.sort(key=lambda x: x["val"], reverse=True)
     
-    chart_lines = ["\n📈 *TREND VISUALIZER* (1m Close)"]
+    chart_lines = ["\n📈 *TREND VISUALIZER* (Real-Time Websocket Close)"]
     for item in mapping:
         chart_lines.append(f"│  {item['char']}  {item['label']}: {round(item['val'], 2)}")
     
@@ -194,7 +202,7 @@ def get_option_contract_details(spot_price, option_type):
     return {"symbol": trading_symbol, "scrip_code": scrip_code}
 
 # ==============================================================================
-# 6. ROUTED EXECUTION HANDLERS (VERIFIED SPACING PROFILES)
+# 6. ROUTED EXECUTION HANDLERS
 # ==============================================================================
 def execute_status_broadcast():
     pnl_val = round(daily_analytics_summary["gross_pnl"], 2)
@@ -226,13 +234,3 @@ def execute_manual_squareoff():
         return
     sq_ltp = get_sharekhan_live_ltp(active_trade_details["scrip_code"]) or active_trade_details["entry_price"]
     execute_paper_order("SELL (MANUAL OVERRIDE)", active_trade_details, sq_ltp)
-    current_position = "NONE"
-
-# ==============================================================================
-# 7. PAPER TRADING ENGINE & ANALYTICS REPORTING
-# ==============================================================================
-def execute_paper_order(action, symbol_details, execution_price):  
-    global daily_analytics_summary
-    timestamp = datetime.now(timezone(timedelta(hours=5, minutes=30))).strftime('%Y-%m-%d %H:%M:%S')
-
-
