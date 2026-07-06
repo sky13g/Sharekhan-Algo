@@ -134,8 +134,8 @@ def get_option_contract_details(spot_price, option_type):
                 (scrip_master_df['OptionType'] == option_type)
             ]
             if not matched.empty:
-                scrip_code = int(matched.iloc['ScripCode'].values)
-                trading_symbol = str(matched.iloc['TradingSymbol'].values)
+                scrip_code = int(matched.iloc['ScripCode'].values[0])
+                trading_symbol = str(matched.iloc['TradingSymbol'].values[0])
         except Exception as err:
             print(f"[LOOKUP WARNING] Pattern lookup failed: {err}")
     return {"symbol": trading_symbol, "scrip_code": scrip_code}
@@ -207,13 +207,17 @@ async def process_telegram_incoming_message(request: Request):
             otp_received_event.set()  
             return {"status": "otp_captured"}
 
+        # FIXED: Status formatting stripped of old text block loops
         if msg_text == "/status":
             pnl_val = round(daily_analytics_summary["gross_pnl"], 2)
             chart_v = generate_text_chart()
             
             if current_position == "NONE":
-                msg = f"ℹ️ *ALGO ENGINE STATUS*\n• **Current State**: Flat (No Exposure)\n• **Active Size**: {ACTIVE_LOTS} Lot ({QTY} Qty)\n• **Realised Today**: ₹{pnl_val}\n{chart_v}"
+                msg = f"ℹ️ *ALGO ENGINE STATUS*\n• State: Flat\n• Size: {ACTIVE_LOTS} Lots\n• Profit Today: ₹{pnl_val}\n{chart_v}"
                 send_telegram_alert(msg)
             else:
                 live_ltp = get_sharekhan_live_ltp(active_trade_details["scrip_code"]) or active_trade_details["entry_price"]
-    pass
+                msg = f"ℹ️ *ALGO ENGINE STATUS*\n• State: Holding {current_position}\n• Instrument: {active_trade_details['symbol']}\n• Entry: ₹{active_trade_details['entry_price']}\n• LTP: ₹{live_ltp}\n• SL: ₹{active_trade_details['stop_loss']}\n• Target: ₹{active_trade_details['take_profit']}\n• Profit Today: ₹{pnl_val}\n{chart_v}"
+                send_telegram_alert(msg)
+            return {"status": "command_handled"}
+
