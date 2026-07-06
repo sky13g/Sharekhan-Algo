@@ -29,7 +29,7 @@ SESSION_TOKEN_FILE = "/tmp/sharekhan_session.txt"
 
 TICKER_SYMBOL = "^NSEI"  
 LOT_SIZE = 75  
-ACTIVE_LOTS = 1  # Dynamic default lot count variable
+ACTIVE_LOTS = 1  
 QTY = ACTIVE_LOTS * LOT_SIZE  
 
 STOP_LOSS_PERC = 0.10      
@@ -45,9 +45,9 @@ trade_history_ledger = []
 daily_analytics_summary = {"total_trades": 0, "winning_trades": 0, "losing_trades": 0, "gross_pnl": 0.0}
 
 # Indicators Caching for Visual Charts
+cached_spot = 0.0
 cached_ema5 = 0.0
 cached_ema10 = 0.0
-cached_spot = 0.0
 
 access_token = None
 is_authenticated = False
@@ -65,26 +65,28 @@ def send_telegram_alert(message):
         return  
     url = f"https://telegram.org{TELEGRAM_TOKEN}/sendMessage"  
     payload = {"chat_id": CHAT_ID, "text": message, "parse_mode": "Markdown"}  
-    try: requests.post(url, json=payload, timeout=5)
-    except Exception as e: print(f"[WARNING] Telegram post failed: {e}") 
+    try: 
+        requests.post(url, json=payload, timeout=5)
+    except Exception as e: 
+        print(f"[WARNING] Telegram post failed: {e}") 
 
 def setup_telegram_webhook():
     if not TELEGRAM_TOKEN or not RENDER_URL: return
     webhook_endpoint = f"{RENDER_URL.rstrip('/')}/telegram-webhook"
     url = f"https://telegram.org{TELEGRAM_TOKEN}/setWebhook"
-    try: requests.post(url, json={"url": webhook_endpoint}, timeout=5)
-    except Exception: pass
+    try: 
+        requests.post(url, json={"url": webhook_endpoint}, timeout=5)
+    except Exception: 
+        pass
 
 # ==============================================================================
 # 3. TEXT-BASED VISUAL CHART GENERATOR
 # ==============================================================================
 def generate_text_chart():
-    """Generates a clean text graph representing trend lines for Telegram output."""
     global cached_spot, cached_ema5, cached_ema10
     if cached_spot == 0:
         return "No chart metrics compiled yet."
         
-    # Sort prices to build an ordered graph layout
     mapping = [
         {"label": "NIFTY SPOT", "val": cached_spot, "char": "🔹"},
         {"label": "EMA 5 (Fast)", "val": cached_ema5, "char": "🟢"},
@@ -96,7 +98,6 @@ def generate_text_chart():
     for item in mapping:
         chart_lines.append(f"│  {item['char']}  {item['label']}: {round(item['val'], 2)}")
     
-    # Render mini directional signal arrows
     direction = "🟢 BULLISH CROSS (UPTREND)" if cached_ema5 > cached_ema10 else "🔴 BEARISH CROSS (DOWNTREND)"
     chart_lines.append(f"└▶ State: {direction}")
     
@@ -136,8 +137,8 @@ def get_option_contract_details(spot_price, option_type):
                 (scrip_master_df['OptionType'] == option_type)
             ]
             if not matched.empty:
-                scrip_code = int(matched.iloc['ScripCode'])
-                trading_symbol = str(matched.iloc['TradingSymbol'])
+                scrip_code = int(matched.iloc['ScripCode'].values[0])
+                trading_symbol = str(matched.iloc['TradingSymbol'].values[0])
         except Exception as err:
             print(f"[LOOKUP WARNING] Pattern lookup failed: {err}")
     return {"symbol": trading_symbol, "scrip_code": scrip_code}
@@ -204,13 +205,11 @@ async def process_telegram_incoming_message(request: Request):
         if incoming_chat_id != str(CHAT_ID):
             return {"status": "unauthorized"}
 
-        # Route A: Handle Interactive 2FA OTP submission
         if not is_authenticated and msg_text.isdigit() and (4 <= len(msg_text) <= 6):
             latest_submitted_otp = msg_text
             otp_received_event.set()  
             return {"status": "otp_captured"}
 
-        # Route B: Handle Status Query + Text Chart Injection
         if msg_text == "/status":
             pnl_val = round(daily_analytics_summary["gross_pnl"], 2)
             chart_visualization = generate_text_chart()
@@ -220,4 +219,8 @@ async def process_telegram_incoming_message(request: Request):
             else:
                 live_ltp = get_sharekhan_live_ltp(active_trade_details["scrip_code"]) or active_trade_details["entry_price"]
                 status_reply = (
-    
+                    f"ℹ️ *ALGO ENGINE STATUS*\n"
+                    f"• **Current State**: Holding `{current_position}`\n"
+                    f"• **Active Size**: {ACTIVE_LOTS} Lot ({QTY} Qty)\n"
+                    f"• **Instrument**: {active_trade_details['symbol']}\n"
+    )
