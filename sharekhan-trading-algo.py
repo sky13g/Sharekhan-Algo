@@ -223,4 +223,4 @@ async def process_telegram_incoming_message(request: Request):
                     f"• **Current State**: Holding `{current_position}`\n"
                     f"• **Active Size**: {ACTIVE_LOTS} Lot ({QTY} Qty)\n"
                     f"• **Instrument**: {active_trade_details['symbol']}\n"
-    )
+
