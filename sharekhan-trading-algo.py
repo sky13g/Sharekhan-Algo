@@ -131,7 +131,7 @@ def send_telegram_alert(message):
 def setup_telegram_webhook():
     if not TELEGRAM_TOKEN or not RENDER_URL: return
     webhook_endpoint = f"{RENDER_URL.rstrip('/')}/telegram-webhook"
-    url = f"https://telegram.org{TELEGRAM_TOKEN}/setWebhook"
+    url = f"https://api.telegram.org{TELEGRAM_TOKEN}/setWebhook"
     try: 
         requests.post(url, json={"url": webhook_endpoint}, timeout=5)
     except Exception: 
