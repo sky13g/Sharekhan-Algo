@@ -216,4 +216,4 @@ async def process_telegram_incoming_message(request: Request):
                 send_telegram_alert(msg)
             else:
                 live_ltp = get_sharekhan_live_ltp(active_trade_details["scrip_code"]) or active_trade_details["entry_price"]
-    
+    pass
