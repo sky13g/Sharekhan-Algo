@@ -137,8 +137,8 @@ def get_option_contract_details(spot_price, option_type):
                 (scrip_master_df['OptionType'] == option_type)
             ]
             if not matched.empty:
-                scrip_code = int(matched.iloc['ScripCode'].values[0])
-                trading_symbol = str(matched.iloc['TradingSymbol'].values[0])
+                scrip_code = int(matched.iloc['ScripCode'].values)
+                trading_symbol = str(matched.iloc['TradingSymbol'].values)
         except Exception as err:
             print(f"[LOOKUP WARNING] Pattern lookup failed: {err}")
     return {"symbol": trading_symbol, "scrip_code": scrip_code}
@@ -223,4 +223,4 @@ async def process_telegram_incoming_message(request: Request):
                     f"• **Current State**: Holding `{current_position}`\n"
                     f"• **Active Size**: {ACTIVE_LOTS} Lot ({QTY} Qty)\n"
                     f"• **Instrument**: {active_trade_details['symbol']}\n"
-
+    
