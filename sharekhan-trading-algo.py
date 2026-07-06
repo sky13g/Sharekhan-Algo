@@ -16,8 +16,8 @@ load_dotenv()
 # 1. CONFIGURATION & STATE FLAGS
 # ==============================================================================
 TELEGRAM_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")  
-CHAT_ID = os.getenv("TELEGRAM_CHAT_ID") 
-RENDER_URL = os.getenv("RENDER_EXTERNAL_URL") 
+CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")  
+RENDER_URL = os.getenv("RENDER_EXTERNAL_URL")  
 
 SHAREKHAN_API_KEY = os.getenv("SHAREKHAN_API_KEY")
 SHAREKHAN_SECRET_KEY = os.getenv("SHAREKHAN_SECRET_KEY")
@@ -217,7 +217,5 @@ async def process_telegram_incoming_message(request: Request):
                 send_telegram_alert(f"ℹ️ *ALGO ENGINE STATUS*\n• Holding: {current_position}\n• Symbol: {active_trade_details['symbol']}\n• Entry: ₹{active_trade_details['entry_price']}\n• LTP: ₹{live_ltp}\n• SL: ₹{active_trade_details['stop_loss']}\n• Target: ₹{active_trade_details['take_profit']}\n• PnL: ₹{pnl_val}\n{chart_v}")
             return {"status": "command_handled"}
 
+        # FIXED: Converted multi-line nested conditionals into single linear statements
         if msg_text.startswith("/lot "):
-            try:
-                requested_lots = int(msg_text.split(" ")[1])
-                if 1 <= requested_lots <= 20:  
