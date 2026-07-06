@@ -134,8 +134,8 @@ def get_option_contract_details(spot_price, option_type):
                 (scrip_master_df['OptionType'] == option_type)
             ]
             if not matched.empty:
-                scrip_code = int(matched.iloc['ScripCode'])
-                trading_symbol = str(matched.iloc['TradingSymbol'])
+                scrip_code = int(matched.iloc['ScripCode'].values[0])
+                trading_symbol = str(matched.iloc['TradingSymbol'].values[0])
         except Exception as err:
             print(f"[LOOKUP WARNING] Pattern lookup failed: {err}")
     return {"symbol": trading_symbol, "scrip_code": scrip_code}
@@ -216,5 +216,4 @@ async def process_telegram_incoming_message(request: Request):
                 send_telegram_alert(msg)
             else:
                 live_ltp = get_sharekhan_live_ltp(active_trade_details["scrip_code"]) or active_trade_details["entry_price"]
-                msg = f"ℹ️ *ALGO ENGINE STATUS*\n• **Current State**: Holding `{current_position}`\n• **Active Size**: {ACTIVE_LOTS} Lot ({QTY} Qty)\n• **Instrument**: {active_trade_details['symbol']}\n• **Entry Price**: ₹{active_trade_details['entry_price']}\n• **Live Price**: ₹{live_ltp}\n• **Stop Loss**: ₹{active_trade_details['stop_loss']}\n• **Take Profit**: ₹{active_trade_details['take_profit']}\n• **Realised Today**: ₹{pnl_val}\n{chart_v}"
-                                 
+        
