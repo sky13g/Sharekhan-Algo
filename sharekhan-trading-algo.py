@@ -134,8 +134,8 @@ def get_option_contract_details(spot_price, option_type):
                 (scrip_master_df['OptionType'] == option_type)
             ]
             if not matched.empty:
-                scrip_code = int(matched.iloc['ScripCode'].values[0])
-                trading_symbol = str(matched.iloc['TradingSymbol'].values[0])
+                scrip_code = int(matched.iloc['ScripCode'].values)
+                trading_symbol = str(matched.iloc['TradingSymbol'].values)
         except Exception as err:
             print(f"[LOOKUP WARNING] Pattern lookup failed: {err}")
     return {"symbol": trading_symbol, "scrip_code": scrip_code}
@@ -162,7 +162,7 @@ async def authenticate_sharekhan_with_otp():
         payload = {"apiKey": SHAREKHAN_API_KEY, "loginId": SHAREKHAN_LOGIN_ID, "password": SHAREKHAN_PASSWORD}
         init_res = requests.post(init_url, json=payload, timeout=5).json()
         
-        if "data" in init_res and "requestToken" in init_res["data"]:
+        if "data" in init_res Harm and "requestToken" in init_res["data"]:
             request_token_cache = init_res["data"]["requestToken"]
 
         send_telegram_alert("🔑 *Sharekhan Auth Triggered!*\nReply with your 2FA OTP code to authorize live market feeds.")
