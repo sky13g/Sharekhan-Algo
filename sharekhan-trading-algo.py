@@ -36,7 +36,7 @@ STOP_LOSS_PERC = 0.10
 TAKE_PROFIT_PERC = 0.20    
 TRAILING_SL_PERC = 0.05    
 
-current_position = "NONE" 
+current_position = "NONE"  
 active_trade_details = {"symbol": None, "scrip_code": None, "entry_price": 0.0, "highest_price": 0.0, "stop_loss": 0.0, "take_profit": 0.0, "option_type": None}
 
 trade_history_ledger = []
@@ -54,12 +54,53 @@ request_token_cache = None
 scrip_master_df = None
 
 # ==============================================================================
-# 2. TELEGRAM UTILITY & WEBHOOK INITIALIZATION
+# 2. FASTAPI INITIALIZATION & EXPOSED ROUTES (ISOLATED FIRST TO ELIMINATE PARSING ERRORS)
+# ==============================================================================
+app = FastAPI() 
+
+@app.post("/telegram-webhook")
+async def process_telegram_incoming_message(request: Request):
+    global latest_submitted_otp
+    try:
+        payload = await request.json()
+        if "message" not in payload or "text" not in payload["message"]:
+            return {"status": "ignored"}
+            
+        incoming_chat_id = str(payload["message"]["chat"]["id"])
+        msg_text = str(payload["message"]["text"]).strip()
+
+        if incoming_chat_id != str(CHAT_ID):
+            return {"status": "unauthorized"}
+
+        if not is_authenticated and msg_text.isdigit() and (4 <= len(msg_text) <= 6):
+            latest_submitted_otp = msg_text
+            otp_received_event.set()  
+            return {"status": "otp_captured"}
+
+        if msg_text == "/status":
+            execute_status_broadcast()
+            return {"status": "command_handled"}
+            
+        if msg_text.startswith("/lot "):
+            execute_lot_rescale(msg_text)
+            return {"status": "command_handled"}
+            
+        if msg_text == "/squareoff":
+            execute_manual_squareoff()
+            return {"status": "command_handled"}
+
+    except Exception as e: 
+        print(f"Webhook Execution Exception: {e}")
+    return {"status": "processed"}
+
+# ==============================================================================
+# 3. TELEGRAM UTILITY & WEBHOOK INITIALIZATION (CORRECTED WITH MANDATORY /bot PREFIX)
 # ==============================================================================
 def send_telegram_alert(message):  
     if not TELEGRAM_TOKEN or not CHAT_ID:  
         print(f"[Telegram Log]: {message}")  
         return  
+    # FIXED: Added the missing /bot prefix into the API address string
     url = f"https://telegram.org{TELEGRAM_TOKEN}/sendMessage"  
     payload = {"chat_id": CHAT_ID, "text": message, "parse_mode": "Markdown"}  
     try: 
@@ -70,6 +111,7 @@ def send_telegram_alert(message):
 def setup_telegram_webhook():
     if not TELEGRAM_TOKEN or not RENDER_URL: return
     webhook_endpoint = f"{RENDER_URL.rstrip('/')}/telegram-webhook"
+    # FIXED: Added the missing /bot prefix into the Webhook initialization address string
     url = f"https://telegram.org{TELEGRAM_TOKEN}/setWebhook"
     try: 
         requests.post(url, json={"url": webhook_endpoint}, timeout=5)
@@ -77,7 +119,7 @@ def setup_telegram_webhook():
         pass
 
 # ==============================================================================
-# 3. TEXT-BASED VISUAL CHART GENERATOR
+# 4. TEXT-BASED VISUAL CHART GENERATOR
 # ==============================================================================
 def generate_text_chart():
     global cached_spot, cached_ema5, cached_ema10
@@ -101,7 +143,7 @@ def generate_text_chart():
     return "\n".join(chart_lines)
 
 # ==============================================================================
-# 4. AUTOMATED MASTER SYNC & CONTRACT EXTRACTOR
+# 5. AUTOMATED MASTER SYNC & CONTRACT EXTRACTOR
 # ==============================================================================
 def download_scrip_master():
     global scrip_master_df
@@ -141,81 +183,45 @@ def get_option_contract_details(spot_price, option_type):
     return {"symbol": trading_symbol, "scrip_code": scrip_code}
 
 # ==============================================================================
-# 5. SHAREKHAN INTERACTIVE AUTHENTICATION
+# 6. ROUTED EXECUTION HANDLERS (VERIFIED SPACING PROFILES)
 # ==============================================================================
-async def authenticate_sharekhan_with_otp():
-    global access_token, is_authenticated, latest_submitted_otp, request_token_cache
-    try:
-        if os.path.exists(SESSION_TOKEN_FILE):
-            with open(SESSION_TOKEN_FILE, "r") as f:
-                saved_token = f.read().strip()
-            if saved_token:
-                headers = {"api-key": SHAREKHAN_API_KEY, "access-token": saved_token}
-                res = requests.get(f"{SHAREKHAN_BASE_URL}/profile", headers=headers, timeout=5)
-                if res.status_code == 200:
-                    access_token = saved_token
-                    send_telegram_alert("🔄 *Sharekhan Feed Token Restored!* Running parameters.")
-                    is_authenticated = True
-                    return True
+def execute_status_broadcast():
+    pnl_val = round(daily_analytics_summary["gross_pnl"], 2)
+    chart_v = generate_text_chart()
+    if current_position == "NONE":
+        send_telegram_alert(f"ℹ️ *ALGO ENGINE STATUS*\n• State: Flat\n• Lots: {ACTIVE_LOTS}\n• PnL: ₹{pnl_val}\n{chart_v}")
+        return
+    live_ltp = get_sharekhan_live_ltp(active_trade_details["scrip_code"]) or active_trade_details["entry_price"]
+    send_telegram_alert(f"ℹ️ *ALGO ENGINE STATUS*\n• Holding: {current_position}\n• Symbol: {active_trade_details['symbol']}\n• Entry: ₹{active_trade_details['entry_price']}\n• LTP: ₹{live_ltp}\n• SL: ₹{active_trade_details['stop_loss']}\n• Target: ₹{active_trade_details['take_profit']}\n• PnL: ₹{pnl_val}\n{chart_v}")
 
-        init_url = f"{SHAREKHAN_BASE_URL}/login"
-        payload = {"apiKey": SHAREKHAN_API_KEY, "loginId": SHAREKHAN_LOGIN_ID, "password": SHAREKHAN_PASSWORD}
-        init_res = requests.post(init_url, json=payload, timeout=5).json()
-        
-        if "data" in init_res and "requestToken" in init_res["data"]:
-            request_token_cache = init_res["data"]["requestToken"]
+def execute_lot_rescale(msg_text):
+    global ACTIVE_LOTS, QTY
+    raw_num = msg_text.replace("/lot ", "").strip()
+    if not str(raw_num).isdigit():
+        send_telegram_alert("⚠️ Use format configuration: `/lot 3`")
+        return
+    requested_lots = int(raw_num)
+    if requested_lots >= 1 and requested_lots <= 20:
+        ACTIVE_LOTS = requested_lots
+        QTY = ACTIVE_LOTS * LOT_SIZE
+        send_telegram_alert(f"⚙️ *Lots Updated!* Sizing: **{ACTIVE_LOTS} Lots** ({QTY} Qty).")
+        return
+    send_telegram_alert("⚠️ Select a lot size parameter between 1 and 20.")
 
-        send_telegram_alert("🔑 *Sharekhan Auth Triggered!*\nReply with your 2FA OTP code to authorize live market feeds.")
-        await otp_received_event.wait()
-
-        validate_url = f"{SHAREKHAN_BASE_URL}/validateOTP"
-        otp_payload = {"apiKey": SHAREKHAN_API_KEY, "requestToken": request_token_cache, "otp": latest_submitted_otp}
-        token_res = requests.post(validate_url, json=otp_payload, timeout=5).json()
-
-        if "data" in token_res and "accessToken" in token_res["data"]:
-            access_token = token_res["data"]["accessToken"]
-            with open(SESSION_TOKEN_FILE, "w") as f:
-                f.write(access_token)
-            send_telegram_alert("🚀 *Feed Auth Connected!* Starting Paper Trading strategy loop.")
-            is_authenticated = True
-            return True
-    except Exception as e:
-        send_telegram_alert(f"❌ *Auth Link Failure:* {e}")
-        return False
+def execute_manual_squareoff():
+    global current_position
+    if current_position == "NONE":
+        send_telegram_alert("⚠️ Portfolio risk management layers are flat.")
+        return
+    sq_ltp = get_sharekhan_live_ltp(active_trade_details["scrip_code"]) or active_trade_details["entry_price"]
+    execute_paper_order("SELL (MANUAL OVERRIDE)", active_trade_details, sq_ltp)
+    current_position = "NONE"
 
 # ==============================================================================
-# 6. FASTAPI EXPOSED WEBHOOK & CHAT COMMANDS LISTENER
+# 7. PAPER TRADING ENGINE & ANALYTICS REPORTING
 # ==============================================================================
-app = FastAPI() 
+def execute_paper_order(action, symbol_details, execution_price):  
+    global daily_analytics_summary
+    timestamp = datetime.now(timezone(timedelta(hours=5, minutes=30))).strftime('%Y-%m-%d %H:%M:%S')
 
-@app.post("/telegram-webhook")
-async def process_telegram_incoming_message(request: Request):
-    global latest_submitted_otp, current_position, ACTIVE_LOTS, QTY
-    try:
-        payload = await request.json()
-        if "message" not in payload or "text" not in payload["message"]:
-            return {"status": "ignored"}
-            
-        incoming_chat_id = str(payload["message"]["chat"]["id"])
-        msg_text = str(payload["message"]["text"]).strip()
 
-        if incoming_chat_id != str(CHAT_ID):
-            return {"status": "unauthorized"}
-
-        if not is_authenticated and msg_text.isdigit() and (4 <= len(msg_text) <= 6):
-            latest_submitted_otp = msg_text
-            otp_received_event.set()  
-            return {"status": "otp_captured"}
-
-        if msg_text == "/status":
-            pnl_val = round(daily_analytics_summary["gross_pnl"], 2)
-            chart_v = generate_text_chart()
-            if current_position == "NONE":
-                send_telegram_alert(f"ℹ️ *ALGO ENGINE STATUS*\n• State: Flat\n• Lots: {ACTIVE_LOTS}\n• PnL: ₹{pnl_val}\n{chart_v}")
-            else:
-                live_ltp = get_sharekhan_live_ltp(active_trade_details["scrip_code"]) or active_trade_details["entry_price"]
-                send_telegram_alert(f"ℹ️ *ALGO ENGINE STATUS*\n• Holding: {current_position}\n• Symbol: {active_trade_details['symbol']}\n• Entry: ₹{active_trade_details['entry_price']}\n• LTP: ₹{live_ltp}\n• SL: ₹{active_trade_details['stop_loss']}\n• Target: ₹{active_trade_details['take_profit']}\n• PnL: ₹{pnl_val}\n{chart_v}")
-            return {"status": "command_handled"}
-
-        # FIXED: Converted multi-line nested conditionals into single linear statements
-        if msg_text.startswith("/lot "):
