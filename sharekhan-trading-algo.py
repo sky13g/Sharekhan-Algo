@@ -162,7 +162,7 @@ async def authenticate_sharekhan_with_otp():
         payload = {"apiKey": SHAREKHAN_API_KEY, "loginId": SHAREKHAN_LOGIN_ID, "password": SHAREKHAN_PASSWORD}
         init_res = requests.post(init_url, json=payload, timeout=5).json()
         
-        if "data" in init_res Harm and "requestToken" in init_res["data"]:
+        if "data" in init_res and "requestToken" in init_res["data"]:
             request_token_cache = init_res["data"]["requestToken"]
 
         send_telegram_alert("🔑 *Sharekhan Auth Triggered!*\nReply with your 2FA OTP code to authorize live market feeds.")
@@ -216,3 +216,4 @@ async def process_telegram_incoming_message(request: Request):
                 send_telegram_alert(msg)
             else:
                 live_ltp = get_sharekhan_live_ltp(active_trade_details["scrip_code"]) or active_trade_details["entry_price"]
+    
