@@ -207,7 +207,6 @@ async def process_telegram_incoming_message(request: Request):
             otp_received_event.set()  
             return {"status": "otp_captured"}
 
-        # FIXED: Removed multi-line bracket assignments entirely to bypass git encoding failures
         if msg_text == "/status":
             pnl_val = round(daily_analytics_summary["gross_pnl"], 2)
             chart_v = generate_text_chart()
@@ -217,4 +216,5 @@ async def process_telegram_incoming_message(request: Request):
                 send_telegram_alert(msg)
             else:
                 live_ltp = get_sharekhan_live_ltp(active_trade_details["scrip_code"]) or active_trade_details["entry_price"]
+                msg = f"ℹ️ *ALGO ENGINE STATUS*\n• **Current State**: Holding `{current_position}`\n• **Active Size**: {ACTIVE_LOTS} Lot ({QTY} Qty)\n• **Instrument**: {active_trade_details['symbol']}\n• **Entry Price**: ₹{active_trade_details['entry_price']}\n• **Live Price**: ₹{live_ltp}\n• **Stop Loss**: ₹{active_trade_details['stop_loss']}\n• **Take Profit**: ₹{active_trade_details['take_profit']}\n• **Realised Today**: ₹{pnl_val}\n{chart_v}"
     
