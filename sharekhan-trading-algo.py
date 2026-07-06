@@ -1,298 +1,223 @@
-import os
-import json
-import asyncio
-import random
-from datetime import datetime, timezone
-import pandas as pd
-import requests
-from fastapi import FastAPI, WebSocket, WebSocketDisconnect
-from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse
-from contextlib import asynccontextmanager
-from dotenv import load_dotenv
+import os  
+import sys  
+import io
+import asyncio  
+from datetime import datetime, time as datetime_time, timezone, timedelta
+import pandas as pd  
+import requests  
+import yfinance as yf  
+from fastapi import FastAPI, Request  
+from contextlib import asynccontextmanager  
+from dotenv import load_dotenv 
 
-load_dotenv()
-
-# ==============================================================================
-# LIFESPAN BACKGROUND CONTROLLER (Manages asynchronous loops on startup)
-# ==============================================================================
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    global is_engine_running
-    is_engine_running = True
-    # Spawns your background Telegram loop concurrently with Uvicorn
-    asyncio.create_task(telegram_command_listener_loop())
-    yield
-    is_engine_running = False
-
-# Instantiate global FastAPI instance with lifespan context binding
-app = FastAPI(
-    title="Sharekhan Algorithmic Trading Engine",
-    version="1.0.0",
-    lifespan=lifespan
-)
+load_dotenv() 
 
 # ==============================================================================
-# 1. SHAREKHAN & TELEGRAM CONFIGURATION
+# 1. CONFIGURATION & STATE FLAGS
 # ==============================================================================
-TELEGRAM_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
-CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
+TELEGRAM_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")  
+CHAT_ID = os.getenv("TELEGRAM_CHAT_ID") 
+RENDER_URL = os.getenv("RENDER_EXTERNAL_URL") 
 
-SK_API_KEY = os.getenv("SHAREKHAN_API_KEY")
-SK_SECRET_KEY = os.getenv("SHAREKHAN_SECRET_KEY")
-SK_CONSUMER_ID = os.getenv("SHAREKHAN_CONSUMER_ID")
+SHAREKHAN_API_KEY = os.getenv("SHAREKHAN_API_KEY")
+SHAREKHAN_SECRET_KEY = os.getenv("SHAREKHAN_SECRET_KEY")
+SHAREKHAN_LOGIN_ID = os.getenv("SHAREKHAN_LOGIN_ID")
+SHAREKHAN_PASSWORD = os.getenv("SHAREKHAN_PASSWORD")
 
-# Strategy Primitives
-TICKER_SYMBOL = "NIFTY"
-NIFTY_INDEX_SCRIP_ID = 25000001  
-LOT_SIZE = 65
-QTY = 1 * LOT_SIZE
-OPTION_OFFSET = 800
+SHAREKHAN_BASE_URL = "https://sharekhan.com"
+SESSION_TOKEN_FILE = "/tmp/sharekhan_session.txt"
 
-# Core State Matrix
-current_position = "NONE"       
-last_trade_time = None
-ER_LOOKBACK = 10
-CHANNEL_LOOKBACK = 15
-live_vix_value = 15.0
-trailing_sl_active = False
-highest_observed_spot = 0.0
-lowest_observed_spot = 999999.0
-TRAILING_SL_POINTS = 15.0
-candle_history_df = pd.DataFrame()
+TICKER_SYMBOL = "^NSEI"  
+LOT_SIZE = 75  
+ACTIVE_LOTS = 1  # Dynamic default lot count variable
+QTY = ACTIVE_LOTS * LOT_SIZE  
 
-# Balance Sheet Tracking Variables
-total_net_pnl = 0.0
-peak_pnl = 0.0
-max_drawdown_cash = 0.0
-active_trade_entry_premium = 0.0
-active_contract_scrip_code = None
-last_action_status = "🤖 Sharekhan Engine Active. Awaiting login Token Activation..."
-recent_trades_ledger = []
+STOP_LOSS_PERC = 0.10      
+TAKE_PROFIT_PERC = 0.20    
+TRAILING_SL_PERC = 0.05    
 
-is_engine_running = False
-is_trading_paused = True        
-connected_clients = []
-last_telegram_update_id = 0
+# Live Tracking States
+current_position = "NONE" 
+active_trade_details = {"symbol": None, "scrip_code": None, "entry_price": 0.0, "highest_price": 0.0, "stop_loss": 0.0, "take_profit": 0.0, "option_type": None}
 
-BASE_URL = "https://sharekhan.com"
+# Performance Tracking Ledgers
+trade_history_ledger = []
+daily_analytics_summary = {"total_trades": 0, "winning_trades": 0, "losing_trades": 0, "gross_pnl": 0.0}
+
+# Indicators Caching for Visual Charts
+cached_ema5 = 0.0
+cached_ema10 = 0.0
+cached_spot = 0.0
+
 access_token = None
-
-# Network Backoff Bounds
-MAX_RETRIES = 5
-BASE_DELAY_SECONDS = 2.0
+is_authenticated = False
+otp_received_event = asyncio.Event()
+latest_submitted_otp = None
+request_token_cache = None
+scrip_master_df = None
 
 # ==============================================================================
-# 2. SHAREKHAN REST API NETWORK CONNECTIONS
+# 2. TELEGRAM UTILITY & WEBHOOK INITIALIZATION
 # ==============================================================================
-def send_telegram_alert(message):
-    if not TELEGRAM_TOKEN or not CHAT_ID: return
-    url = f"https://telegram.org{TELEGRAM_TOKEN}/sendMessage"
-    try: 
-        requests.post(url, json={"chat_id": CHAT_ID, "text": message, "parse_mode": "Markdown"}, timeout=5)
-    except Exception: 
-        pass
+def send_telegram_alert(message):  
+    if not TELEGRAM_TOKEN or not CHAT_ID:  
+        print(f"[Telegram Log]: {message}")  
+        return  
+    url = f"https://telegram.org{TELEGRAM_TOKEN}/sendMessage"  
+    payload = {"chat_id": CHAT_ID, "text": message, "parse_mode": "Markdown"}  
+    try: requests.post(url, json=payload, timeout=5)
+    except Exception as e: print(f"[WARNING] Telegram post failed: {e}") 
 
-def process_sharekhan_session_generation(request_token):
-    """Exchanges dynamic user request login redirects for persistent secure access token"""
-    global access_token, last_action_status, is_trading_paused
-    url = f"{BASE_URL}/access/token"
-    headers = {"apiKey": SK_API_KEY, "Content-Type": "application/json"}
-    payload = {
-        "secretKey": SK_SECRET_KEY,
-        "requestToken": request_token,
-        "consumerId": SK_CONSUMER_ID
-    }
+def setup_telegram_webhook():
+    if not TELEGRAM_TOKEN or not RENDER_URL: return
+    webhook_endpoint = f"{RENDER_URL.rstrip('/')}/telegram-webhook"
+    url = f"https://telegram.org{TELEGRAM_TOKEN}/setWebhook"
+    try: requests.post(url, json={"url": webhook_endpoint}, timeout=5)
+    except Exception: pass
+
+# ==============================================================================
+# 3. TEXT-BASED VISUAL CHART GENERATOR
+# ==============================================================================
+def generate_text_chart():
+    """Generates a clean text graph representing trend lines for Telegram output."""
+    global cached_spot, cached_ema5, cached_ema10
+    if cached_spot == 0:
+        return "No chart metrics compiled yet."
+        
+    # Sort prices to build an ordered graph layout
+    mapping = [
+        {"label": "NIFTY SPOT", "val": cached_spot, "char": "🔹"},
+        {"label": "EMA 5 (Fast)", "val": cached_ema5, "char": "🟢"},
+        {"label": "EMA 10 (Slow)", "val": cached_ema10, "char": "🟠"}
+    ]
+    mapping.sort(key=lambda x: x["val"], reverse=True)
+    
+    chart_lines = ["\n📈 *TREND VISUALIZER* (1m Close)"]
+    for item in mapping:
+        chart_lines.append(f"│  {item['char']}  {item['label']}: {round(item['val'], 2)}")
+    
+    # Render mini directional signal arrows
+    direction = "🟢 BULLISH CROSS (UPTREND)" if cached_ema5 > cached_ema10 else "🔴 BEARISH CROSS (DOWNTREND)"
+    chart_lines.append(f"└▶ State: {direction}")
+    
+    return "\n".join(chart_lines)
+
+# ==============================================================================
+# 4. AUTOMATED MASTER SYNC & CONTRACT EXTRACTOR
+# ==============================================================================
+def download_scrip_master():
+    global scrip_master_df
+    print("[SYSTEM] Fetching dynamic Sharekhan Scrip Master file...")
+    url = "https://sharekhan.com"
     try:
-        response = requests.post(url, headers=headers, json=payload, timeout=10)
-        data = response.json()
-        if response.status_code == 200 and "accessToken" in data:
-            access_token = data["accessToken"]
-            is_trading_paused = False
-            last_action_status = "▶️ Running Live: Sharekhan session authenticated."
-            send_telegram_alert("✅ *SHAREKHAN ALGO SESSION ACTIVE*\nTrading engine is fully unpaused and parsing data channels.")
-        else:
-            last_action_status = f"❌ Authentication Rejected: {data.get('message', 'Unknown Error')}"
-            send_telegram_alert(f"❌ *SHAREKHAN AUTH REJECTED*\nDetails: `{data.get('message', 'Error Parsing payload context')}`")
+        response = requests.get(url, timeout=15)
+        if response.status_code == 200:
+            raw_data = io.StringIO(response.text)
+            df = pd.read_csv(raw_data, sep="|", low_memory=False)
+            scrip_master_df = df[df['Exchange'] == 'NCED']
+            print(f"[SYSTEM] Master parsed successfully. Loaded {len(scrip_master_df)} contracts.")
     except Exception as e:
-        last_action_status = f"❌ Connection Error: {e}"
+        print(f"[CRITICAL ERROR] Failed to fetch Sharekhan Master data: {e}")
 
-async def execute_with_retry(api_call_func):
-    attempt = 0
-    while attempt < MAX_RETRIES:
+def get_option_contract_details(spot_price, option_type):
+    global scrip_master_df
+    strike_price = int(round(spot_price / 50) * 50)
+    now = datetime.now()
+    expiry_month_str = now.strftime("%b").upper() 
+    expiry_year_short = now.strftime("%y")       
+    trading_symbol = f"NIFTY{expiry_year_short}{expiry_month_str}{strike_price}{option_type}"
+    scrip_code = 43501 
+    
+    if scrip_master_df is not None and not scrip_master_df.empty:
         try:
-            return api_call_func()
-        except Exception:
-            attempt += 1
-            delay = (BASE_DELAY_SECONDS ** attempt) + random.uniform(0.5, 1.5)
-            await asyncio.sleep(delay)
-    return None
+            matched = scrip_master_df[
+                (scrip_master_df['BaseSymbol'] == 'NIFTY') & 
+                (scrip_master_df['StrikePrice'] == strike_price) & 
+                (scrip_master_df['OptionType'] == option_type)
+            ]
+            if not matched.empty:
+                scrip_code = int(matched.iloc['ScripCode'])
+                trading_symbol = str(matched.iloc['TradingSymbol'])
+        except Exception as err:
+            print(f"[LOOKUP WARNING] Pattern lookup failed: {err}")
+    return {"symbol": trading_symbol, "scrip_code": scrip_code}
 
-async def fetch_live_spot_price_safe():
-    """Fetches Live Tick feeds using custom header map parameters"""
-    if not access_token: return None
-    def _call():
-        url = f"{BASE_URL}/feeds/market/{NIFTY_INDEX_SCRIP_ID}"
-        headers = {"apiKey": SK_API_KEY, "accessToken": access_token, "Content-Type": "application/json"}
-        res = requests.get(url, headers=headers, timeout=5)
-        if res.status_code == 200:
-            return float(res.json().get("data", {}).get("ltp", 0.0))
-        return None
-    return await execute_with_retry(_call)
-
-async def fetch_live_option_premium_safe(contract_code):
-    if not access_token or not contract_code: return None
-    def _call():
-        url = f"{BASE_URL}/feeds/market/{contract_code}"
-        headers = {"apiKey": SK_API_KEY, "accessToken": access_token, "Content-Type": "application/json"}
-        res = requests.get(url, headers=headers, timeout=5)
-        if res.status_code == 200:
-            return float(res.json().get("data", {}).get("ltp", 0.0))
-        return None
-    return await execute_with_retry(_call)
-
-def get_active_options_scrip_code(strike_price, option_type):
-    """Maps options parameters into specific Sharekhan unique identification codes"""
-    if not access_token: return None
-    url = f"{BASE_URL}/instruments/search"
-    headers = {"apiKey": SK_API_KEY, "accessToken": access_token, "Content-Type": "application/json"}
-    payload = {"search_text": f"NIFTY {strike_price} {option_type}"}
+# ==============================================================================
+# 5. SHAREKHAN INTERACTIVE AUTHENTICATION
+# ==============================================================================
+async def authenticate_sharekhan_with_otp():
+    global access_token, is_authenticated, latest_submitted_otp, request_token_cache
     try:
-        res = requests.post(url, headers=headers, json=payload, timeout=5)
-        if res.status_code == 200:
-            instruments = res.json().get("data", [])
-            if len(instruments) > 0:
-                return instruments.get("scripCode")
-    except Exception:
-        pass
-    return None
+        if os.path.exists(SESSION_TOKEN_FILE):
+            with open(SESSION_TOKEN_FILE, "r") as f:
+                saved_token = f.read().strip()
+            if saved_token:
+                headers = {"api-key": SHAREKHAN_API_KEY, "access-token": saved_token}
+                res = requests.get(f"{SHAREKHAN_BASE_URL}/profile", headers=headers, timeout=5)
+                if res.status_code == 200:
+                    access_token = saved_token
+                    send_telegram_alert("🔄 *Sharekhan Feed Token Restored!* Running simulation parameters.")
+                    is_authenticated = True
+                    return True
 
-async def execute_order_async(action, position, spot, target, sl, trailing, label):
-    """Fallback placeholder logic handling internal trade router mappings"""
-    global last_action_status
-    last_action_status = f"⚡ Order Triggered: {action} {position} via {label}"
-    send_telegram_alert(f"🔔 *TRADE SIGNAL*: {last_action_status} | Spot: `{spot}`")
-    await asyncio.sleep(0.1)
+        init_url = f"{SHAREKHAN_BASE_URL}/login"
+        payload = {"apiKey": SHAREKHAN_API_KEY, "loginId": SHAREKHAN_LOGIN_ID, "password": SHAREKHAN_PASSWORD}
+        init_res = requests.post(init_url, json=payload, timeout=5).json()
+        
+        if "data" in init_res and "requestToken" in init_res["data"]:
+            request_token_cache = init_res["data"]["requestToken"]
 
-# ==============================================================================
-# 3. INTERACTIVE COMMUNICATIONS CONTROLLER
-# ==============================================================================
-async def telegram_command_listener_loop():
-    global is_trading_paused, last_telegram_update_id, last_action_status, current_position
-    if not TELEGRAM_TOKEN: return
-    url = f"https://telegram.org{TELEGRAM_TOKEN}/getUpdates"
-    while is_engine_running:
-        try:
-            params = {"offset": last_telegram_update_id + 1, "timeout": 8}
-            loop = asyncio.get_event_loop()
-            response = await loop.run_in_executor(None, lambda: requests.get(url, params=params, timeout=10).json())
-            if response.get("ok") and response.get("result"):
-                for update in response["result"]:
-                    last_telegram_update_id = update["update_id"]
-                    message = update.get("message", {})
-                    text = message.get("text", "").strip()
-                    sender_chat_id = str(message.get("chat", {}).get("id", ""))
-                    if sender_chat_id != str(CHAT_ID): continue
-                    
-                    if text.startswith("/token "):
-                        raw_token = text.replace("/token ", "").strip()
-                        send_telegram_alert("📥 Processing dynamic authorization token payload...")
-                        process_sharekhan_session_generation(raw_token)
-                    elif text == "/pause":
-                        is_trading_paused = True
-                        last_action_status = "⏸️ Engine paused via user intervention."
-                        send_telegram_alert("⏸️ *TRADING HALTED*")
-                    elif text == "/resume":
-                        is_trading_paused = False
-                        last_action_status = "▶️ Hunting setups live."
-                        send_telegram_alert("▶️ *TRADING RESUMED*")
-                    elif text == "/status":
-                        msg = f"🤖 *SHAREKHAN METRICS*\n• Exposure: `{current_position}`\n• Balance: `₹{total_net_pnl:,.2f}`\n• Track: `{last_action_status}`"
-                        send_telegram_alert(msg)
-                    elif text == "/panic" and current_position != "NONE":
-                        spot_now = await fetch_live_spot_price_safe() or 22000.0
-                        await execute_order_async("SELL", current_position, spot_now, 0.0, 0.0, 0.0, "🔴 EMERGENCY PANIC CLOSE")
-        except Exception:
-            await asyncio.sleep(5)
+        send_telegram_alert("🔑 *Sharekhan Auth Triggered!*\nReply with your 2FA OTP code to authorize live market feeds.")
+        await otp_received_event.wait()
+
+        validate_url = f"{SHAREKHAN_BASE_URL}/validateOTP"
+        otp_payload = {"apiKey": SHAREKHAN_API_KEY, "requestToken": request_token_cache, "otp": latest_submitted_otp}
+        token_res = requests.post(validate_url, json=otp_payload, timeout=5).json()
+
+        if "data" in token_res and "accessToken" in token_res["data"]:
+            access_token = token_res["data"]["accessToken"]
+            with open(SESSION_TOKEN_FILE, "w") as f:
+                f.write(access_token)
+            send_telegram_alert("🚀 *Feed Auth Connected!* Starting Paper Trading strategy loop.")
+            is_authenticated = True
+            return True
+    except Exception as e:
+        send_telegram_alert(f"❌ *Auth Link Failure:* {e}")
+        return False
 
 # ==============================================================================
-# 4. HTTP AUTOMATED AUTHENTICATION & WEBSOCKET ENDPOINTS
+# 6. FASTAPI EXPOSED WEBHOOK & CHAT COMMANDS LISTENER
 # ==============================================================================
-# ==============================================================================
-# 4. HTTP AUTOMATED AUTHENTICATION & WEBSOCKET ENDPOINTS
-# ==============================================================================
-@app.get("/")
-async def root_gateway_endpoint():
-    """Serves home route matrix metrics, satisfying Render's default health checking pings"""
-    return JSONResponse(status_code=200, content={
-        "status": "Running Live",
-        "engine": "Sharekhan Algorithmic Strategic Controller",
-        "system_time_utc": str(datetime.now(timezone.utc)),
-        "engine_active": is_engine_running,
-        "trading_paused": is_trading_paused,
-        "current_exposure": current_position,
-        "net_pnl_cash": total_net_pnl,
-        "last_telemetry_status": last_action_status
-    })
+app = FastAPI() 
 
-@app.get("/auth/login")
-async def initiate_sharekhan_login():
-    """Generates the official compliant retail customer authorization routing layout"""
-    if not SK_API_KEY:
-        return JSONResponse(status_code=400, content={"error": "SHAREKHAN_API_KEY environment parameter is missing."})
-    
-    # Updated multi-parameter routing string incorporating mandatory tracking variables
-    sharekhan_login_url = (
-        f"https://sharekhan.com?"
-        f"api_key={SK_API_KEY}&"
-        f"state=12345&"
-        f"version_id=1005"
-    )
-    return RedirectResponse(url=sharekhan_login_url)
-
-@app.get("/auth/callback")
-async def sharekhan_callback_capture(requestToken: str = None):
-    """Listens for the automated broker redirect, extracts requestToken, and unlocks engine memory"""
-    global last_action_status
-    
-    if not requestToken:
-        return JSONResponse(status_code=400, content={"status": "Failed", "message": "No requestToken caught inside query headers."})
-    
-    last_action_status = "📥 Callback intercepted successfully. Running token swap sequence..."
-    send_telegram_alert("📥 *CALLBACK RECEIVED*\nProcessing dynamic authentication tokens via script automation...")
-    
-    # Passes intercepted token directly into token exchange engine routine
-    process_sharekhan_session_generation(requestToken)
-    
-    return HTMLResponse(content="""
-    <html>
-        <head><title>Algo Authentication Successful</title></head>
-        <body style="font-family: sans-serif; text-align: center; padding-top: 50px; background-color: #f4f7f6;">
-            <div style="display: inline-block; padding: 30px; background: white; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
-                <h2 style="color: #2ecc71;">✓ Authorization Captured Successfully</h2>
-                <p style="color: #34495e;">The Sharekhan request token has been registered in script memory.</p>
-                <p style="color: #7f8c8d; font-size: 14px;">Your algorithmic system is now unlocked and parsing live market charts.</p>
-                <br>
-                <a href="/" style="background: #3498db; color: white; padding: 10px 20px; text-decoration: none; border-radius: 4px;">Go to Dashboard</a>
-            </div>
-        </body>
-    </html>
-    """)
-
-@app.websocket("/ws")
-async def websocket_endpoint(websocket: WebSocket):
-    """Establishes duplex real-time chart status connections for visualization monitors"""
-    await websocket.accept()
-    connected_clients.append(websocket)
+@app.post("/telegram-webhook")
+async def process_telegram_incoming_message(request: Request):
+    global latest_submitted_otp, current_position, ACTIVE_LOTS, QTY
     try:
-        while True:
-            payload = {
-                "status": last_action_status,
-                "position": current_position,
-                "pnl": total_net_pnl,
-                "paused": is_trading_paused
-            }
-            await websocket.send_json(payload)
-            await asyncio.sleep(1)
-    except WebSocketDisconnect:
-        connected_clients.remove(websocket)
+        payload = await request.json()
+        if "message" not in payload or "text" not in payload["message"]:
+            return {"status": "ignored"}
+            
+        incoming_chat_id = str(payload["message"]["chat"]["id"])
+        msg_text = str(payload["message"]["text"]).strip()
+
+        if incoming_chat_id != str(CHAT_ID):
+            return {"status": "unauthorized"}
+
+        # Route A: Handle Interactive 2FA OTP submission
+        if not is_authenticated and msg_text.isdigit() and (4 <= len(msg_text) <= 6):
+            latest_submitted_otp = msg_text
+            otp_received_event.set()  
+            return {"status": "otp_captured"}
+
+        # Route B: Handle Status Query + Text Chart Injection
+        if msg_text == "/status":
+            pnl_val = round(daily_analytics_summary["gross_pnl"], 2)
+            chart_visualization = generate_text_chart()
+            
+            if current_position == "NONE":
+                status_reply = f"ℹ️ *ALGO ENGINE STATUS*\n• **Current State**: Flat (No Exposure)\n• **Active Position Size**: {ACTIVE_LOTS} Lot ({QTY} Qty)\n• **Realised Today**: ₹{pnl_val}\n{chart_visualization}"
+            else:
+                live_ltp = get_sharekhan_live_ltp(active_trade_details["scrip_code"]) or active_trade_details["entry_price"]
+                status_reply = (
     
