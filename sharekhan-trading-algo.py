@@ -36,15 +36,12 @@ STOP_LOSS_PERC = 0.10
 TAKE_PROFIT_PERC = 0.20    
 TRAILING_SL_PERC = 0.05    
 
-# Live Tracking States
 current_position = "NONE" 
 active_trade_details = {"symbol": None, "scrip_code": None, "entry_price": 0.0, "highest_price": 0.0, "stop_loss": 0.0, "take_profit": 0.0, "option_type": None}
 
-# Performance Tracking Ledgers
 trade_history_ledger = []
 daily_analytics_summary = {"total_trades": 0, "winning_trades": 0, "losing_trades": 0, "gross_pnl": 0.0}
 
-# Indicators Caching for Visual Charts
 cached_spot = 0.0
 cached_ema5 = 0.0
 cached_ema10 = 0.0
@@ -137,8 +134,8 @@ def get_option_contract_details(spot_price, option_type):
                 (scrip_master_df['OptionType'] == option_type)
             ]
             if not matched.empty:
-                scrip_code = int(matched.iloc['ScripCode'].values)
-                trading_symbol = str(matched.iloc['TradingSymbol'].values)
+                scrip_code = int(matched.iloc[0]['ScripCode'])
+                trading_symbol = str(matched.iloc[0]['TradingSymbol'])
         except Exception as err:
             print(f"[LOOKUP WARNING] Pattern lookup failed: {err}")
     return {"symbol": trading_symbol, "scrip_code": scrip_code}
@@ -210,17 +207,14 @@ async def process_telegram_incoming_message(request: Request):
             otp_received_event.set()  
             return {"status": "otp_captured"}
 
+        # FIXED: Removed multi-line bracket assignments entirely to bypass git encoding failures
         if msg_text == "/status":
             pnl_val = round(daily_analytics_summary["gross_pnl"], 2)
-            chart_visualization = generate_text_chart()
+            chart_v = generate_text_chart()
             
             if current_position == "NONE":
-                status_reply = f"ℹ️ *ALGO ENGINE STATUS*\n• **Current State**: Flat (No Exposure)\n• **Active Position Size**: {ACTIVE_LOTS} Lot ({QTY} Qty)\n• **Realised Today**: ₹{pnl_val}\n{chart_visualization}"
+                msg = f"ℹ️ *ALGO ENGINE STATUS*\n• **Current State**: Flat (No Exposure)\n• **Active Size**: {ACTIVE_LOTS} Lot ({QTY} Qty)\n• **Realised Today**: ₹{pnl_val}\n{chart_v}"
+                send_telegram_alert(msg)
             else:
                 live_ltp = get_sharekhan_live_ltp(active_trade_details["scrip_code"]) or active_trade_details["entry_price"]
-                status_reply = (
-                    f"ℹ️ *ALGO ENGINE STATUS*\n"
-                    f"• **Current State**: Holding `{current_position}`\n"
-                    f"• **Active Size**: {ACTIVE_LOTS} Lot ({QTY} Qty)\n"
-                    f"• **Instrument**: {active_trade_details['symbol']}\n"
     
