@@ -1,0 +1,854 @@
+# NIFS-5 full DEBUG log (includes feed spam)  2026-08-17 08:45 -> 2026-08-17 15:45 IST
+2026-08-17 08:45:00 | INFO     | nifs5.state_engine | ======================================================================
+2026-08-17 08:45:00 | INFO     | nifs5.state_engine | PRE-MARKET AUTOMATION STARTING (08:45 IST)
+2026-08-17 08:45:00 | INFO     | nifs5.state_engine | ======================================================================
+2026-08-17 08:45:00 | INFO     | nifs5.system_state | Daily state reset for 2026-08-17 (prior=2026-08-17)
+2026-08-17 08:45:00 | INFO     | nifs5.ntp_sync | NTP sync: offset=0.031s
+2026-08-17 08:45:00 | INFO     | nifs5.ntp_sync | NTP sync: offset=0.031s
+2026-08-17 08:45:00 | INFO     | nifs5.kotak_auth | Generated TOTP token (6-digit)
+2026-08-17 08:45:00 | INFO     | nifs5.kotak_auth | Kotak TOTP login response received — view session established
+2026-08-17 08:45:00 | INFO     | nifs5.kotak_auth | Kotak MPIN validation complete — trade session active (edit_token set)
+2026-08-17 08:45:01 | INFO     | nifs5.state_engine | Core Task A complete — Kotak Neo live session authenticated hands-free
+2026-08-17 08:45:01 | INFO     | nifs5.ntp_sync | NTP sync: offset=0.032s
+2026-08-17 08:45:01 | INFO     | nifs5.iifl_client | [IIFLClient] auto-login step 1/7 — vendor/details
+2026-08-17 08:45:01 | INFO     | nifs5.iifl_client | [IIFLClient] auto-login step 2-3/7 — RSA key exchange (encKey)
+2026-08-17 08:45:01 | INFO     | nifs5.iifl_client | [IIFLClient] auto-login step 4/7 — pwd/validate (client=SKYADAVG)
+2026-08-17 08:45:01 | INFO     | nifs5.iifl_client | [IIFLClient] auto-login step 5/7 — topt/verify
+2026-08-17 08:45:01 | INFO     | nifs5.iifl_client | [IIFLClient] auto-login step 6/7 — sso/vendor/authorize
+2026-08-17 08:45:02 | INFO     | nifs5.iifl_client | [IIFLClient] auto-login step 7/7 — getusersession (client_id=SKYADAVG auth_code_len=20 app_secret_len=100)
+2026-08-17 08:45:02 | INFO     | nifs5.credential_vault | Stored encrypted credentials for provider: iifl_session
+2026-08-17 08:45:02 | INFO     | nifs5.iifl_client | [IIFLClient] automated login successful for client SKYADAVG
+2026-08-17 08:45:02 | INFO     | nifs5.state_engine | Core Task A.2 complete — IIFL Capital session authenticated hands-free
+2026-08-17 08:45:02 | INFO     | nifs5.tradingview_ws | [TradingViewWS] connected (premium) for NSE:NIFTY
+2026-08-17 08:45:02 | INFO     | nifs5.state_engine | Core Task B complete — TradingView premium sessionid verified
+2026-08-17 08:45:04 | INFO     | nifs5.kotak_client | [KotakClient] downloading scrip master CSV for nse_fo from https://lapi.kotaksecurities.com/wso2-scripmaster/v1/prod/2026-08-17/transformed/nse_fo.csv
+2026-08-17 08:45:09 | INFO     | nifs5.kotak_client | [KotakClient] scrip master CSV downloaded for nse_fo — 26230515 bytes
+2026-08-17 08:45:18 | INFO     | nifs5.nfo_sync | [NFOSync] cached 79088 NFO derivative contracts across all underlyings
+2026-08-17 08:45:19 | INFO     | nifs5.kotak_client | [KotakClient] downloading scrip master CSV for nse_cm from https://lapi.kotaksecurities.com/wso2-scripmaster/v1/prod/2026-08-17/transformed-v1/nse_cm-v1.csv
+2026-08-17 08:45:19 | INFO     | nifs5.kotak_client | [KotakClient] scrip master CSV downloaded for nse_cm — 4139918 bytes
+2026-08-17 08:45:20 | INFO     | nifs5.nfo_sync | [NFOSync] cached 12720 NSE cash-equity instruments
+2026-08-17 08:45:21 | INFO     | nifs5.nfo_sync | [NFOSync] lot-size resolution map rebuilt — 214 underlyings resolvable
+2026-08-17 08:45:21 | INFO     | nifs5.state_engine | Core Task C complete — NFO/CM instrument masters synced
+2026-08-17 08:45:22 | INFO     | nifs5.iifl_nfo_sync | [IIFLNfoSync] cached 3987 option/futures instruments from IIFL for underlyings=['NIFTY']
+2026-08-17 08:45:22 | INFO     | nifs5.state_engine | Core Task C.2 complete — IIFL NSEFO instrument cache synced
+2026-08-17 08:45:22 | DEBUG    | nifs5.iifl_eq_sync | [IIFLEqSync] no CASH_STOCK script routed to IIFL — skipping NSEEQ download
+2026-08-17 08:45:22 | INFO     | nifs5.state_engine | Core Task C.3 complete — IIFL NSEEQ instrument cache synced
+2026-08-17 08:45:22 | INFO     | nifs5.state_engine | Core Task C.4 complete — master catalogs refreshed for dropdowns
+2026-08-17 08:45:22 | INFO     | nifs5.margin_checker | [MarginChecker] no LIVE scripts — margin freeze gate skipped
+2026-08-17 08:45:22 | INFO     | nifs5.state_engine | Core Task D complete — margin requirement satisfied
+2026-08-17 08:45:22 | INFO     | nifs5.state_engine | PRE-MARKET AUTOMATION COMPLETE — system armed for opening bell
+2026-08-17 08:56:23 | INFO     | nifs5.script_registry | [ScriptRegistry] NIFTY removed — worker thread terminated, feed torn down
+2026-08-17 09:02:48 | INFO     | nifs5.feed_manager | [FeedManager] NIFTY dual-anchor: price=SPOT(token=Nifty 50) volume=FUT(token=58072, expiry=2026-08-25)
+2026-08-17 09:02:48 | INFO     | nifs5.iifl_client | [IIFLClient] IIFL Capital session reused (client=SKYADAVG) — cached token for 2026-08-17 (no new login). Send /iifl_login to force fresh login.
+2026-08-17 09:02:49 | INFO     | nifs5.iifl_client | [IIFLClient] historicaldata ok — 772 bars (lookback=14d, interval=5 minutes, symbol=NIFTY)
+2026-08-17 09:02:49 | INFO     | nifs5.candle_history_store | [CandleHistory] saved 400 bars for NIFTY (5m) → NIFTY_5m.json
+2026-08-17 09:02:49 | INFO     | nifs5.candle_warmup | [CandleWarmup] NIFTY cross-check ok ({'compared': 20, 'mismatches': 0, 'ok': True, 'note': 'ok'})
+2026-08-17 09:02:49 | INFO     | nifs5.feed_manager | [FeedManager] NIFTY warmup ok source=iifl+local bars=400 active=kotak (sticky)
+2026-08-17 09:02:50 | INFO     | nifs5.iifl_client | [IIFLClient] historicaldata ok — 778 bars (lookback=14d, interval=5 minutes, symbol=NIFTY[NSEFO:58072])
+2026-08-17 09:02:50 | INFO     | nifs5.candle_history_store | [CandleHistory] saved 400 bars for NIFTY (5m) → NIFTY_VOL_5m.json
+2026-08-17 09:02:50 | INFO     | nifs5.candle_warmup | [CandleWarmup] NIFTY volume cross-check ok ({'compared': 20, 'mismatches': 0, 'ok': True, 'note': 'ok'})
+2026-08-17 09:02:50 | WARNING  | nifs5.candle_buffer | ACTIVE DATA SOURCE SWITCHED: kotak -> iifl
+2026-08-17 09:02:50 | INFO     | nifs5.feed_manager | [FeedManager] NIFTY volume catchup ok source=iifl+local bars=400 active=iifl
+2026-08-17 09:02:50 | INFO     | nifs5.kotak_feed | [KotakFeed-NIFTY-PRICE] Kotak live quote→5m bar worker started — token=Nifty 50 exchange=nse_cm is_index=True timeframe=5m poll=5s (no history API; TF from active_scripts row)
+2026-08-17 09:02:50 | INFO     | nifs5.iifl_feed | [IIFLFeed-NIFTY-PRICE] IIFL live quote→5m bar worker started — symbol=NIFTY timeframe=5minute poll=5s
+2026-08-17 09:02:50 | INFO     | nifs5.kotak_feed | [KotakFeed-NIFTY-VOLUME] Kotak live quote→5m bar worker started — token=58072 exchange=nse_fo is_index=False timeframe=5m poll=5s (no history API; TF from active_scripts row)
+2026-08-17 09:02:50 | INFO     | nifs5.iifl_feed | [IIFLFeed-NIFTY-VOLUME] IIFL live quote→5m bar worker started — symbol=NIFTY timeframe=5minute poll=5s
+2026-08-17 09:02:50 | INFO     | nifs5.base_script | [NIFTY] script worker started
+2026-08-17 09:02:50 | INFO     | nifs5.script_registry | [ScriptRegistry] NIFTY added live — feed + worker thread running, zero restart
+2026-08-17 09:02:50 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=910 (lot-sized; not session volume)
+2026-08-17 09:02:50 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=910 (lot-sized; not session volume)
+2026-08-17 09:02:50 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-VOLUME] new bar 2026-08-17 09:00:00 close=24450.00 vol=0 | latency=59.0ms
+2026-08-17 09:02:50 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-PRICE] new bar 2026-08-17 09:00:00 close=24366.75 vol=0 | latency=65.2ms
+2026-08-17 09:02:50 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-PRICE] new bar 2026-08-17 09:00:00 close=24366.05 vol=0 | latency=102.1ms
+2026-08-17 09:02:50 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-VOLUME] new bar 2026-08-17 09:00:00 close=24450.00 vol=0 | latency=100.4ms
+2026-08-17 09:02:55 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=910 (lot-sized; not session volume)
+2026-08-17 09:02:55 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=910 (lot-sized; not session volume)
+2026-08-17 09:03:00 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=975 (lot-sized; not session volume)
+2026-08-17 09:03:00 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=975 (lot-sized; not session volume)
+2026-08-17 09:03:05 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=975 (lot-sized; not session volume)
+2026-08-17 09:03:05 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=975 (lot-sized; not session volume)
+2026-08-17 09:03:10 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=975 (lot-sized; not session volume)
+2026-08-17 09:03:10 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=975 (lot-sized; not session volume)
+2026-08-17 09:03:15 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=975 (lot-sized; not session volume)
+2026-08-17 09:03:15 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=975 (lot-sized; not session volume)
+2026-08-17 09:03:20 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=975 (lot-sized; not session volume)
+2026-08-17 09:03:20 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=975 (lot-sized; not session volume)
+2026-08-17 09:03:25 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=975 (lot-sized; not session volume)
+2026-08-17 09:03:25 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=975 (lot-sized; not session volume)
+2026-08-17 09:03:30 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=975 (lot-sized; not session volume)
+2026-08-17 09:03:30 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=975 (lot-sized; not session volume)
+2026-08-17 09:03:35 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=975 (lot-sized; not session volume)
+2026-08-17 09:03:35 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=975 (lot-sized; not session volume)
+2026-08-17 09:03:40 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=975 (lot-sized; not session volume)
+2026-08-17 09:03:40 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=975 (lot-sized; not session volume)
+2026-08-17 09:03:45 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1040 (lot-sized; not session volume)
+2026-08-17 09:03:45 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1040 (lot-sized; not session volume)
+2026-08-17 09:03:50 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1040 (lot-sized; not session volume)
+2026-08-17 09:03:50 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1040 (lot-sized; not session volume)
+2026-08-17 09:03:56 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1040 (lot-sized; not session volume)
+2026-08-17 09:03:56 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1040 (lot-sized; not session volume)
+2026-08-17 09:04:01 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=975 (lot-sized; not session volume)
+2026-08-17 09:04:01 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=975 (lot-sized; not session volume)
+2026-08-17 09:04:06 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=975 (lot-sized; not session volume)
+2026-08-17 09:04:06 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=975 (lot-sized; not session volume)
+2026-08-17 09:04:11 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=975 (lot-sized; not session volume)
+2026-08-17 09:04:11 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=975 (lot-sized; not session volume)
+2026-08-17 09:04:16 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=975 (lot-sized; not session volume)
+2026-08-17 09:04:16 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=975 (lot-sized; not session volume)
+2026-08-17 09:04:21 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=975 (lot-sized; not session volume)
+2026-08-17 09:04:21 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=975 (lot-sized; not session volume)
+2026-08-17 09:04:26 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=975 (lot-sized; not session volume)
+2026-08-17 09:04:26 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=975 (lot-sized; not session volume)
+2026-08-17 09:04:31 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=975 (lot-sized; not session volume)
+2026-08-17 09:04:31 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=975 (lot-sized; not session volume)
+2026-08-17 09:04:36 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=975 (lot-sized; not session volume)
+2026-08-17 09:04:36 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=975 (lot-sized; not session volume)
+2026-08-17 09:04:41 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1040 (lot-sized; not session volume)
+2026-08-17 09:04:41 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1040 (lot-sized; not session volume)
+2026-08-17 09:04:46 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1040 (lot-sized; not session volume)
+2026-08-17 09:04:46 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1040 (lot-sized; not session volume)
+2026-08-17 09:04:51 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1040 (lot-sized; not session volume)
+2026-08-17 09:04:51 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1040 (lot-sized; not session volume)
+2026-08-17 09:04:56 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1040 (lot-sized; not session volume)
+2026-08-17 09:04:56 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1040 (lot-sized; not session volume)
+2026-08-17 09:05:01 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-PRICE] new bar 2026-08-17 09:05:00 close=24341.30 vol=0 | latency=65.2ms
+2026-08-17 09:05:01 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1040 (lot-sized; not session volume)
+2026-08-17 09:05:01 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1040 (lot-sized; not session volume)
+2026-08-17 09:05:01 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-VOLUME] new bar 2026-08-17 09:05:00 close=24450.00 vol=0 | latency=66.9ms
+2026-08-17 09:05:02 | DEBUG    | nifs5.base_script | [NIFTY] outside entry session (09:20–15:15 IST) — skip eval/audit
+2026-08-17 09:05:02 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-VOLUME] new bar 2026-08-17 09:05:00 close=24450.00 vol=0 | latency=110.2ms
+2026-08-17 09:05:02 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-PRICE] new bar 2026-08-17 09:05:00 close=24341.40 vol=0 | latency=74.3ms
+2026-08-17 09:05:06 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1040 (lot-sized; not session volume)
+2026-08-17 09:05:06 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1040 (lot-sized; not session volume)
+2026-08-17 09:05:11 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1040 (lot-sized; not session volume)
+2026-08-17 09:05:12 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1040 (lot-sized; not session volume)
+2026-08-17 09:05:17 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1040 (lot-sized; not session volume)
+2026-08-17 09:05:17 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1040 (lot-sized; not session volume)
+2026-08-17 09:05:22 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1040 (lot-sized; not session volume)
+2026-08-17 09:05:22 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1040 (lot-sized; not session volume)
+2026-08-17 09:05:27 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1040 (lot-sized; not session volume)
+2026-08-17 09:05:27 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1040 (lot-sized; not session volume)
+2026-08-17 09:05:32 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1040 (lot-sized; not session volume)
+2026-08-17 09:05:32 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1040 (lot-sized; not session volume)
+2026-08-17 09:05:37 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1040 (lot-sized; not session volume)
+2026-08-17 09:05:37 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1040 (lot-sized; not session volume)
+2026-08-17 09:05:39 | INFO     | nifs5.dashboard | [Dashboard] row update applied for NIFTY: {'manual_lot_size': 65, 'use_multiplier': 1, 'execution_broker': 'KOTAK_ONLY', 'execution_mode': 'PAPER', 'adx_entry_ceiling': 16, 'rsi_call_harvest_max': 75, 'rsi_put_harvest_min': 30, 'rsi_long_entry_min': 55, 'rsi_short_entry_max': 57, 'entry_atr_period': 16, 'davb_atr_period': 20, 'kaufman_er_threshold': 0.4, 'volume_spike_mult': 2.0, 'spread_ceiling_pct': 1.5, 'base_lots': 1, 'pyramid_lots': 1, 'adx_pyramid_threshold': 22, 'fast_ema_value': 0.0, 'slow_ema_value': 0.0, 'stoploss_inr': 3000.0}
+2026-08-17 09:05:42 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1040 (lot-sized; not session volume)
+2026-08-17 09:05:42 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1040 (lot-sized; not session volume)
+2026-08-17 09:05:47 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1040 (lot-sized; not session volume)
+2026-08-17 09:05:47 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1040 (lot-sized; not session volume)
+2026-08-17 09:05:52 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1040 (lot-sized; not session volume)
+2026-08-17 09:05:52 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1040 (lot-sized; not session volume)
+2026-08-17 09:05:57 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1040 (lot-sized; not session volume)
+2026-08-17 09:05:57 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1040 (lot-sized; not session volume)
+2026-08-17 09:06:02 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1040 (lot-sized; not session volume)
+2026-08-17 09:06:02 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1040 (lot-sized; not session volume)
+2026-08-17 09:06:07 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1040 (lot-sized; not session volume)
+2026-08-17 09:06:07 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1040 (lot-sized; not session volume)
+2026-08-17 09:06:12 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1235 (lot-sized; not session volume)
+2026-08-17 09:06:12 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1235 (lot-sized; not session volume)
+2026-08-17 09:06:13 | INFO     | nifs5.kotak_feed | [KotakFeed-NIFTY-PRICE] Kotak feed worker stop requested
+2026-08-17 09:06:13 | INFO     | nifs5.base_script | [NIFTY] script worker stopped
+2026-08-17 09:06:13 | INFO     | nifs5.self_heal | [SelfHeal:ScriptWorker-NIFTY] target returned cleanly
+2026-08-17 09:06:13 | INFO     | nifs5.kotak_feed | [KotakFeed-NIFTY-PRICE] Kotak feed worker stopped
+2026-08-17 09:06:13 | INFO     | nifs5.iifl_feed | [IIFLFeed-NIFTY-PRICE] IIFL feed worker stopped
+2026-08-17 09:06:13 | INFO     | nifs5.iifl_feed | [IIFLFeed-NIFTY-PRICE] IIFL feed worker stop requested
+2026-08-17 09:06:13 | INFO     | nifs5.kotak_feed | [KotakFeed-NIFTY-VOLUME] Kotak feed worker stop requested
+2026-08-17 09:06:13 | INFO     | nifs5.iifl_feed | [IIFLFeed-NIFTY-VOLUME] IIFL feed worker stop requested
+2026-08-17 09:06:13 | INFO     | nifs5.feed_manager | [FeedManager] feed context for NIFTY stopped and removed
+2026-08-17 09:06:13 | INFO     | nifs5.kotak_feed | [KotakFeed-NIFTY-VOLUME] Kotak feed worker stopped
+2026-08-17 09:06:13 | INFO     | nifs5.iifl_feed | [IIFLFeed-NIFTY-VOLUME] IIFL feed worker stopped
+2026-08-17 09:06:13 | INFO     | nifs5.script_registry | [ScriptRegistry] NIFTY removed — worker thread terminated, feed torn down
+2026-08-17 09:08:53 | INFO     | nifs5.feed_manager | [FeedManager] NIFTY dual-anchor: price=SPOT(token=Nifty 50) volume=FUT(token=58072, expiry=2026-08-25)
+2026-08-17 09:08:54 | INFO     | nifs5.iifl_client | [IIFLClient] historicaldata ok — 773 bars (lookback=14d, interval=5 minutes, symbol=NIFTY)
+2026-08-17 09:08:54 | INFO     | nifs5.candle_history_store | [CandleHistory] saved 400 bars for NIFTY (5m) → NIFTY_5m.json
+2026-08-17 09:08:54 | INFO     | nifs5.candle_warmup | [CandleWarmup] NIFTY cross-check ok ({'compared': 20, 'mismatches': 0, 'ok': True, 'note': 'ok'})
+2026-08-17 09:08:54 | INFO     | nifs5.feed_manager | [FeedManager] NIFTY warmup ok source=iifl+local bars=400 active=kotak (sticky)
+2026-08-17 09:08:54 | INFO     | nifs5.iifl_client | [IIFLClient] historicaldata ok — 779 bars (lookback=14d, interval=5 minutes, symbol=NIFTY[NSEFO:58072])
+2026-08-17 09:08:54 | INFO     | nifs5.candle_history_store | [CandleHistory] saved 400 bars for NIFTY (5m) → NIFTY_VOL_5m.json
+2026-08-17 09:08:54 | INFO     | nifs5.candle_warmup | [CandleWarmup] NIFTY volume cross-check ok ({'compared': 20, 'mismatches': 0, 'ok': True, 'note': 'ok'})
+2026-08-17 09:08:54 | WARNING  | nifs5.candle_buffer | ACTIVE DATA SOURCE SWITCHED: kotak -> iifl
+2026-08-17 09:08:54 | INFO     | nifs5.feed_manager | [FeedManager] NIFTY volume catchup ok source=iifl+local bars=400 active=iifl
+2026-08-17 09:08:54 | INFO     | nifs5.kotak_feed | [KotakFeed-NIFTY-PRICE] Kotak live quote→5m bar worker started — token=Nifty 50 exchange=nse_cm is_index=True timeframe=5m poll=5s (no history API; TF from active_scripts row)
+2026-08-17 09:08:54 | INFO     | nifs5.iifl_feed | [IIFLFeed-NIFTY-PRICE] IIFL live quote→5m bar worker started — symbol=NIFTY timeframe=5minute poll=5s
+2026-08-17 09:08:54 | INFO     | nifs5.kotak_feed | [KotakFeed-NIFTY-VOLUME] Kotak live quote→5m bar worker started — token=58072 exchange=nse_fo is_index=False timeframe=5m poll=5s (no history API; TF from active_scripts row)
+2026-08-17 09:08:54 | INFO     | nifs5.iifl_feed | [IIFLFeed-NIFTY-VOLUME] IIFL live quote→5m bar worker started — symbol=NIFTY timeframe=5minute poll=5s
+2026-08-17 09:08:54 | INFO     | nifs5.base_script | [NIFTY] script worker started
+2026-08-17 09:08:54 | INFO     | nifs5.script_registry | [ScriptRegistry] NIFTY added live — feed + worker thread running, zero restart
+2026-08-17 09:08:54 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:08:54 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-PRICE] new bar 2026-08-17 09:05:00 close=24343.45 vol=0 | latency=68.3ms
+2026-08-17 09:08:54 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:08:54 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-VOLUME] new bar 2026-08-17 09:05:00 close=24400.00 vol=0 | latency=73.3ms
+2026-08-17 09:08:54 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-VOLUME] new bar 2026-08-17 09:05:00 close=24400.00 vol=0 | latency=113.7ms
+2026-08-17 09:08:54 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-PRICE] new bar 2026-08-17 09:05:00 close=24343.45 vol=0 | latency=118.0ms
+2026-08-17 09:08:59 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:08:59 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:09:04 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:09:04 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:09:09 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:09:09 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:09:14 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:09:14 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:09:19 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:09:20 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:09:25 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:09:25 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:09:30 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:09:30 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:09:35 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:09:35 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:09:40 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:09:40 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:09:45 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:09:45 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:09:50 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:09:50 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:09:55 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:09:55 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:10:00 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:10:00 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:10:00 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-VOLUME] new bar 2026-08-17 09:10:00 close=24400.00 vol=0 | latency=54.0ms
+2026-08-17 09:10:00 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-PRICE] new bar 2026-08-17 09:10:00 close=24343.45 vol=0 | latency=68.1ms
+2026-08-17 09:10:00 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-PRICE] new bar 2026-08-17 09:10:00 close=24343.45 vol=0 | latency=89.5ms
+2026-08-17 09:10:00 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-VOLUME] new bar 2026-08-17 09:10:00 close=24400.00 vol=0 | latency=88.6ms
+2026-08-17 09:10:02 | DEBUG    | nifs5.base_script | [NIFTY] outside entry session (09:20–15:15 IST) — skip eval/audit
+2026-08-17 09:10:05 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:10:05 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:10:10 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:10:10 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:10:15 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:10:15 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:10:20 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:10:20 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:10:25 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:10:25 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:10:30 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:10:30 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:10:35 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:10:35 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:10:41 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:10:41 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:10:46 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:10:46 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:10:51 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:10:51 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:10:56 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:10:56 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:11:01 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:11:01 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:11:06 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:11:06 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:11:11 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:11:11 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:11:16 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:11:16 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:11:21 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:11:21 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:11:26 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:11:26 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:11:31 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:11:31 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:11:36 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:11:36 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:11:41 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:11:41 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:11:46 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:11:46 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:11:51 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:11:51 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:11:56 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:11:57 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:12:02 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:12:02 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:12:07 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:12:07 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:12:12 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:12:12 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:12:17 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:12:17 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:12:22 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:12:22 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:12:27 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:12:27 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:12:32 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:12:32 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:12:37 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:12:37 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:12:42 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:12:42 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:12:47 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:12:47 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:12:52 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:12:52 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:12:57 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:12:57 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:13:02 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:13:02 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:13:07 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:13:07 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:13:12 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:13:13 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:13:18 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:13:18 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:13:23 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:13:23 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:13:28 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:13:28 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:13:33 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:13:33 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:13:38 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:13:38 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:13:43 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:13:43 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:13:48 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:13:48 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:13:53 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:13:53 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:13:58 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:13:58 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:14:03 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:14:03 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:14:08 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:14:08 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:14:13 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:14:13 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:14:18 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:14:18 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:14:23 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:14:23 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:14:28 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:14:28 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:14:33 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:14:33 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:14:38 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:14:39 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:14:44 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:14:44 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:14:49 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:14:49 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:14:54 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:14:54 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:14:59 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:14:59 | DEBUG    | nifs5.kotak_client | [KotakClient] discarding FO volume=1690 (lot-sized; not session volume)
+2026-08-17 09:15:00 | INFO     | nifs5.state_engine | OPENING BOUNDARY FREEZE ENGAGED (09:15) — no order routing until 09:20
+2026-08-17 09:15:00 | INFO     | nifs5.system_state | Opening boundary freeze: True
+2026-08-17 09:15:00 | INFO     | nifs5.candle_buffer | Candle buffer opening reset — preserving rolling history (today=2026-08-17; multi-day warmup retained)
+2026-08-17 09:15:00 | INFO     | nifs5.candle_buffer | Candle buffer opening reset — preserving rolling history (today=2026-08-17; multi-day warmup retained)
+2026-08-17 09:15:00 | INFO     | nifs5.feed_manager | [FeedManager] opening boundary reset complete (rolling history preserved)
+2026-08-17 09:15:00 | WARNING  | nifs5.feed_manager | [FeedManager] feed context for NIFTY already running
+2026-08-17 09:15:00 | INFO     | nifs5.feed_manager | FeedManager started — 1-asset self-healing pipeline is live
+2026-08-17 09:15:00 | INFO     | nifs5.iifl_client | [IIFLClient] historicaldata ok — 761 bars (lookback=14d, interval=5 minutes, symbol=NIFTY)
+2026-08-17 09:15:00 | INFO     | nifs5.candle_history_store | [CandleHistory] saved 400 bars for NIFTY (5m) → NIFTY_5m.json
+2026-08-17 09:15:00 | INFO     | nifs5.candle_warmup | [CandleWarmup] NIFTY cross-check ok ({'compared': 20, 'mismatches': 0, 'ok': True, 'note': 'ok'})
+2026-08-17 09:15:00 | INFO     | nifs5.feed_manager | [FeedManager] NIFTY warmup ok source=iifl+local bars=400 active=kotak (sticky)
+2026-08-17 09:15:00 | INFO     | nifs5.iifl_client | [IIFLClient] historicaldata ok — 777 bars (lookback=14d, interval=5 minutes, symbol=NIFTY[NSEFO:58072])
+2026-08-17 09:15:00 | INFO     | nifs5.candle_history_store | [CandleHistory] saved 400 bars for NIFTY (5m) → NIFTY_VOL_5m.json
+2026-08-17 09:15:00 | INFO     | nifs5.candle_warmup | [CandleWarmup] NIFTY volume cross-check ok ({'compared': 20, 'mismatches': 0, 'ok': True, 'note': 'ok'})
+2026-08-17 09:15:00 | INFO     | nifs5.feed_manager | [FeedManager] NIFTY volume catchup ok source=iifl+local bars=400 active=iifl
+2026-08-17 09:15:00 | INFO     | nifs5.circuit_breaker | Portfolio LOSS_CIRCUIT_CAP disabled — use per-script stoploss_inr on /config
+2026-08-17 09:15:00 | INFO     | nifs5.state_engine | Opening boundary: feeds live, candle warmup seeded (IIFL and/or local history; Kotak Neo history never used)
+2026-08-17 09:15:01 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-PRICE] new bar 2026-08-17 09:15:00 close=24348.05 vol=0 | latency=132.7ms
+2026-08-17 09:15:01 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-VOLUME] new bar 2026-08-17 09:15:00 close=24394.60 vol=3510 | latency=219.0ms
+2026-08-17 09:15:02 | DEBUG    | nifs5.base_script | [NIFTY] outside entry session (09:20–15:15 IST) — skip eval/audit
+2026-08-17 09:15:04 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-VOLUME] new bar 2026-08-17 09:15:00 close=24393.20 vol=6630 | latency=50.6ms
+2026-08-17 09:15:04 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-PRICE] new bar 2026-08-17 09:15:00 close=24335.05 vol=0 | latency=79.3ms
+2026-08-17 09:20:00 | INFO     | nifs5.system_state | Opening boundary freeze: False
+2026-08-17 09:20:00 | WARNING  | nifs5.base_script | [NIFTY] worker already running
+2026-08-17 09:20:00 | INFO     | nifs5.state_engine | OPENING BOUNDARY LIFTED (09:20) — script workers live, entries enabled
+2026-08-17 09:20:01 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-VOLUME] new bar 2026-08-17 09:20:00 close=24359.90 vol=3965 | latency=63.6ms
+2026-08-17 09:20:02 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-PRICE] new bar 2026-08-17 09:20:00 close=24302.40 vol=0 | latency=123.8ms
+2026-08-17 09:20:02 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-VOLUME] new bar 2026-08-17 09:20:00 close=24360.00 vol=3770 | latency=90.3ms
+2026-08-17 09:20:02 | INFO     | nifs5.indicator_calculator | [Indicators:NIFTY] close=24305.55 | EMA(fast/slow)=24339.77/24354.81 dir=BEAR_HOLD | Kaufman_ER=0.7695 thr=0.40 state=PASS | ADX=17.95 prev=14.98 confirmed=True | RSI=26.74 | F4_vel range=51.10 atr_ma=10.72 | DAVB[win=10]=(24384.40, 24343.45)
+2026-08-17 09:20:02 | INFO     | nifs5.filter_chain | [FilterChain:NIFTY] BLOCKED @F3b(RSI_ENTRY) — SHORT needs RSI>57.0 got 26.74
+2026-08-17 09:20:04 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-PRICE] new bar 2026-08-17 09:20:00 close=24299.20 vol=0 | latency=81.2ms
+2026-08-17 09:25:02 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-PRICE] new bar 2026-08-17 09:25:00 close=24301.90 vol=0 | latency=121.2ms
+2026-08-17 09:25:02 | INFO     | nifs5.indicator_calculator | [Indicators:NIFTY] close=24302.90 | EMA(fast/slow)=24327.48/24347.40 dir=BEAR_HOLD | Kaufman_ER=0.7565 thr=0.40 state=PASS | ADX=20.70 prev=17.95 confirmed=True | RSI=26.14 | F4_vel range=12.80 atr_ma=10.92 | DAVB[win=10]=(24384.40, 24284.85)
+2026-08-17 09:25:02 | INFO     | nifs5.filter_chain | [FilterChain:NIFTY] BLOCKED @F3b(RSI_ENTRY) — SHORT needs RSI>57.0 got 26.14
+2026-08-17 09:25:02 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-VOLUME] new bar 2026-08-17 09:25:00 close=24357.00 vol=260 | latency=88.9ms
+2026-08-17 09:25:03 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-PRICE] new bar 2026-08-17 09:25:00 close=24302.20 vol=0 | latency=74.0ms
+2026-08-17 09:25:03 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-VOLUME] new bar 2026-08-17 09:25:00 close=24350.00 vol=1820 | latency=55.0ms
+2026-08-17 09:30:01 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-VOLUME] new bar 2026-08-17 09:30:00 close=24352.20 vol=3380 | latency=48.6ms
+2026-08-17 09:30:02 | INFO     | nifs5.indicator_calculator | [Indicators:NIFTY] close=24307.20 | EMA(fast/slow)=24320.72/24341.65 dir=BEAR_HOLD | Kaufman_ER=0.6871 thr=0.40 state=PASS | ADX=22.92 prev=20.70 confirmed=True | RSI=28.94 | F4_vel range=14.95 atr_ma=11.39 | DAVB[win=10]=(24382.25, 24284.85)
+2026-08-17 09:30:02 | INFO     | nifs5.filter_chain | [FilterChain:NIFTY] BLOCKED @F3b(RSI_ENTRY) — SHORT needs RSI>57.0 got 28.94
+2026-08-17 09:30:03 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-PRICE] new bar 2026-08-17 09:30:00 close=24306.70 vol=0 | latency=107.3ms
+2026-08-17 09:30:03 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-PRICE] new bar 2026-08-17 09:30:00 close=24306.80 vol=0 | latency=103.0ms
+2026-08-17 09:30:03 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-VOLUME] new bar 2026-08-17 09:30:00 close=24354.30 vol=3640 | latency=101.8ms
+2026-08-17 09:35:00 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-VOLUME] new bar 2026-08-17 09:35:00 close=24341.90 vol=195 | latency=90.1ms
+2026-08-17 09:35:02 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-PRICE] new bar 2026-08-17 09:35:00 close=24287.90 vol=0 | latency=77.0ms
+2026-08-17 09:35:02 | INFO     | nifs5.indicator_calculator | [Indicators:NIFTY] close=24287.90 | EMA(fast/slow)=24302.04/24327.15 dir=BEAR_HOLD | Kaufman_ER=0.6647 thr=0.40 state=PASS | ADX=27.67 prev=25.38 confirmed=True | RSI=25.34 | F4_vel range=0.00 atr_ma=12.13 | DAVB[win=10]=(24375.20, 24282.20)
+2026-08-17 09:35:02 | INFO     | nifs5.filter_chain | [FilterChain:NIFTY] BLOCKED @F3b(RSI_ENTRY) — SHORT needs RSI>57.0 got 25.34
+2026-08-17 09:35:03 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-VOLUME] new bar 2026-08-17 09:35:00 close=24331.60 vol=130 | latency=31.7ms
+2026-08-17 09:35:04 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-PRICE] new bar 2026-08-17 09:35:00 close=24287.85 vol=0 | latency=125.9ms
+2026-08-17 09:40:00 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-VOLUME] new bar 2026-08-17 09:40:00 close=24340.00 vol=65 | latency=34.8ms
+2026-08-17 09:40:00 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-PRICE] new bar 2026-08-17 09:40:00 close=24294.00 vol=0 | latency=128.7ms
+2026-08-17 09:40:01 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-VOLUME] new bar 2026-08-17 09:40:00 close=24340.00 vol=65 | latency=132.6ms
+2026-08-17 09:40:01 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-PRICE] new bar 2026-08-17 09:40:00 close=24293.65 vol=0 | latency=61.5ms
+2026-08-17 09:40:02 | INFO     | nifs5.indicator_calculator | [Indicators:NIFTY] close=24293.65 | EMA(fast/slow)=24300.42/24323.01 dir=BEAR_HOLD | Kaufman_ER=0.5688 thr=0.40 state=PASS | ADX=29.79 prev=27.67 confirmed=True | RSI=28.79 | F4_vel range=0.00 atr_ma=12.50 | DAVB[win=10]=(24366.00, 24282.20)
+2026-08-17 09:40:02 | INFO     | nifs5.filter_chain | [FilterChain:NIFTY] BLOCKED @F3b(RSI_ENTRY) — SHORT needs RSI>57.0 got 28.79
+2026-08-17 09:40:35 | WARNING  | nifs5.feed_manager | [FeedManager] NIFTY/PRICE STICKY FAILOVER kotak → iifl (active latency=1096ms>1000ms; standby ok latency=162ms; confirm=3/3)
+2026-08-17 09:40:35 | WARNING  | nifs5.candle_buffer | ACTIVE DATA SOURCE SWITCHED: kotak -> iifl
+2026-08-17 09:45:01 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-VOLUME] new bar 2026-08-17 09:45:00 close=24350.00 vol=455 | latency=98.2ms
+2026-08-17 09:45:02 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-PRICE] new bar 2026-08-17 09:45:00 close=24302.35 vol=0 | latency=109.8ms
+2026-08-17 09:45:02 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-PRICE] new bar 2026-08-17 09:45:00 close=24302.85 vol=0 | latency=547.9ms
+2026-08-17 09:45:02 | INFO     | nifs5.indicator_calculator | [Indicators:NIFTY] close=24302.35 | EMA(fast/slow)=24302.84/24321.08 dir=BEAR_HOLD | Kaufman_ER=0.4671 thr=0.40 state=PASS | ADX=30.95 prev=29.59 confirmed=True | RSI=33.30 | F4_vel range=0.00 atr_ma=13.23 | DAVB[win=10]=(24366.00, 24282.50)
+2026-08-17 09:45:02 | INFO     | nifs5.filter_chain | [FilterChain:NIFTY] BLOCKED @F3b(RSI_ENTRY) — SHORT needs RSI>57.0 got 33.30
+2026-08-17 09:45:02 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-VOLUME] new bar 2026-08-17 09:45:00 close=24350.00 vol=390 | latency=58.1ms
+2026-08-17 09:46:56 | INFO     | nifs5.telegram_bot | [TelegramBot] received command: /status
+2026-08-17 09:50:01 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-PRICE] new bar 2026-08-17 09:50:00 close=24303.50 vol=0 | latency=65.4ms
+2026-08-17 09:50:02 | INFO     | nifs5.indicator_calculator | [Indicators:NIFTY] close=24304.40 | EMA(fast/slow)=24303.52/24321.37 dir=BEAR_HOLD | Kaufman_ER=0.4408 thr=0.40 state=PASS | ADX=30.95 prev=29.59 confirmed=True | RSI=34.49 | F4_vel range=8.90 atr_ma=13.78 | DAVB[win=10]=(24366.00, 24282.50)
+2026-08-17 09:50:02 | INFO     | nifs5.filter_chain | [FilterChain:NIFTY] BLOCKED @F3b(RSI_ENTRY) — SHORT needs RSI>57.0 got 34.49
+2026-08-17 09:50:03 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-VOLUME] new bar 2026-08-17 09:50:00 close=24351.00 vol=325 | latency=100.9ms
+2026-08-17 09:50:03 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-PRICE] new bar 2026-08-17 09:50:00 close=24304.00 vol=0 | latency=120.0ms
+2026-08-17 09:50:04 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-VOLUME] new bar 2026-08-17 09:50:00 close=24350.00 vol=390 | latency=39.0ms
+2026-08-17 09:55:00 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-PRICE] new bar 2026-08-17 09:55:00 close=24300.15 vol=0 | latency=96.7ms
+2026-08-17 09:55:02 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-VOLUME] new bar 2026-08-17 09:55:00 close=24345.00 vol=2990 | latency=36.1ms
+2026-08-17 09:55:02 | INFO     | nifs5.indicator_calculator | [Indicators:NIFTY] close=24300.30 | EMA(fast/slow)=24302.45/24318.36 dir=BEAR_HOLD | Kaufman_ER=0.6117 thr=0.40 state=PASS | ADX=31.94 prev=30.95 confirmed=True | RSI=33.21 | F4_vel range=12.15 atr_ma=13.86 | DAVB[win=10]=(24366.00, 24282.50)
+2026-08-17 09:55:02 | INFO     | nifs5.filter_chain | [FilterChain:NIFTY] BLOCKED @F3b(RSI_ENTRY) — SHORT needs RSI>57.0 got 33.21
+2026-08-17 09:55:04 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-VOLUME] new bar 2026-08-17 09:55:00 close=24345.00 vol=2665 | latency=101.9ms
+2026-08-17 09:55:05 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-PRICE] new bar 2026-08-17 09:55:00 close=24299.30 vol=0 | latency=85.4ms
+2026-08-17 10:00:00 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-VOLUME] new bar 2026-08-17 10:00:00 close=24338.00 vol=260 | latency=87.0ms
+2026-08-17 10:00:00 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-PRICE] new bar 2026-08-17 10:00:00 close=24285.25 vol=0 | latency=110.6ms
+2026-08-17 10:00:02 | INFO     | nifs5.indicator_calculator | [Indicators:NIFTY] close=24285.25 | EMA(fast/slow)=24292.88/24309.57 dir=BEAR_HOLD | Kaufman_ER=0.5820 thr=0.40 state=PASS | ADX=34.51 prev=33.27 confirmed=True | RSI=29.00 | F4_vel range=0.00 atr_ma=13.54 | DAVB[win=10]=(24348.05, 24282.50)
+2026-08-17 10:00:02 | INFO     | nifs5.filter_chain | [FilterChain:NIFTY] BLOCKED @F3b(RSI_ENTRY) — SHORT needs RSI>57.0 got 29.00
+2026-08-17 10:00:04 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-PRICE] new bar 2026-08-17 10:00:00 close=24284.75 vol=0 | latency=83.2ms
+2026-08-17 10:00:04 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-VOLUME] new bar 2026-08-17 10:00:00 close=24338.60 vol=650 | latency=33.0ms
+2026-08-17 10:05:01 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-PRICE] new bar 2026-08-17 10:05:00 close=24292.25 vol=0 | latency=99.9ms
+2026-08-17 10:05:02 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-VOLUME] new bar 2026-08-17 10:05:00 close=24336.10 vol=650 | latency=122.0ms
+2026-08-17 10:05:02 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-PRICE] new bar 2026-08-17 10:05:00 close=24290.25 vol=0 | latency=90.2ms
+2026-08-17 10:05:02 | INFO     | nifs5.indicator_calculator | [Indicators:NIFTY] close=24292.25 | EMA(fast/slow)=24293.54/24307.57 dir=BEAR_HOLD | Kaufman_ER=0.1901 thr=0.40 state=CHOP_NOISE_TRAP | ADX=35.70 prev=34.53 confirmed=True | RSI=33.39 | F4_vel range=0.00 atr_ma=12.85 | DAVB[win=10]=(24348.05, 24282.50)
+2026-08-17 10:05:02 | INFO     | nifs5.filter_chain | [FilterChain:NIFTY] BLOCKED @F2(Kaufman_ER=0.1901 < 0.40) — CHOP_NOISE_TRAP overrides EMA cross
+2026-08-17 10:05:03 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-VOLUME] new bar 2026-08-17 10:05:00 close=24336.10 vol=650 | latency=1033.3ms
+2026-08-17 10:10:00 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-VOLUME] new bar 2026-08-17 10:10:00 close=24335.50 vol=130 | latency=27.4ms
+2026-08-17 10:10:02 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-PRICE] new bar 2026-08-17 10:10:00 close=24291.85 vol=0 | latency=60.6ms
+2026-08-17 10:10:02 | INFO     | nifs5.indicator_calculator | [Indicators:NIFTY] close=24290.45 | EMA(fast/slow)=24292.94/24307.32 dir=BEAR_HOLD | Kaufman_ER=0.2221 thr=0.40 state=CHOP_NOISE_TRAP | ADX=35.66 prev=34.53 confirmed=True | RSI=32.27 | F4_vel range=7.00 atr_ma=13.29 | DAVB[win=10]=(24348.05, 24282.50)
+2026-08-17 10:10:02 | INFO     | nifs5.filter_chain | [FilterChain:NIFTY] BLOCKED @F2(Kaufman_ER=0.2221 < 0.40) — CHOP_NOISE_TRAP overrides EMA cross
+2026-08-17 10:10:02 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-PRICE] new bar 2026-08-17 10:10:00 close=24292.40 vol=0 | latency=127.8ms
+2026-08-17 10:10:03 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-VOLUME] new bar 2026-08-17 10:10:00 close=24335.50 vol=65 | latency=99.8ms
+2026-08-17 10:15:02 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-PRICE] new bar 2026-08-17 10:15:00 close=24282.35 vol=0 | latency=81.5ms
+2026-08-17 10:15:02 | INFO     | nifs5.indicator_calculator | [Indicators:NIFTY] close=24282.15 | EMA(fast/slow)=24289.34/24303.72 dir=BEAR_HOLD | Kaufman_ER=0.2859 thr=0.40 state=CHOP_NOISE_TRAP | ADX=37.06 prev=35.66 confirmed=True | RSI=29.78 | F4_vel range=14.60 atr_ma=14.20 | DAVB[win=10]=(24311.95, 24282.50)
+2026-08-17 10:15:02 | INFO     | nifs5.filter_chain | [FilterChain:NIFTY] BLOCKED @F2(Kaufman_ER=0.2859 < 0.40) — CHOP_NOISE_TRAP overrides EMA cross
+2026-08-17 10:15:04 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-PRICE] new bar 2026-08-17 10:15:00 close=24281.35 vol=0 | latency=82.3ms
+2026-08-17 10:15:04 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-VOLUME] new bar 2026-08-17 10:15:00 close=24329.90 vol=455 | latency=141.1ms
+2026-08-17 10:15:04 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-VOLUME] new bar 2026-08-17 10:15:00 close=24328.90 vol=520 | latency=30.4ms
+2026-08-17 10:20:01 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-VOLUME] new bar 2026-08-17 10:20:00 close=24310.00 vol=325 | latency=33.3ms
+2026-08-17 10:20:02 | INFO     | nifs5.indicator_calculator | [Indicators:NIFTY] close=24263.80 | EMA(fast/slow)=24280.83/24298.02 dir=BEAR_HOLD | Kaufman_ER=0.4971 thr=0.40 state=PASS | ADX=38.89 prev=37.06 confirmed=True | RSI=25.16 | F4_vel range=23.75 atr_ma=15.68 | DAVB[win=10]=(24311.95, 24277.80)
+2026-08-17 10:20:02 | INFO     | nifs5.filter_chain | [FilterChain:NIFTY] BLOCKED @F3b(RSI_ENTRY) — SHORT needs RSI>57.0 got 25.16
+2026-08-17 10:20:02 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-PRICE] new bar 2026-08-17 10:20:00 close=24262.35 vol=0 | latency=69.4ms
+2026-08-17 10:20:05 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-PRICE] new bar 2026-08-17 10:20:00 close=24261.40 vol=0 | latency=103.8ms
+2026-08-17 10:20:05 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-VOLUME] new bar 2026-08-17 10:20:00 close=24315.80 vol=130 | latency=199.8ms
+2026-08-17 10:25:00 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-PRICE] new bar 2026-08-17 10:25:00 close=24252.95 vol=0 | latency=91.1ms
+2026-08-17 10:25:01 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-VOLUME] new bar 2026-08-17 10:25:00 close=24306.00 vol=260 | latency=118.8ms
+2026-08-17 10:25:02 | INFO     | nifs5.indicator_calculator | [Indicators:NIFTY] close=24252.95 | EMA(fast/slow)=24265.37/24286.08 dir=BEAR_HOLD | Kaufman_ER=0.5293 thr=0.40 state=PASS | ADX=42.51 prev=40.77 confirmed=True | RSI=22.90 | F4_vel range=0.00 atr_ma=15.62 | DAVB[win=10]=(24310.85, 24253.10)
+2026-08-17 10:25:02 | INFO     | nifs5.filter_chain | [FilterChain:NIFTY] BLOCKED @F3b(RSI_ENTRY) — SHORT needs RSI>57.0 got 22.90
+2026-08-17 10:25:03 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-PRICE] new bar 2026-08-17 10:25:00 close=24253.05 vol=0 | latency=66.5ms
+2026-08-17 10:25:04 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-VOLUME] new bar 2026-08-17 10:25:00 close=24306.00 vol=390 | latency=32.8ms
+2026-08-17 10:30:01 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-VOLUME] new bar 2026-08-17 10:30:00 close=24318.00 vol=130 | latency=30.3ms
+2026-08-17 10:30:02 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-PRICE] new bar 2026-08-17 10:30:00 close=24259.80 vol=0 | latency=84.2ms
+2026-08-17 10:30:02 | INFO     | nifs5.indicator_calculator | [Indicators:NIFTY] close=24261.00 | EMA(fast/slow)=24268.06/24287.23 dir=BEAR_HOLD | Kaufman_ER=0.3810 thr=0.40 state=CHOP_NOISE_TRAP | ADX=42.57 prev=40.77 confirmed=True | RSI=28.01 | F4_vel range=11.25 atr_ma=16.33 | DAVB[win=10]=(24310.85, 24253.10)
+2026-08-17 10:30:02 | INFO     | nifs5.filter_chain | [FilterChain:NIFTY] BLOCKED @F2(Kaufman_ER=0.3810 < 0.40) — CHOP_NOISE_TRAP overrides EMA cross
+2026-08-17 10:30:02 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-PRICE] new bar 2026-08-17 10:30:00 close=24260.25 vol=0 | latency=166.6ms
+2026-08-17 10:30:02 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-VOLUME] new bar 2026-08-17 10:30:00 close=24318.60 vol=130 | latency=211.2ms
+2026-08-17 10:35:01 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-PRICE] new bar 2026-08-17 10:35:00 close=24255.30 vol=0 | latency=69.3ms
+2026-08-17 10:35:02 | INFO     | nifs5.indicator_calculator | [Indicators:NIFTY] close=24257.55 | EMA(fast/slow)=24264.55/24282.99 dir=BEAR_HOLD | Kaufman_ER=0.5779 thr=0.40 state=PASS | ADX=44.24 prev=42.57 confirmed=True | RSI=27.17 | F4_vel range=8.40 atr_ma=16.85 | DAVB[win=10]=(24310.85, 24250.70)
+2026-08-17 10:35:02 | INFO     | nifs5.filter_chain | [FilterChain:NIFTY] BLOCKED @F3b(RSI_ENTRY) — SHORT needs RSI>57.0 got 27.17
+2026-08-17 10:35:03 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-PRICE] new bar 2026-08-17 10:35:00 close=24255.60 vol=0 | latency=104.2ms
+2026-08-17 10:35:03 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-VOLUME] new bar 2026-08-17 10:35:00 close=24316.00 vol=130 | latency=27.6ms
+2026-08-17 10:35:04 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-VOLUME] new bar 2026-08-17 10:35:00 close=24316.00 vol=130 | latency=164.8ms
+2026-08-17 10:40:00 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-VOLUME] new bar 2026-08-17 10:40:00 close=24315.10 vol=0 | latency=154.0ms
+2026-08-17 10:40:01 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-VOLUME] new bar 2026-08-17 10:40:00 close=24315.00 vol=65 | latency=31.5ms
+2026-08-17 10:40:02 | INFO     | nifs5.indicator_calculator | [Indicators:NIFTY] close=24254.40 | EMA(fast/slow)=24261.17/24278.91 dir=BEAR_HOLD | Kaufman_ER=0.6553 thr=0.40 state=PASS | ADX=45.82 prev=44.24 confirmed=True | RSI=26.39 | F4_vel range=6.15 atr_ma=13.30 | DAVB[win=10]=(24308.35, 24250.70)
+2026-08-17 10:40:02 | INFO     | nifs5.filter_chain | [FilterChain:NIFTY] BLOCKED @F3b(RSI_ENTRY) — SHORT needs RSI>57.0 got 26.39
+2026-08-17 10:40:04 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-PRICE] new bar 2026-08-17 10:40:00 close=24253.35 vol=0 | latency=66.4ms
+2026-08-17 10:40:05 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-PRICE] new bar 2026-08-17 10:40:00 close=24253.00 vol=0 | latency=103.7ms
+2026-08-17 10:45:01 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-PRICE] new bar 2026-08-17 10:45:00 close=24238.40 vol=0 | latency=109.6ms
+2026-08-17 10:45:02 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-VOLUME] new bar 2026-08-17 10:45:00 close=24299.30 vol=2665 | latency=564.8ms
+2026-08-17 10:45:02 | INFO     | nifs5.indicator_calculator | [Indicators:NIFTY] close=24238.40 | EMA(fast/slow)=24248.52/24268.16 dir=BEAR_HOLD | Kaufman_ER=0.6402 thr=0.40 state=PASS | ADX=49.42 prev=47.69 confirmed=True | RSI=22.80 | F4_vel range=0.00 atr_ma=12.74 | DAVB[win=10]=(24300.55, 24236.05)
+2026-08-17 10:45:02 | INFO     | nifs5.filter_chain | [FilterChain:NIFTY] BLOCKED @F3b(RSI_ENTRY) — SHORT needs RSI>57.0 got 22.80
+2026-08-17 10:45:03 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-PRICE] new bar 2026-08-17 10:45:00 close=24238.40 vol=0 | latency=71.2ms
+2026-08-17 10:45:03 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-VOLUME] new bar 2026-08-17 10:45:00 close=24305.00 vol=910 | latency=28.0ms
+2026-08-17 10:50:01 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-VOLUME] new bar 2026-08-17 10:50:00 close=24299.90 vol=130 | latency=28.0ms
+2026-08-17 10:50:02 | INFO     | nifs5.indicator_calculator | [Indicators:NIFTY] close=24239.15 | EMA(fast/slow)=24248.77/24268.27 dir=BEAR_HOLD | Kaufman_ER=0.6236 thr=0.40 state=PASS | ADX=49.55 prev=47.69 confirmed=True | RSI=23.33 | F4_vel range=9.85 atr_ma=13.36 | DAVB[win=10]=(24300.55, 24236.05)
+2026-08-17 10:50:02 | INFO     | nifs5.filter_chain | [FilterChain:NIFTY] BLOCKED @F3b(RSI_ENTRY) — SHORT needs RSI>57.0 got 23.33
+2026-08-17 10:50:02 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-PRICE] new bar 2026-08-17 10:50:00 close=24238.75 vol=0 | latency=56.1ms
+2026-08-17 10:50:03 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-PRICE] new bar 2026-08-17 10:50:00 close=24238.15 vol=0 | latency=111.6ms
+2026-08-17 10:50:03 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-VOLUME] new bar 2026-08-17 10:50:00 close=24299.90 vol=195 | latency=95.0ms
+2026-08-17 10:55:00 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-VOLUME] new bar 2026-08-17 10:55:00 close=24308.60 vol=65 | latency=128.2ms
+2026-08-17 10:55:02 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-PRICE] new bar 2026-08-17 10:55:00 close=24242.60 vol=0 | latency=102.0ms
+2026-08-17 10:55:02 | INFO     | nifs5.indicator_calculator | [Indicators:NIFTY] close=24242.10 | EMA(fast/slow)=24246.55/24264.53 dir=BEAR_HOLD | Kaufman_ER=0.6458 thr=0.40 state=PASS | ADX=50.47 prev=49.55 confirmed=True | RSI=25.48 | F4_vel range=8.35 atr_ma=12.32 | DAVB[win=10]=(24294.30, 24229.30)
+2026-08-17 10:55:02 | INFO     | nifs5.filter_chain | [FilterChain:NIFTY] BLOCKED @F3b(RSI_ENTRY) — SHORT needs RSI>57.0 got 25.48
+2026-08-17 10:55:03 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-VOLUME] new bar 2026-08-17 10:55:00 close=24307.50 vol=260 | latency=27.0ms
+2026-08-17 10:55:05 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-PRICE] new bar 2026-08-17 10:55:00 close=24241.90 vol=0 | latency=105.8ms
+2026-08-17 11:00:00 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-VOLUME] new bar 2026-08-17 11:00:00 close=24302.00 vol=65 | latency=35.0ms
+2026-08-17 11:00:01 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-PRICE] new bar 2026-08-17 11:00:00 close=24236.80 vol=0 | latency=159.4ms
+2026-08-17 11:00:01 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-PRICE] new bar 2026-08-17 11:00:00 close=24236.10 vol=0 | latency=343.7ms
+2026-08-17 11:00:02 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-VOLUME] new bar 2026-08-17 11:00:00 close=24304.00 vol=130 | latency=132.2ms
+2026-08-17 11:00:02 | INFO     | nifs5.indicator_calculator | [Indicators:NIFTY] close=24236.80 | EMA(fast/slow)=24241.25/24257.24 dir=BEAR_HOLD | Kaufman_ER=0.6616 thr=0.40 state=PASS | ADX=51.73 prev=51.11 confirmed=True | RSI=24.16 | F4_vel range=0.00 atr_ma=10.95 | DAVB[win=10]=(24292.40, 24229.30)
+2026-08-17 11:00:02 | INFO     | nifs5.filter_chain | [FilterChain:NIFTY] BLOCKED @F3b(RSI_ENTRY) — SHORT needs RSI>57.0 got 24.16
+2026-08-17 11:05:02 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-PRICE] new bar 2026-08-17 11:05:00 close=24240.95 vol=0 | latency=95.3ms
+2026-08-17 11:05:02 | INFO     | nifs5.indicator_calculator | [Indicators:NIFTY] close=24240.95 | EMA(fast/slow)=24242.30/24255.54 dir=BEAR_HOLD | Kaufman_ER=0.4136 thr=0.40 state=PASS | ADX=52.51 prev=51.84 confirmed=True | RSI=27.49 | F4_vel range=0.00 atr_ma=11.05 | DAVB[win=10]=(24283.90, 24229.30)
+2026-08-17 11:05:02 | INFO     | nifs5.filter_chain | [FilterChain:NIFTY] BLOCKED @F3b(RSI_ENTRY) — SHORT needs RSI>57.0 got 27.49
+2026-08-17 11:05:03 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-VOLUME] new bar 2026-08-17 11:05:00 close=24307.90 vol=390 | latency=29.7ms
+2026-08-17 11:05:03 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-VOLUME] new bar 2026-08-17 11:05:00 close=24307.90 vol=390 | latency=88.1ms
+2026-08-17 11:05:05 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-PRICE] new bar 2026-08-17 11:05:00 close=24240.00 vol=0 | latency=55.5ms
+2026-08-17 11:10:00 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-VOLUME] new bar 2026-08-17 11:10:00 close=24305.00 vol=0 | latency=26.2ms
+2026-08-17 11:10:02 | INFO     | nifs5.indicator_calculator | [Indicators:NIFTY] close=24235.60 | EMA(fast/slow)=24240.51/24254.78 dir=BEAR_HOLD | Kaufman_ER=0.4653 thr=0.40 state=PASS | ADX=52.56 prev=51.84 confirmed=True | RSI=26.00 | F4_vel range=9.05 atr_ma=11.62 | DAVB[win=10]=(24283.90, 24229.30)
+2026-08-17 11:10:02 | INFO     | nifs5.filter_chain | [FilterChain:NIFTY] BLOCKED @F3b(RSI_ENTRY) — SHORT needs RSI>57.0 got 26.00
+2026-08-17 11:10:03 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-PRICE] new bar 2026-08-17 11:10:00 close=24235.95 vol=0 | latency=61.3ms
+2026-08-17 11:10:04 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-PRICE] new bar 2026-08-17 11:10:00 close=24235.55 vol=0 | latency=89.9ms
+2026-08-17 11:10:04 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-VOLUME] new bar 2026-08-17 11:10:00 close=24301.00 vol=65 | latency=104.8ms
+2026-08-17 11:12:45 | INFO     | nifs5.telegram_bot | [TelegramBot] received command: /status
+2026-08-17 11:15:00 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-PRICE] new bar 2026-08-17 11:15:00 close=24236.05 vol=0 | latency=119.6ms
+2026-08-17 11:15:01 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-VOLUME] new bar 2026-08-17 11:15:00 close=24301.90 vol=0 | latency=188.9ms
+2026-08-17 11:15:02 | INFO     | nifs5.indicator_calculator | [Indicators:NIFTY] close=24236.05 | EMA(fast/slow)=24238.05/24249.82 dir=BEAR_HOLD | Kaufman_ER=0.5864 thr=0.40 state=PASS | ADX=53.86 prev=53.23 confirmed=True | RSI=26.39 | F4_vel range=0.00 atr_ma=10.23 | DAVB[win=10]=(24261.95, 24229.30)
+2026-08-17 11:15:02 | INFO     | nifs5.filter_chain | [FilterChain:NIFTY] BLOCKED @F3b(RSI_ENTRY) — SHORT needs RSI>57.0 got 26.39
+2026-08-17 11:15:02 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-VOLUME] new bar 2026-08-17 11:15:00 close=24301.90 vol=0 | latency=30.6ms
+2026-08-17 11:15:02 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-PRICE] new bar 2026-08-17 11:15:00 close=24236.05 vol=0 | latency=73.0ms
+2026-08-17 11:20:01 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-PRICE] new bar 2026-08-17 11:20:00 close=24235.10 vol=0 | latency=141.9ms
+2026-08-17 11:20:02 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-PRICE] new bar 2026-08-17 11:20:00 close=24235.35 vol=0 | latency=71.3ms
+2026-08-17 11:20:02 | INFO     | nifs5.indicator_calculator | [Indicators:NIFTY] close=24235.10 | EMA(fast/slow)=24237.19/24247.78 dir=BEAR_HOLD | Kaufman_ER=0.5469 thr=0.40 state=PASS | ADX=54.43 prev=53.86 confirmed=True | RSI=26.34 | F4_vel range=0.00 atr_ma=9.89 | DAVB[win=10]=(24261.65, 24229.30)
+2026-08-17 11:20:02 | INFO     | nifs5.filter_chain | [FilterChain:NIFTY] BLOCKED @F3b(RSI_ENTRY) — SHORT needs RSI>57.0 got 26.34
+2026-08-17 11:20:03 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-VOLUME] new bar 2026-08-17 11:20:00 close=24300.00 vol=260 | latency=84.3ms
+2026-08-17 11:20:04 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-VOLUME] new bar 2026-08-17 11:20:00 close=24300.00 vol=260 | latency=37.5ms
+2026-08-17 11:25:01 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-PRICE] new bar 2026-08-17 11:25:00 close=24229.25 vol=0 | latency=78.7ms
+2026-08-17 11:25:01 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-VOLUME] new bar 2026-08-17 11:25:00 close=24300.20 vol=130 | latency=26.3ms
+2026-08-17 11:25:02 | INFO     | nifs5.indicator_calculator | [Indicators:NIFTY] close=24227.80 | EMA(fast/slow)=24234.75/24246.74 dir=BEAR_HOLD | Kaufman_ER=0.6153 thr=0.40 state=PASS | ADX=54.65 prev=53.86 confirmed=True | RSI=24.18 | F4_vel range=7.50 atr_ma=10.36 | DAVB[win=10]=(24261.65, 24229.30)
+2026-08-17 11:25:02 | INFO     | nifs5.filter_chain | [FilterChain:NIFTY] BLOCKED @F3b(RSI_ENTRY) — SHORT needs RSI>57.0 got 24.18
+2026-08-17 11:25:03 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-PRICE] new bar 2026-08-17 11:25:00 close=24229.40 vol=0 | latency=95.7ms
+2026-08-17 11:25:04 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-VOLUME] new bar 2026-08-17 11:25:00 close=24300.50 vol=130 | latency=217.6ms
+2026-08-17 11:30:00 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-PRICE] new bar 2026-08-17 11:30:00 close=24240.00 vol=0 | latency=133.1ms
+2026-08-17 11:30:02 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-VOLUME] new bar 2026-08-17 11:30:00 close=24311.50 vol=650 | latency=728.0ms
+2026-08-17 11:30:02 | INFO     | nifs5.indicator_calculator | [Indicators:NIFTY] close=24240.00 | EMA(fast/slow)=24237.31/24244.75 dir=BEAR_HOLD | Kaufman_ER=0.0386 thr=0.40 state=CHOP_NOISE_TRAP | ADX=53.78 prev=54.20 confirmed=False | RSI=34.02 | F4_vel range=0.00 atr_ma=9.86 | DAVB[win=10]=(24255.45, 24227.80)
+2026-08-17 11:30:02 | INFO     | nifs5.filter_chain | [FilterChain:NIFTY] BLOCKED @F2(Kaufman_ER=0.0386 < 0.40) — CHOP_NOISE_TRAP overrides EMA cross
+2026-08-17 11:30:03 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-VOLUME] new bar 2026-08-17 11:30:00 close=24311.50 vol=455 | latency=45.1ms
+2026-08-17 11:31:05 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-PRICE] new bar 2026-08-17 11:30:00 close=24239.50 vol=0 | latency=60069.8ms
+2026-08-17 11:35:00 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-VOLUME] new bar 2026-08-17 11:35:00 close=24315.00 vol=0 | latency=29.2ms
+2026-08-17 11:35:01 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-PRICE] new bar 2026-08-17 11:35:00 close=24242.40 vol=0 | latency=152.5ms
+2026-08-17 11:35:02 | INFO     | nifs5.indicator_calculator | [Indicators:NIFTY] close=24242.40 | EMA(fast/slow)=24239.32/24244.59 dir=BEAR_HOLD | Kaufman_ER=0.0755 thr=0.40 state=CHOP_NOISE_TRAP | ADX=53.08 prev=53.62 confirmed=False | RSI=35.83 | F4_vel range=0.00 atr_ma=8.95 | DAVB[win=10]=(24247.20, 24227.80)
+2026-08-17 11:35:02 | INFO     | nifs5.filter_chain | [FilterChain:NIFTY] BLOCKED @F2(Kaufman_ER=0.0755 < 0.40) — CHOP_NOISE_TRAP overrides EMA cross
+2026-08-17 11:35:03 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-PRICE] new bar 2026-08-17 11:35:00 close=24241.10 vol=0 | latency=78.4ms
+2026-08-17 11:35:03 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-VOLUME] new bar 2026-08-17 11:35:00 close=24315.00 vol=0 | latency=113.7ms
+2026-08-17 11:40:00 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-VOLUME] new bar 2026-08-17 11:40:00 close=24313.00 vol=0 | latency=146.0ms
+2026-08-17 11:40:02 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-PRICE] new bar 2026-08-17 11:40:00 close=24237.70 vol=0 | latency=67.0ms
+2026-08-17 11:40:02 | INFO     | nifs5.indicator_calculator | [Indicators:NIFTY] close=24237.60 | EMA(fast/slow)=24237.72/24243.90 dir=BEAR_HOLD | Kaufman_ER=0.0338 thr=0.40 state=CHOP_NOISE_TRAP | ADX=52.61 prev=53.62 confirmed=False | RSI=33.52 | F4_vel range=10.40 atr_ma=9.60 | DAVB[win=10]=(24247.20, 24227.80)
+2026-08-17 11:40:02 | INFO     | nifs5.filter_chain | [FilterChain:NIFTY] BLOCKED @F2(Kaufman_ER=0.0338 < 0.40) — CHOP_NOISE_TRAP overrides EMA cross
+2026-08-17 11:40:02 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-VOLUME] new bar 2026-08-17 11:40:00 close=24313.00 vol=65 | latency=35.7ms
+2026-08-17 11:40:03 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-PRICE] new bar 2026-08-17 11:40:00 close=24238.20 vol=0 | latency=81.9ms
+2026-08-17 11:45:00 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-PRICE] new bar 2026-08-17 11:45:00 close=24244.75 vol=0 | latency=94.6ms
+2026-08-17 11:45:01 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-PRICE] new bar 2026-08-17 11:45:00 close=24245.20 vol=0 | latency=137.6ms
+2026-08-17 11:45:02 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-VOLUME] new bar 2026-08-17 11:45:00 close=24318.50 vol=130 | latency=197.3ms
+2026-08-17 11:45:02 | INFO     | nifs5.indicator_calculator | [Indicators:NIFTY] close=24244.75 | EMA(fast/slow)=24241.45/24244.03 dir=BEAR_HOLD | Kaufman_ER=0.1634 thr=0.40 state=CHOP_NOISE_TRAP | ADX=50.65 prev=51.59 confirmed=False | RSI=38.97 | F4_vel range=0.00 atr_ma=8.88 | DAVB[win=10]=(24247.75, 24227.80)
+2026-08-17 11:45:02 | INFO     | nifs5.filter_chain | [FilterChain:NIFTY] BLOCKED @F2(Kaufman_ER=0.1634 < 0.40) — CHOP_NOISE_TRAP overrides EMA cross
+2026-08-17 11:45:04 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-VOLUME] new bar 2026-08-17 11:45:00 close=24318.50 vol=65 | latency=49.6ms
+2026-08-17 11:49:13 | WARNING  | nifs5.feed_manager | [FeedManager] NIFTY/PRICE STICKY FAILOVER iifl → kotak (active latency=5216ms>1000ms; standby ok latency=77ms; confirm=3/3)
+2026-08-17 11:49:13 | WARNING  | nifs5.candle_buffer | ACTIVE DATA SOURCE SWITCHED: iifl -> kotak
+2026-08-17 11:50:00 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-PRICE] new bar 2026-08-17 11:50:00 close=24254.35 vol=0 | latency=65.2ms
+2026-08-17 11:50:01 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-PRICE] new bar 2026-08-17 11:50:00 close=24253.50 vol=0 | latency=211.9ms
+2026-08-17 11:50:02 | INFO     | nifs5.indicator_calculator | [Indicators:NIFTY] close=24254.35 | EMA(fast/slow)=24248.47/24247.04 dir=BULL | Kaufman_ER=0.2775 thr=0.40 state=CHOP_NOISE_TRAP | ADX=44.13 prev=46.19 confirmed=False | RSI=45.33 | F4_vel range=0.00 atr_ma=9.19 | DAVB[win=10]=(24256.10, 24227.40)
+2026-08-17 11:50:02 | INFO     | nifs5.filter_chain | [FilterChain:NIFTY] BLOCKED @F2(Kaufman_ER=0.2775 < 0.40) — CHOP_NOISE_TRAP overrides EMA cross
+2026-08-17 11:50:02 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-VOLUME] new bar 2026-08-17 11:50:00 close=24321.50 vol=325 | latency=54.0ms
+2026-08-17 11:50:04 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-VOLUME] new bar 2026-08-17 11:50:00 close=24322.00 vol=520 | latency=356.5ms
+2026-08-17 11:55:00 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-VOLUME] new bar 2026-08-17 11:55:00 close=24325.00 vol=0 | latency=89.5ms
+2026-08-17 11:55:02 | INFO     | nifs5.indicator_calculator | [Indicators:NIFTY] close=24263.30 | EMA(fast/slow)=24251.45/24248.32 dir=BULL | Kaufman_ER=0.4061 thr=0.40 state=PASS | ADX=43.30 prev=46.19 confirmed=False | RSI=50.55 | F4_vel range=18.00 atr_ma=10.32 | DAVB[win=10]=(24256.10, 24227.40)
+2026-08-17 11:55:02 | INFO     | nifs5.filter_chain | [FilterChain:NIFTY] BLOCKED @F3(ADX=43.30 prev=46.19 thr=16.0) — velocity not confirmed
+2026-08-17 11:55:03 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-PRICE] new bar 2026-08-17 11:55:00 close=24265.10 vol=0 | latency=230.9ms
+2026-08-17 11:55:04 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-PRICE] new bar 2026-08-17 11:55:00 close=24265.80 vol=0 | latency=65.9ms
+2026-08-17 11:55:04 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-VOLUME] new bar 2026-08-17 11:55:00 close=24325.00 vol=0 | latency=28.3ms
+2026-08-17 12:00:00 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-PRICE] new bar 2026-08-17 12:00:00 close=24271.65 vol=0 | latency=141.9ms
+2026-08-17 12:00:01 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-VOLUME] new bar 2026-08-17 12:00:00 close=24331.00 vol=130 | latency=31.7ms
+2026-08-17 12:00:02 | INFO     | nifs5.indicator_calculator | [Indicators:NIFTY] close=24271.75 | EMA(fast/slow)=24258.22/24251.67 dir=BULL_HOLD | Kaufman_ER=0.6091 thr=0.40 state=PASS | ADX=40.74 prev=43.30 confirmed=False | RSI=55.02 | F4_vel range=8.20 atr_ma=10.39 | DAVB[win=10]=(24272.35, 24227.40)
+2026-08-17 12:00:02 | INFO     | nifs5.filter_chain | [FilterChain:NIFTY] BLOCKED @F3(ADX=40.74 prev=43.30 thr=16.0) — velocity not confirmed
+2026-08-17 12:00:02 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-VOLUME] new bar 2026-08-17 12:00:00 close=24331.00 vol=130 | latency=169.8ms
+2026-08-17 12:00:02 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-PRICE] new bar 2026-08-17 12:00:00 close=24271.30 vol=0 | latency=68.4ms
+2026-08-17 12:05:01 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-PRICE] new bar 2026-08-17 12:05:00 close=24267.35 vol=0 | latency=75.0ms
+2026-08-17 12:05:02 | INFO     | nifs5.indicator_calculator | [Indicators:NIFTY] close=24267.35 | EMA(fast/slow)=24262.95/24255.64 dir=BULL_HOLD | Kaufman_ER=0.4714 thr=0.40 state=PASS | ADX=36.32 prev=38.45 confirmed=False | RSI=52.35 | F4_vel range=0.00 atr_ma=9.14 | DAVB[win=10]=(24274.85, 24227.40)
+2026-08-17 12:05:02 | INFO     | nifs5.filter_chain | [FilterChain:NIFTY] BLOCKED @F3(ADX=36.32 prev=38.45 thr=16.0) — velocity not confirmed
+2026-08-17 12:05:02 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-PRICE] new bar 2026-08-17 12:05:00 close=24267.05 vol=0 | latency=372.9ms
+2026-08-17 12:05:03 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-VOLUME] new bar 2026-08-17 12:05:00 close=24332.50 vol=260 | latency=27.2ms
+2026-08-17 12:05:04 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-VOLUME] new bar 2026-08-17 12:05:00 close=24332.50 vol=260 | latency=110.0ms
+2026-08-17 12:05:41 | WARNING  | nifs5.feed_manager | [FeedManager] NIFTY/PRICE STICKY FAILOVER kotak → iifl (active latency=1088ms>1000ms; standby ok latency=113ms; confirm=3/3)
+2026-08-17 12:05:41 | WARNING  | nifs5.candle_buffer | ACTIVE DATA SOURCE SWITCHED: kotak -> iifl
+2026-08-17 12:10:00 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-VOLUME] new bar 2026-08-17 12:10:00 close=24327.00 vol=0 | latency=33.0ms
+2026-08-17 12:10:01 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-PRICE] new bar 2026-08-17 12:10:00 close=24264.65 vol=0 | latency=81.8ms
+2026-08-17 12:10:01 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-VOLUME] new bar 2026-08-17 12:10:00 close=24327.00 vol=0 | latency=511.6ms
+2026-08-17 12:10:02 | INFO     | nifs5.indicator_calculator | [Indicators:NIFTY] close=24264.65 | EMA(fast/slow)=24262.02/24255.16 dir=BULL_HOLD | Kaufman_ER=0.4098 thr=0.40 state=PASS | ADX=37.77 prev=40.68 confirmed=False | RSI=50.80 | F4_vel range=7.30 atr_ma=9.84 | DAVB[win=10]=(24275.25, 24227.80)
+2026-08-17 12:10:02 | INFO     | nifs5.filter_chain | [FilterChain:NIFTY] BLOCKED @F3(ADX=37.77 prev=40.68 thr=16.0) — velocity not confirmed
+2026-08-17 12:10:04 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-PRICE] new bar 2026-08-17 12:10:00 close=24264.40 vol=0 | latency=151.3ms
+2026-08-17 12:15:01 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-PRICE] new bar 2026-08-17 12:15:00 close=24270.95 vol=0 | latency=62.5ms
+2026-08-17 12:15:01 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-PRICE] new bar 2026-08-17 12:15:00 close=24272.90 vol=0 | latency=160.3ms
+2026-08-17 12:15:02 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-VOLUME] new bar 2026-08-17 12:15:00 close=24334.00 vol=65 | latency=32.4ms
+2026-08-17 12:15:02 | INFO     | nifs5.indicator_calculator | [Indicators:NIFTY] close=24272.90 | EMA(fast/slow)=24267.42/24259.51 dir=BULL_HOLD | Kaufman_ER=0.6021 thr=0.40 state=PASS | ADX=33.11 prev=35.47 confirmed=False | RSI=55.34 | F4_vel range=0.00 atr_ma=9.54 | DAVB[win=10]=(24275.25, 24229.40)
+2026-08-17 12:15:02 | INFO     | nifs5.filter_chain | [FilterChain:NIFTY] BLOCKED @F3(ADX=33.11 prev=35.47 thr=16.0) — velocity not confirmed
+2026-08-17 12:15:03 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-VOLUME] new bar 2026-08-17 12:15:00 close=24334.00 vol=130 | latency=148.4ms
+2026-08-17 12:20:00 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-PRICE] new bar 2026-08-17 12:20:00 close=24285.70 vol=0 | latency=64.4ms
+2026-08-17 12:20:01 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-VOLUME] new bar 2026-08-17 12:20:00 close=24342.00 vol=390 | latency=954.6ms
+2026-08-17 12:20:02 | INFO     | nifs5.indicator_calculator | [Indicators:NIFTY] close=24286.10 | EMA(fast/slow)=24271.82/24261.39 dir=BULL_HOLD | Kaufman_ER=0.6766 thr=0.40 state=PASS | ADX=34.05 prev=35.47 confirmed=False | RSI=61.32 | F4_vel range=16.40 atr_ma=10.57 | DAVB[win=10]=(24275.25, 24229.40)
+2026-08-17 12:20:02 | INFO     | nifs5.filter_chain | [FilterChain:NIFTY] BLOCKED @F3(ADX=34.05 prev=35.47 thr=16.0) — velocity not confirmed
+2026-08-17 12:20:04 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-PRICE] new bar 2026-08-17 12:20:00 close=24285.15 vol=0 | latency=937.5ms
+2026-08-17 12:20:04 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-VOLUME] new bar 2026-08-17 12:20:00 close=24343.80 vol=195 | latency=33.0ms
+2026-08-17 12:25:01 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-PRICE] new bar 2026-08-17 12:25:00 close=24286.40 vol=0 | latency=376.9ms
+2026-08-17 12:25:01 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-VOLUME] new bar 2026-08-17 12:25:00 close=24350.00 vol=260 | latency=34.5ms
+2026-08-17 12:25:02 | INFO     | nifs5.indicator_calculator | [Indicators:NIFTY] close=24286.40 | EMA(fast/slow)=24279.92/24268.03 dir=BULL_HOLD | Kaufman_ER=0.7625 thr=0.40 state=PASS | ADX=31.57 prev=32.76 confirmed=False | RSI=61.45 | F4_vel range=0.00 atr_ma=9.72 | DAVB[win=10]=(24287.55, 24236.85)
+2026-08-17 12:25:02 | INFO     | nifs5.filter_chain | [FilterChain:NIFTY] BLOCKED @F3(ADX=31.57 prev=32.76 thr=16.0) — velocity not confirmed
+2026-08-17 12:25:04 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-PRICE] new bar 2026-08-17 12:25:00 close=24287.40 vol=0 | latency=74.1ms
+2026-08-17 12:25:04 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-VOLUME] new bar 2026-08-17 12:25:00 close=24352.00 vol=520 | latency=85.8ms
+2026-08-17 12:30:02 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-VOLUME] new bar 2026-08-17 12:30:00 close=24351.90 vol=130 | latency=236.2ms
+2026-08-17 12:30:02 | INFO     | nifs5.indicator_calculator | [Indicators:NIFTY] close=24289.90 | EMA(fast/slow)=24281.09/24268.53 dir=BULL_HOLD | Kaufman_ER=0.7748 thr=0.40 state=PASS | ADX=31.83 prev=32.76 confirmed=False | RSI=62.97 | F4_vel range=7.05 atr_ma=10.16 | DAVB[win=10]=(24287.55, 24236.85)
+2026-08-17 12:30:02 | INFO     | nifs5.filter_chain | [FilterChain:NIFTY] BLOCKED @F3(ADX=31.83 prev=32.76 thr=16.0) — velocity not confirmed
+2026-08-17 12:30:03 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-PRICE] new bar 2026-08-17 12:30:00 close=24288.75 vol=0 | latency=80.4ms
+2026-08-17 12:30:03 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-VOLUME] new bar 2026-08-17 12:30:00 close=24348.00 vol=455 | latency=35.9ms
+2026-08-17 12:30:03 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-PRICE] new bar 2026-08-17 12:30:00 close=24288.20 vol=0 | latency=183.3ms
+2026-08-17 12:35:00 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-PRICE] new bar 2026-08-17 12:35:00 close=24294.70 vol=0 | latency=141.1ms
+2026-08-17 12:35:00 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-VOLUME] new bar 2026-08-17 12:35:00 close=24355.00 vol=195 | latency=255.0ms
+2026-08-17 12:35:02 | INFO     | nifs5.indicator_calculator | [Indicators:NIFTY] close=24294.70 | EMA(fast/slow)=24288.85/24275.58 dir=BULL_HOLD | Kaufman_ER=0.6999 thr=0.40 state=PASS | ADX=31.42 prev=31.62 confirmed=False | RSI=64.66 | F4_vel range=0.00 atr_ma=10.29 | DAVB[win=10]=(24299.55, 24243.35)
+2026-08-17 12:35:02 | INFO     | nifs5.filter_chain | [FilterChain:NIFTY] BLOCKED @F3(ADX=31.42 prev=31.62 thr=16.0) — velocity not confirmed
+2026-08-17 12:35:02 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-PRICE] new bar 2026-08-17 12:35:00 close=24295.55 vol=0 | latency=58.6ms
+2026-08-17 12:35:03 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-VOLUME] new bar 2026-08-17 12:35:00 close=24355.00 vol=0 | latency=95.4ms
+2026-08-17 12:38:15 | INFO     | nifs5.telegram_bot | [TelegramBot] received command: /status
+2026-08-17 12:40:00 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-VOLUME] new bar 2026-08-17 12:40:00 close=24355.00 vol=195 | latency=91.4ms
+2026-08-17 12:40:01 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-PRICE] new bar 2026-08-17 12:40:00 close=24297.15 vol=0 | latency=64.8ms
+2026-08-17 12:40:02 | INFO     | nifs5.indicator_calculator | [Indicators:NIFTY] close=24296.55 | EMA(fast/slow)=24289.47/24275.85 dir=BULL_HOLD | Kaufman_ER=0.7319 thr=0.40 state=PASS | ADX=31.67 prev=31.62 confirmed=True | RSI=65.76 | F4_vel range=11.05 atr_ma=10.98 | DAVB[win=10]=(24299.55, 24243.35)
+2026-08-17 12:40:02 | INFO     | nifs5.filter_chain | [FilterChain:NIFTY] BLOCKED @F3b(RSI_ENTRY) — LONG needs RSI<55.0 got 65.76
+2026-08-17 12:40:03 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-PRICE] new bar 2026-08-17 12:40:00 close=24296.35 vol=0 | latency=108.2ms
+2026-08-17 12:40:12 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-VOLUME] new bar 2026-08-17 12:40:00 close=24359.90 vol=2405 | latency=60041.7ms
+2026-08-17 12:44:41 | WARNING  | nifs5.feed_manager | [FeedManager] NIFTY/VOLUME STICKY FAILOVER iifl → kotak (active latency=1630ms>1000ms; standby ok latency=30ms; confirm=3/3)
+2026-08-17 12:44:41 | WARNING  | nifs5.candle_buffer | ACTIVE DATA SOURCE SWITCHED: iifl -> kotak
+2026-08-17 12:45:00 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-PRICE] new bar 2026-08-17 12:45:00 close=24303.25 vol=0 | latency=59.7ms
+2026-08-17 12:45:01 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-PRICE] new bar 2026-08-17 12:45:00 close=24305.65 vol=0 | latency=276.6ms
+2026-08-17 12:45:02 | INFO     | nifs5.indicator_calculator | [Indicators:NIFTY] close=24305.65 | EMA(fast/slow)=24297.96/24283.48 dir=BULL_HOLD | Kaufman_ER=0.6872 thr=0.40 state=PASS | ADX=32.04 prev=31.84 confirmed=True | RSI=69.45 | F4_vel range=0.00 atr_ma=10.20 | DAVB[win=10]=(24304.95, 24257.55)
+2026-08-17 12:45:02 | INFO     | nifs5.filter_chain | [FilterChain:NIFTY] BLOCKED @F3b(RSI_ENTRY) — LONG needs RSI<55.0 got 69.45
+2026-08-17 12:45:04 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-VOLUME] new bar 2026-08-17 12:45:00 close=24363.60 vol=1040 | latency=33.5ms
+2026-08-17 12:45:04 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-VOLUME] new bar 2026-08-17 12:45:00 close=24363.60 vol=1040 | latency=89.2ms
+2026-08-17 12:48:09 | WARNING  | nifs5.feed_manager | [FeedManager] NIFTY/VOLUME STICKY FAILOVER kotak → iifl (active latency=1121ms>1000ms; standby ok latency=90ms; confirm=3/3)
+2026-08-17 12:48:09 | WARNING  | nifs5.candle_buffer | ACTIVE DATA SOURCE SWITCHED: kotak -> iifl
+2026-08-17 12:50:01 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-VOLUME] new bar 2026-08-17 12:50:00 close=24392.60 vol=3250 | latency=129.4ms
+2026-08-17 12:50:02 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-VOLUME] new bar 2026-08-17 12:50:00 close=24385.00 vol=1430 | latency=35.5ms
+2026-08-17 12:50:02 | INFO     | nifs5.indicator_calculator | [Indicators:NIFTY] close=24322.85 | EMA(fast/slow)=24303.69/24285.94 dir=BULL_HOLD | Kaufman_ER=0.7690 thr=0.40 state=PASS | ADX=33.31 prev=31.84 confirmed=True | RSI=74.86 | F4_vel range=28.15 atr_ma=11.96 | DAVB[win=10]=(24304.95, 24257.55)
+2026-08-17 12:50:02 | INFO     | nifs5.filter_chain | [FilterChain:NIFTY] BLOCKED @F3b(RSI_ENTRY) — LONG needs RSI<55.0 got 74.86
+2026-08-17 12:50:03 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-PRICE] new bar 2026-08-17 12:50:00 close=24322.70 vol=0 | latency=111.1ms
+2026-08-17 12:50:04 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-PRICE] new bar 2026-08-17 12:50:00 close=24323.30 vol=0 | latency=67.9ms
+2026-08-17 12:55:01 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-PRICE] new bar 2026-08-17 12:55:00 close=24330.70 vol=0 | latency=233.1ms
+2026-08-17 12:55:02 | INFO     | nifs5.indicator_calculator | [Indicators:NIFTY] close=24330.70 | EMA(fast/slow)=24318.27/24297.58 dir=BULL_HOLD | Kaufman_ER=1.0000 thr=0.40 state=PASS | ADX=36.29 prev=34.85 confirmed=True | RSI=76.91 | F4_vel range=0.00 atr_ma=11.53 | DAVB[win=10]=(24335.45, 24257.55)
+2026-08-17 12:55:02 | INFO     | nifs5.filter_chain | [FilterChain:NIFTY] BLOCKED @F3b(RSI_ENTRY) — LONG needs RSI<55.0 got 76.91
+2026-08-17 12:55:03 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-PRICE] new bar 2026-08-17 12:55:00 close=24329.00 vol=0 | latency=64.5ms
+2026-08-17 12:55:04 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-VOLUME] new bar 2026-08-17 12:55:00 close=24405.00 vol=845 | latency=121.1ms
+2026-08-17 12:55:04 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-VOLUME] new bar 2026-08-17 12:55:00 close=24405.00 vol=780 | latency=45.2ms
+2026-08-17 13:00:01 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-VOLUME] new bar 2026-08-17 13:00:00 close=24401.00 vol=1430 | latency=63.8ms
+2026-08-17 13:00:01 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-VOLUME] new bar 2026-08-17 13:00:00 close=24409.00 vol=975 | latency=765.6ms
+2026-08-17 13:00:02 | INFO     | nifs5.indicator_calculator | [Indicators:NIFTY] close=24333.85 | EMA(fast/slow)=24319.32/24298.03 dir=BULL_HOLD | Kaufman_ER=1.0000 thr=0.40 state=PASS | ADX=36.17 prev=34.85 confirmed=True | RSI=77.68 | F4_vel range=12.00 atr_ma=12.28 | DAVB[win=10]=(24335.45, 24257.55)
+2026-08-17 13:00:02 | INFO     | nifs5.filter_chain | [FilterChain:NIFTY] BLOCKED @F3b(RSI_ENTRY) — LONG needs RSI<55.0 got 77.68
+2026-08-17 13:00:02 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-PRICE] new bar 2026-08-17 13:00:00 close=24333.15 vol=0 | latency=63.6ms
+2026-08-17 13:00:03 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-PRICE] new bar 2026-08-17 13:00:00 close=24334.00 vol=0 | latency=107.1ms
+2026-08-17 13:05:00 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-PRICE] new bar 2026-08-17 13:05:00 close=24343.95 vol=0 | latency=133.2ms
+2026-08-17 13:05:01 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-PRICE] new bar 2026-08-17 13:05:00 close=24344.40 vol=0 | latency=65.4ms
+2026-08-17 13:05:02 | INFO     | nifs5.indicator_calculator | [Indicators:NIFTY] close=24343.95 | EMA(fast/slow)=24332.95/24310.18 dir=BULL_HOLD | Kaufman_ER=1.0000 thr=0.40 state=PASS | ADX=39.84 prev=38.07 confirmed=True | RSI=79.99 | F4_vel range=0.00 atr_ma=12.08 | DAVB[win=10]=(24353.70, 24270.85)
+2026-08-17 13:05:02 | INFO     | nifs5.filter_chain | [FilterChain:NIFTY] BLOCKED @F3b(RSI_ENTRY) — LONG needs RSI<55.0 got 79.99
+2026-08-17 13:05:03 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-VOLUME] new bar 2026-08-17 13:05:00 close=24415.00 vol=325 | latency=31.3ms
+2026-08-17 13:05:04 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-VOLUME] new bar 2026-08-17 13:05:00 close=24415.00 vol=260 | latency=611.9ms
+2026-08-17 13:10:00 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-PRICE] new bar 2026-08-17 13:10:00 close=24339.00 vol=0 | latency=93.0ms
+2026-08-17 13:10:01 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-VOLUME] new bar 2026-08-17 13:10:00 close=24415.00 vol=65 | latency=46.3ms
+2026-08-17 13:10:01 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-VOLUME] new bar 2026-08-17 13:10:00 close=24415.00 vol=65 | latency=369.5ms
+2026-08-17 13:10:02 | INFO     | nifs5.indicator_calculator | [Indicators:NIFTY] close=24338.75 | EMA(fast/slow)=24331.22/24309.44 dir=BULL_HOLD | Kaufman_ER=0.8417 thr=0.40 state=PASS | ADX=39.84 prev=38.07 confirmed=True | RSI=75.79 | F4_vel range=13.25 atr_ma=12.91 | DAVB[win=10]=(24353.70, 24270.85)
+2026-08-17 13:10:02 | INFO     | nifs5.filter_chain | [FilterChain:NIFTY] BLOCKED @F3b(RSI_ENTRY) — LONG needs RSI<55.0 got 75.79
+2026-08-17 13:10:03 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-PRICE] new bar 2026-08-17 13:10:00 close=24338.50 vol=0 | latency=1010.9ms
+2026-08-17 13:10:05 | WARNING  | nifs5.feed_manager | [FeedManager] NIFTY/PRICE STICKY FAILOVER iifl → kotak (active latency=1011ms>1000ms; standby ok latency=114ms; confirm=3/3)
+2026-08-17 13:10:05 | WARNING  | nifs5.candle_buffer | ACTIVE DATA SOURCE SWITCHED: iifl -> kotak
+2026-08-17 13:10:24 | WARNING  | nifs5.feed_manager | [FeedManager] NIFTY/VOLUME STICKY FAILOVER iifl → kotak (active latency=5175ms>1000ms; standby ok latency=27ms; confirm=3/3)
+2026-08-17 13:10:24 | WARNING  | nifs5.candle_buffer | ACTIVE DATA SOURCE SWITCHED: iifl -> kotak
+2026-08-17 13:15:00 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-PRICE] new bar 2026-08-17 13:15:00 close=24346.30 vol=0 | latency=97.4ms
+2026-08-17 13:15:02 | INFO     | nifs5.indicator_calculator | [Indicators:NIFTY] close=24346.10 | EMA(fast/slow)=24336.02/24314.55 dir=BULL_HOLD | Kaufman_ER=0.8390 thr=0.40 state=PASS | ADX=40.94 prev=39.23 confirmed=True | RSI=77.53 | F4_vel range=16.75 atr_ma=12.42 | DAVB[win=10]=(24352.30, 24282.00)
+2026-08-17 13:15:02 | INFO     | nifs5.filter_chain | [FilterChain:NIFTY] BLOCKED @F3b(RSI_ENTRY) — LONG needs RSI<55.0 got 77.53
+2026-08-17 13:15:03 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-VOLUME] new bar 2026-08-17 13:15:00 close=24422.00 vol=1625 | latency=34.1ms
+2026-08-17 13:15:04 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-PRICE] new bar 2026-08-17 13:15:00 close=24348.00 vol=0 | latency=65.2ms
+2026-08-17 13:15:04 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-VOLUME] new bar 2026-08-17 13:15:00 close=24422.00 vol=1885 | latency=346.0ms
+2026-08-17 13:20:02 | INFO     | nifs5.indicator_calculator | [Indicators:NIFTY] close=24348.70 | EMA(fast/slow)=24340.25/24319.43 dir=BULL_HOLD | Kaufman_ER=0.8383 thr=0.40 state=PASS | ADX=42.58 prev=40.94 confirmed=True | RSI=78.16 | F4_vel range=8.25 atr_ma=12.43 | DAVB[win=10]=(24352.30, 24284.20)
+2026-08-17 13:20:02 | INFO     | nifs5.filter_chain | [FilterChain:NIFTY] BLOCKED @F3b(RSI_ENTRY) — LONG needs RSI<55.0 got 78.16
+2026-08-17 13:20:03 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-VOLUME] new bar 2026-08-17 13:20:00 close=24416.90 vol=130 | latency=219.0ms
+2026-08-17 13:20:03 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-PRICE] new bar 2026-08-17 13:20:00 close=24350.50 vol=0 | latency=79.6ms
+2026-08-17 13:20:04 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-PRICE] new bar 2026-08-17 13:20:00 close=24350.15 vol=0 | latency=149.9ms
+2026-08-17 13:20:04 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-VOLUME] new bar 2026-08-17 13:20:00 close=24423.40 vol=195 | latency=33.6ms
+2026-08-17 13:25:01 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-PRICE] new bar 2026-08-17 13:25:00 close=24345.50 vol=0 | latency=87.9ms
+2026-08-17 13:25:01 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-VOLUME] new bar 2026-08-17 13:25:00 close=24413.90 vol=65 | latency=158.4ms
+2026-08-17 13:25:01 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-VOLUME] new bar 2026-08-17 13:25:00 close=24413.90 vol=65 | latency=45.1ms
+2026-08-17 13:25:02 | INFO     | nifs5.indicator_calculator | [Indicators:NIFTY] close=24345.45 | EMA(fast/slow)=24341.98/24323.14 dir=BULL_HOLD | Kaufman_ER=0.7367 thr=0.40 state=PASS | ADX=43.73 prev=42.58 confirmed=True | RSI=75.30 | F4_vel range=9.20 atr_ma=12.44 | DAVB[win=10]=(24353.55, 24287.55)
+2026-08-17 13:25:02 | INFO     | nifs5.filter_chain | [FilterChain:NIFTY] BLOCKED @F3b(RSI_ENTRY) — LONG needs RSI<55.0 got 75.30
+2026-08-17 13:25:02 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-PRICE] new bar 2026-08-17 13:25:00 close=24345.65 vol=0 | latency=70.0ms
+2026-08-17 13:28:40 | INFO     | nifs5.telegram_bot | [TelegramBot] received command: /status
+2026-08-17 13:30:00 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-VOLUME] new bar 2026-08-17 13:30:00 close=24420.00 vol=65 | latency=114.5ms
+2026-08-17 13:30:00 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-PRICE] new bar 2026-08-17 13:30:00 close=24351.85 vol=0 | latency=112.0ms
+2026-08-17 13:30:01 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-PRICE] new bar 2026-08-17 13:30:00 close=24352.20 vol=0 | latency=64.5ms
+2026-08-17 13:30:02 | INFO     | nifs5.indicator_calculator | [Indicators:NIFTY] close=24352.20 | EMA(fast/slow)=24347.54/24330.79 dir=BULL_HOLD | Kaufman_ER=0.7333 thr=0.40 state=PASS | ADX=46.00 prev=44.91 confirmed=True | RSI=77.18 | F4_vel range=0.00 atr_ma=11.84 | DAVB[win=10]=(24354.85, 24297.15)
+2026-08-17 13:30:02 | INFO     | nifs5.filter_chain | [FilterChain:NIFTY] BLOCKED @F3b(RSI_ENTRY) — LONG needs RSI<55.0 got 77.18
+2026-08-17 13:30:03 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-VOLUME] new bar 2026-08-17 13:30:00 close=24425.00 vol=130 | latency=38.9ms
+2026-08-17 13:35:00 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-PRICE] new bar 2026-08-17 13:35:00 close=24349.35 vol=0 | latency=97.3ms
+2026-08-17 13:35:00 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-VOLUME] new bar 2026-08-17 13:35:00 close=24419.00 vol=65 | latency=32.8ms
+2026-08-17 13:35:02 | INFO     | nifs5.indicator_calculator | [Indicators:NIFTY] close=24349.35 | EMA(fast/slow)=24347.29/24332.97 dir=BULL_HOLD | Kaufman_ER=0.5290 thr=0.40 state=PASS | ADX=47.21 prev=46.10 confirmed=True | RSI=74.39 | F4_vel range=0.00 atr_ma=11.53 | DAVB[win=10]=(24357.40, 24302.50)
+2026-08-17 13:35:02 | INFO     | nifs5.filter_chain | [FilterChain:NIFTY] BLOCKED @F3b(RSI_ENTRY) — LONG needs RSI<55.0 got 74.39
+2026-08-17 13:35:02 | WARNING  | nifs5.feed_manager | [FeedManager] NIFTY/VOLUME STICKY FAILOVER kotak → iifl (active kotak vol=65 looks like LTQ vs iifl=12155; standby ok latency=139ms; confirm=3/3)
+2026-08-17 13:35:02 | WARNING  | nifs5.candle_buffer | ACTIVE DATA SOURCE SWITCHED: kotak -> iifl
+2026-08-17 13:35:04 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-PRICE] new bar 2026-08-17 13:35:00 close=24348.75 vol=0 | latency=97.7ms
+2026-08-17 13:35:04 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-VOLUME] new bar 2026-08-17 13:35:00 close=24418.00 vol=65 | latency=142.1ms
+2026-08-17 13:40:00 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-PRICE] new bar 2026-08-17 13:40:00 close=24346.40 vol=0 | latency=86.8ms
+2026-08-17 13:40:02 | INFO     | nifs5.indicator_calculator | [Indicators:NIFTY] close=24345.80 | EMA(fast/slow)=24346.10/24332.46 dir=BULL_HOLD | Kaufman_ER=0.4470 thr=0.40 state=PASS | ADX=46.20 prev=46.10 confirmed=True | RSI=71.76 | F4_vel range=9.65 atr_ma=12.13 | DAVB[win=10]=(24357.40, 24302.50)
+2026-08-17 13:40:02 | INFO     | nifs5.filter_chain | [FilterChain:NIFTY] BLOCKED @F3b(RSI_ENTRY) — LONG needs RSI<55.0 got 71.76
+2026-08-17 13:40:03 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-VOLUME] new bar 2026-08-17 13:40:00 close=24415.00 vol=520 | latency=32.6ms
+2026-08-17 13:40:03 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-VOLUME] new bar 2026-08-17 13:40:00 close=24415.00 vol=650 | latency=128.8ms
+2026-08-17 13:40:04 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-PRICE] new bar 2026-08-17 13:40:00 close=24345.00 vol=0 | latency=104.7ms
+2026-08-17 13:40:26 | WARNING  | nifs5.feed_manager | [FeedManager] NIFTY/VOLUME STICKY FAILOVER iifl → kotak (active latency=5384ms>1000ms; standby ok latency=29ms; confirm=3/3)
+2026-08-17 13:40:26 | WARNING  | nifs5.candle_buffer | ACTIVE DATA SOURCE SWITCHED: iifl -> kotak
+2026-08-17 13:45:00 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-VOLUME] new bar 2026-08-17 13:45:00 close=24429.90 vol=195 | latency=33.3ms
+2026-08-17 13:45:01 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-VOLUME] new bar 2026-08-17 13:45:00 close=24429.90 vol=195 | latency=483.9ms
+2026-08-17 13:45:02 | INFO     | nifs5.indicator_calculator | [Indicators:NIFTY] close=24353.25 | EMA(fast/slow)=24348.48/24335.43 dir=BULL_HOLD | Kaufman_ER=0.4547 thr=0.40 state=PASS | ADX=46.68 prev=46.20 confirmed=True | RSI=74.28 | F4_vel range=16.25 atr_ma=12.78 | DAVB[win=10]=(24357.40, 24321.85)
+2026-08-17 13:45:02 | INFO     | nifs5.filter_chain | [FilterChain:NIFTY] BLOCKED @F3b(RSI_ENTRY) — LONG needs RSI<55.0 got 74.28
+2026-08-17 13:45:03 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-PRICE] new bar 2026-08-17 13:45:00 close=24354.00 vol=0 | latency=1082.8ms
+2026-08-17 13:45:03 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-PRICE] new bar 2026-08-17 13:45:00 close=24354.00 vol=0 | latency=78.9ms
+2026-08-17 13:50:00 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-PRICE] new bar 2026-08-17 13:50:00 close=24343.70 vol=0 | latency=91.8ms
+2026-08-17 13:50:02 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-VOLUME] new bar 2026-08-17 13:50:00 close=24415.00 vol=130 | latency=46.2ms
+2026-08-17 13:50:02 | INFO     | nifs5.indicator_calculator | [Indicators:NIFTY] close=24343.20 | EMA(fast/slow)=24346.72/24336.54 dir=BULL_HOLD | Kaufman_ER=0.1607 thr=0.40 state=CHOP_NOISE_TRAP | ADX=47.18 prev=46.68 confirmed=True | RSI=65.77 | F4_vel range=16.10 atr_ma=13.38 | DAVB[win=10]=(24357.70, 24321.85)
+2026-08-17 13:50:02 | INFO     | nifs5.filter_chain | [FilterChain:NIFTY] BLOCKED @F2(Kaufman_ER=0.1607 < 0.40) — CHOP_NOISE_TRAP overrides EMA cross
+2026-08-17 13:50:02 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-PRICE] new bar 2026-08-17 13:50:00 close=24341.75 vol=0 | latency=65.6ms
+2026-08-17 13:50:04 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-VOLUME] new bar 2026-08-17 13:50:00 close=24415.00 vol=130 | latency=140.6ms
+2026-08-17 13:55:01 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-VOLUME] new bar 2026-08-17 13:55:00 close=24409.60 vol=130 | latency=98.0ms
+2026-08-17 13:55:01 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-PRICE] new bar 2026-08-17 13:55:00 close=24341.35 vol=0 | latency=72.0ms
+2026-08-17 13:55:02 | INFO     | nifs5.indicator_calculator | [Indicators:NIFTY] close=24341.35 | EMA(fast/slow)=24343.46/24337.66 dir=BULL_HOLD | Kaufman_ER=0.0651 thr=0.40 state=CHOP_NOISE_TRAP | ADX=46.36 prev=46.75 confirmed=False | RSI=63.94 | F4_vel range=0.00 atr_ma=12.36 | DAVB[win=10]=(24358.95, 24335.20)
+2026-08-17 13:55:02 | INFO     | nifs5.filter_chain | [FilterChain:NIFTY] BLOCKED @F2(Kaufman_ER=0.0651 < 0.40) — CHOP_NOISE_TRAP overrides EMA cross
+2026-08-17 13:55:03 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-PRICE] new bar 2026-08-17 13:55:00 close=24339.30 vol=0 | latency=101.5ms
+2026-08-17 13:55:04 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-VOLUME] new bar 2026-08-17 13:55:00 close=24408.10 vol=195 | latency=27.3ms
+2026-08-17 14:00:00 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-PRICE] new bar 2026-08-17 14:00:00 close=24338.15 vol=0 | latency=152.1ms
+2026-08-17 14:00:01 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-PRICE] new bar 2026-08-17 14:00:00 close=24338.90 vol=0 | latency=67.0ms
+2026-08-17 14:00:01 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-VOLUME] new bar 2026-08-17 14:00:00 close=24416.00 vol=65 | latency=35.4ms
+2026-08-17 14:00:02 | INFO     | nifs5.indicator_calculator | [Indicators:NIFTY] close=24338.90 | EMA(fast/slow)=24340.95/24337.29 dir=BULL_HOLD | Kaufman_ER=0.1648 thr=0.40 state=CHOP_NOISE_TRAP | ADX=45.01 prev=45.85 confirmed=False | RSI=61.89 | F4_vel range=0.00 atr_ma=12.43 | DAVB[win=10]=(24358.95, 24333.05)
+2026-08-17 14:00:02 | INFO     | nifs5.filter_chain | [FilterChain:NIFTY] BLOCKED @F2(Kaufman_ER=0.1648 < 0.40) — CHOP_NOISE_TRAP overrides EMA cross
+2026-08-17 14:00:04 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-VOLUME] new bar 2026-08-17 14:00:00 close=24418.80 vol=65 | latency=485.3ms
+2026-08-17 14:05:00 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-PRICE] new bar 2026-08-17 14:05:00 close=24343.30 vol=0 | latency=63.7ms
+2026-08-17 14:05:01 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-VOLUME] new bar 2026-08-17 14:05:00 close=24419.70 vol=0 | latency=228.6ms
+2026-08-17 14:05:02 | INFO     | nifs5.indicator_calculator | [Indicators:NIFTY] close=24343.30 | EMA(fast/slow)=24342.26/24338.44 dir=BULL_HOLD | Kaufman_ER=0.1187 thr=0.40 state=CHOP_NOISE_TRAP | ADX=44.62 prev=45.21 confirmed=False | RSI=63.99 | F4_vel range=0.00 atr_ma=11.28 | DAVB[win=10]=(24358.95, 24333.05)
+2026-08-17 14:05:02 | INFO     | nifs5.filter_chain | [FilterChain:NIFTY] BLOCKED @F2(Kaufman_ER=0.1187 < 0.40) — CHOP_NOISE_TRAP overrides EMA cross
+2026-08-17 14:05:03 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-PRICE] new bar 2026-08-17 14:05:00 close=24341.55 vol=0 | latency=272.7ms
+2026-08-17 14:05:03 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-VOLUME] new bar 2026-08-17 14:05:00 close=24419.70 vol=0 | latency=35.5ms
+2026-08-17 14:10:00 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-VOLUME] new bar 2026-08-17 14:10:00 close=24419.80 vol=0 | latency=30.8ms
+2026-08-17 14:10:02 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-PRICE] new bar 2026-08-17 14:10:00 close=24341.05 vol=0 | latency=949.9ms
+2026-08-17 14:10:02 | INFO     | nifs5.indicator_calculator | [Indicators:NIFTY] close=24341.25 | EMA(fast/slow)=24341.57/24338.15 dir=BULL_HOLD | Kaufman_ER=0.1715 thr=0.40 state=CHOP_NOISE_TRAP | ADX=44.62 prev=45.21 confirmed=False | RSI=63.00 | F4_vel range=4.90 atr_ma=11.59 | DAVB[win=10]=(24358.95, 24333.05)
+2026-08-17 14:10:02 | INFO     | nifs5.filter_chain | [FilterChain:NIFTY] BLOCKED @F2(Kaufman_ER=0.1715 < 0.40) — CHOP_NOISE_TRAP overrides EMA cross
+2026-08-17 14:10:04 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-PRICE] new bar 2026-08-17 14:10:00 close=24341.00 vol=0 | latency=62.2ms
+2026-08-17 14:10:05 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-VOLUME] new bar 2026-08-17 14:10:00 close=24415.00 vol=65 | latency=2470.3ms
+2026-08-17 14:15:00 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-PRICE] new bar 2026-08-17 14:15:00 close=24331.15 vol=0 | latency=123.4ms
+2026-08-17 14:15:02 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-VOLUME] new bar 2026-08-17 14:15:00 close=24410.00 vol=260 | latency=114.9ms
+2026-08-17 14:15:02 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-VOLUME] new bar 2026-08-17 14:15:00 close=24410.00 vol=260 | latency=130.0ms
+2026-08-17 14:15:02 | INFO     | nifs5.indicator_calculator | [Indicators:NIFTY] close=24330.50 | EMA(fast/slow)=24337.88/24337.05 dir=BULL_HOLD | Kaufman_ER=0.2934 thr=0.40 state=CHOP_NOISE_TRAP | ADX=42.79 prev=44.62 confirmed=False | RSI=54.54 | F4_vel range=11.25 atr_ma=11.47 | DAVB[win=10]=(24358.95, 24333.05)
+2026-08-17 14:15:02 | INFO     | nifs5.filter_chain | [FilterChain:NIFTY] BLOCKED @F2(Kaufman_ER=0.2934 < 0.40) — CHOP_NOISE_TRAP overrides EMA cross
+2026-08-17 14:15:03 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-PRICE] new bar 2026-08-17 14:15:00 close=24330.05 vol=0 | latency=61.3ms
+2026-08-17 14:20:00 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-VOLUME] new bar 2026-08-17 14:20:00 close=24415.00 vol=0 | latency=162.4ms
+2026-08-17 14:20:02 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-PRICE] new bar 2026-08-17 14:20:00 close=24338.80 vol=0 | latency=74.6ms
+2026-08-17 14:20:02 | INFO     | nifs5.indicator_calculator | [Indicators:NIFTY] close=24338.80 | EMA(fast/slow)=24338.33/24337.48 dir=BULL_HOLD | Kaufman_ER=0.1920 thr=0.40 state=CHOP_NOISE_TRAP | ADX=39.15 prev=40.90 confirmed=False | RSI=59.12 | F4_vel range=0.00 atr_ma=10.41 | DAVB[win=10]=(24358.95, 24328.75)
+2026-08-17 14:20:02 | INFO     | nifs5.filter_chain | [FilterChain:NIFTY] BLOCKED @F2(Kaufman_ER=0.1920 < 0.40) — CHOP_NOISE_TRAP overrides EMA cross
+2026-08-17 14:20:03 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-PRICE] new bar 2026-08-17 14:20:00 close=24337.15 vol=0 | latency=237.2ms
+2026-08-17 14:20:04 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-VOLUME] new bar 2026-08-17 14:20:00 close=24420.00 vol=65 | latency=32.8ms
+2026-08-17 14:25:00 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-PRICE] new bar 2026-08-17 14:25:00 close=24324.20 vol=0 | latency=89.0ms
+2026-08-17 14:25:01 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-PRICE] new bar 2026-08-17 14:25:00 close=24325.00 vol=0 | latency=66.8ms
+2026-08-17 14:25:01 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-VOLUME] new bar 2026-08-17 14:25:00 close=24403.00 vol=130 | latency=151.3ms
+2026-08-17 14:25:02 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-VOLUME] new bar 2026-08-17 14:25:00 close=24403.00 vol=130 | latency=41.7ms
+2026-08-17 14:25:02 | INFO     | nifs5.indicator_calculator | [Indicators:NIFTY] close=24325.00 | EMA(fast/slow)=24330.37/24333.76 dir=BEAR_HOLD | Kaufman_ER=0.3230 thr=0.40 state=CHOP_NOISE_TRAP | ADX=36.17 prev=38.45 confirmed=False | RSI=50.18 | F4_vel range=0.00 atr_ma=10.62 | DAVB[win=10]=(24358.95, 24323.00)
+2026-08-17 14:25:02 | INFO     | nifs5.filter_chain | [FilterChain:NIFTY] BLOCKED @F2(Kaufman_ER=0.3230 < 0.40) — CHOP_NOISE_TRAP overrides EMA cross
+2026-08-17 14:30:00 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-PRICE] new bar 2026-08-17 14:30:00 close=24326.75 vol=0 | latency=115.0ms
+2026-08-17 14:30:00 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-VOLUME] new bar 2026-08-17 14:30:00 close=24405.00 vol=195 | latency=300.4ms
+2026-08-17 14:30:01 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-PRICE] new bar 2026-08-17 14:30:00 close=24326.45 vol=0 | latency=478.4ms
+2026-08-17 14:30:02 | INFO     | nifs5.indicator_calculator | [Indicators:NIFTY] close=24326.75 | EMA(fast/slow)=24329.38/24332.88 dir=BEAR_HOLD | Kaufman_ER=0.4514 thr=0.40 state=PASS | ADX=34.05 prev=36.17 confirmed=False | RSI=51.19 | F4_vel range=0.00 atr_ma=9.86 | DAVB[win=10]=(24358.95, 24323.00)
+2026-08-17 14:30:02 | INFO     | nifs5.filter_chain | [FilterChain:NIFTY] BLOCKED @F3(ADX=34.05 prev=36.17 thr=16.0) — velocity not confirmed
+2026-08-17 14:30:04 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-VOLUME] new bar 2026-08-17 14:30:00 close=24409.90 vol=325 | latency=54.7ms
+2026-08-17 14:35:01 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-VOLUME] new bar 2026-08-17 14:35:00 close=24404.10 vol=0 | latency=27.7ms
+2026-08-17 14:35:02 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-VOLUME] new bar 2026-08-17 14:35:00 close=24404.10 vol=0 | latency=420.7ms
+2026-08-17 14:35:02 | INFO     | nifs5.indicator_calculator | [Indicators:NIFTY] close=24328.40 | EMA(fast/slow)=24329.93/24333.11 dir=BEAR_HOLD | Kaufman_ER=0.4118 thr=0.40 state=PASS | ADX=34.48 prev=36.17 confirmed=False | RSI=52.15 | F4_vel range=5.80 atr_ma=10.22 | DAVB[win=10]=(24358.95, 24323.00)
+2026-08-17 14:35:02 | INFO     | nifs5.filter_chain | [FilterChain:NIFTY] BLOCKED @F3(ADX=34.48 prev=36.17 thr=16.0) — velocity not confirmed
+2026-08-17 14:35:04 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-PRICE] new bar 2026-08-17 14:35:00 close=24329.40 vol=0 | latency=79.3ms
+2026-08-17 14:35:04 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-PRICE] new bar 2026-08-17 14:35:00 close=24330.45 vol=0 | latency=361.2ms
+2026-08-17 14:40:01 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-PRICE] new bar 2026-08-17 14:40:00 close=24328.35 vol=0 | latency=97.0ms
+2026-08-17 14:40:02 | INFO     | nifs5.indicator_calculator | [Indicators:NIFTY] close=24328.60 | EMA(fast/slow)=24329.48/24332.47 dir=BEAR_HOLD | Kaufman_ER=0.2891 thr=0.40 state=CHOP_NOISE_TRAP | ADX=32.09 prev=34.48 confirmed=False | RSI=52.27 | F4_vel range=12.00 atr_ma=10.46 | DAVB[win=10]=(24358.95, 24323.00)
+2026-08-17 14:40:02 | INFO     | nifs5.filter_chain | [FilterChain:NIFTY] BLOCKED @F2(Kaufman_ER=0.2891 < 0.40) — CHOP_NOISE_TRAP overrides EMA cross
+2026-08-17 14:40:03 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-PRICE] new bar 2026-08-17 14:40:00 close=24328.05 vol=0 | latency=67.5ms
+2026-08-17 14:40:03 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-VOLUME] new bar 2026-08-17 14:40:00 close=24405.00 vol=0 | latency=54.9ms
+2026-08-17 14:40:04 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-VOLUME] new bar 2026-08-17 14:40:00 close=24405.00 vol=0 | latency=95.2ms
+2026-08-17 14:45:00 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-VOLUME] new bar 2026-08-17 14:45:00 close=24416.60 vol=65 | latency=40.3ms
+2026-08-17 14:45:02 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-VOLUME] new bar 2026-08-17 14:45:00 close=24416.60 vol=65 | latency=577.9ms
+2026-08-17 14:45:02 | INFO     | nifs5.indicator_calculator | [Indicators:NIFTY] close=24332.85 | EMA(fast/slow)=24330.61/24332.52 dir=BEAR_HOLD | Kaufman_ER=0.1404 thr=0.40 state=CHOP_NOISE_TRAP | ADX=30.43 prev=32.09 confirmed=False | RSI=54.89 | F4_vel range=8.95 atr_ma=10.44 | DAVB[win=10]=(24345.05, 24318.15)
+2026-08-17 14:45:02 | INFO     | nifs5.filter_chain | [FilterChain:NIFTY] BLOCKED @F2(Kaufman_ER=0.1404 < 0.40) — CHOP_NOISE_TRAP overrides EMA cross
+2026-08-17 14:45:02 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-PRICE] new bar 2026-08-17 14:45:00 close=24334.90 vol=0 | latency=80.0ms
+2026-08-17 14:45:03 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-PRICE] new bar 2026-08-17 14:45:00 close=24334.80 vol=0 | latency=551.5ms
+2026-08-17 14:50:01 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-PRICE] new bar 2026-08-17 14:50:00 close=24337.45 vol=0 | latency=113.7ms
+2026-08-17 14:50:01 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-PRICE] new bar 2026-08-17 14:50:00 close=24337.65 vol=0 | latency=61.6ms
+2026-08-17 14:50:02 | INFO     | nifs5.indicator_calculator | [Indicators:NIFTY] close=24337.65 | EMA(fast/slow)=24334.89/24334.09 dir=BULL_HOLD | Kaufman_ER=0.0690 thr=0.40 state=CHOP_NOISE_TRAP | ADX=28.12 prev=29.23 confirmed=False | RSI=57.31 | F4_vel range=0.00 atr_ma=9.59 | DAVB[win=10]=(24345.05, 24318.15)
+2026-08-17 14:50:02 | INFO     | nifs5.filter_chain | [FilterChain:NIFTY] BLOCKED @F2(Kaufman_ER=0.0690 < 0.40) — CHOP_NOISE_TRAP overrides EMA cross
+2026-08-17 14:50:02 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-VOLUME] new bar 2026-08-17 14:50:00 close=24421.00 vol=0 | latency=55.1ms
+2026-08-17 14:50:05 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-VOLUME] new bar 2026-08-17 14:50:00 close=24420.00 vol=65 | latency=736.3ms
+2026-08-17 14:55:00 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-PRICE] new bar 2026-08-17 14:55:00 close=24343.40 vol=0 | latency=68.6ms
+2026-08-17 14:55:00 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-PRICE] new bar 2026-08-17 14:55:00 close=24343.00 vol=0 | latency=160.8ms
+2026-08-17 14:55:02 | INFO     | nifs5.indicator_calculator | [Indicators:NIFTY] close=24343.40 | EMA(fast/slow)=24338.87/24336.05 dir=BULL_HOLD | Kaufman_ER=0.0393 thr=0.40 state=CHOP_NOISE_TRAP | ADX=27.99 prev=28.59 confirmed=False | RSI=60.85 | F4_vel range=0.00 atr_ma=9.65 | DAVB[win=10]=(24345.40, 24318.15)
+2026-08-17 14:55:02 | INFO     | nifs5.filter_chain | [FilterChain:NIFTY] BLOCKED @F2(Kaufman_ER=0.0393 < 0.40) — CHOP_NOISE_TRAP overrides EMA cross
+2026-08-17 14:55:03 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-VOLUME] new bar 2026-08-17 14:55:00 close=24420.00 vol=65 | latency=395.4ms
+2026-08-17 14:55:05 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-VOLUME] new bar 2026-08-17 14:55:00 close=24422.00 vol=260 | latency=49.8ms
+2026-08-17 14:59:04 | WARNING  | nifs5.feed_manager | [FeedManager] NIFTY/VOLUME STICKY FAILOVER kotak → iifl (active latency=5038ms>1000ms; standby ok latency=94ms; confirm=3/3)
+2026-08-17 14:59:04 | WARNING  | nifs5.candle_buffer | ACTIVE DATA SOURCE SWITCHED: kotak -> iifl
+2026-08-17 15:00:00 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-VOLUME] new bar 2026-08-17 15:00:00 close=24415.00 vol=0 | latency=105.2ms
+2026-08-17 15:00:02 | INFO     | nifs5.indicator_calculator | [Indicators:NIFTY] close=24338.35 | EMA(fast/slow)=24337.19/24335.33 dir=BULL_HOLD | Kaufman_ER=0.0496 thr=0.40 state=CHOP_NOISE_TRAP | ADX=27.99 prev=28.59 confirmed=False | RSI=56.93 | F4_vel range=8.65 atr_ma=10.19 | DAVB[win=10]=(24345.40, 24318.15)
+2026-08-17 15:00:02 | INFO     | nifs5.filter_chain | [FilterChain:NIFTY] BLOCKED @F2(Kaufman_ER=0.0496 < 0.40) — CHOP_NOISE_TRAP overrides EMA cross
+2026-08-17 15:00:02 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-VOLUME] new bar 2026-08-17 15:00:00 close=24415.00 vol=0 | latency=29.7ms
+2026-08-17 15:00:04 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-PRICE] new bar 2026-08-17 15:00:00 close=24336.90 vol=0 | latency=80.7ms
+2026-08-17 15:00:05 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-PRICE] new bar 2026-08-17 15:00:00 close=24336.90 vol=0 | latency=988.2ms
+2026-08-17 15:05:00 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-VOLUME] new bar 2026-08-17 15:05:00 close=24425.00 vol=1300 | latency=147.7ms
+2026-08-17 15:05:02 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-PRICE] new bar 2026-08-17 15:05:00 close=24351.30 vol=0 | latency=103.0ms
+2026-08-17 15:05:02 | INFO     | nifs5.indicator_calculator | [Indicators:NIFTY] close=24351.75 | EMA(fast/slow)=24342.04/24337.67 dir=BULL_HOLD | Kaufman_ER=0.3475 thr=0.40 state=CHOP_NOISE_TRAP | ADX=28.15 prev=27.99 confirmed=True | RSI=63.88 | F4_vel range=20.75 atr_ma=10.48 | DAVB[win=10]=(24345.40, 24318.15)
+2026-08-17 15:05:02 | INFO     | nifs5.filter_chain | [FilterChain:NIFTY] BLOCKED @F2(Kaufman_ER=0.3475 < 0.40) — CHOP_NOISE_TRAP overrides EMA cross
+2026-08-17 15:05:04 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-PRICE] new bar 2026-08-17 15:05:00 close=24351.45 vol=0 | latency=78.8ms
+2026-08-17 15:05:04 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-VOLUME] new bar 2026-08-17 15:05:00 close=24425.70 vol=260 | latency=27.2ms
+2026-08-17 15:10:01 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-VOLUME] new bar 2026-08-17 15:10:00 close=24410.30 vol=130 | latency=43.0ms
+2026-08-17 15:10:02 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-PRICE] new bar 2026-08-17 15:10:00 close=24348.55 vol=0 | latency=344.0ms
+2026-08-17 15:10:02 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-VOLUME] new bar 2026-08-17 15:10:00 close=24410.10 vol=325 | latency=149.7ms
+2026-08-17 15:10:02 | INFO     | nifs5.indicator_calculator | [Indicators:NIFTY] close=24349.55 | EMA(fast/slow)=24344.54/24339.37 dir=BULL_HOLD | Kaufman_ER=0.1996 thr=0.40 state=CHOP_NOISE_TRAP | ADX=28.29 prev=28.15 confirmed=True | RSI=62.11 | F4_vel range=10.05 atr_ma=10.10 | DAVB[win=10]=(24352.75, 24318.15)
+2026-08-17 15:10:02 | INFO     | nifs5.filter_chain | [FilterChain:NIFTY] BLOCKED @F2(Kaufman_ER=0.1996 < 0.40) — CHOP_NOISE_TRAP overrides EMA cross
+2026-08-17 15:10:03 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-PRICE] new bar 2026-08-17 15:10:00 close=24348.10 vol=0 | latency=56.6ms
+2026-08-17 15:12:19 | WARNING  | nifs5.feed_manager | [FeedManager] NIFTY/VOLUME STICKY FAILOVER iifl → kotak (active latency=1279ms>1000ms; standby ok latency=35ms; confirm=3/3)
+2026-08-17 15:12:19 | WARNING  | nifs5.candle_buffer | ACTIVE DATA SOURCE SWITCHED: iifl -> kotak
+2026-08-17 15:15:00 | WARNING  | nifs5.state_engine | FORCED SQUARE-OFF BOUNDARY (15:15) — overriding all technical indicators
+2026-08-17 15:15:00 | INFO     | nifs5.position_manager | [PositionManager] flatten_all(FORCED_SQUARE_OFF_15_15) — no open positions to close
+2026-08-17 15:15:00 | INFO     | nifs5.system_state | Entries paused: True
+2026-08-17 15:15:00 | INFO     | nifs5.candle_history_store | [CandleHistory] saved 400 bars for NIFTY (5m) → NIFTY_5m.json
+2026-08-17 15:15:00 | INFO     | nifs5.candle_history_store | [CandleHistory] saved 400 bars for NIFTY (5m) → NIFTY_VOL_5m.json
+2026-08-17 15:15:00 | INFO     | nifs5.state_engine | All active options inventory flattened ahead of broker auto-liquidation at 15:20
+2026-08-17 15:15:02 | DEBUG    | nifs5.base_script | [NIFTY] outside entry session (09:20–15:15 IST) — skip eval/audit
+2026-08-17 15:15:02 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-PRICE] new bar 2026-08-17 15:15:00 close=24339.80 vol=0 | latency=72.7ms
+2026-08-17 15:15:03 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-VOLUME] new bar 2026-08-17 15:15:00 close=24408.00 vol=845 | latency=34.4ms
+2026-08-17 15:15:04 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-VOLUME] new bar 2026-08-17 15:15:00 close=24408.00 vol=845 | latency=142.6ms
+2026-08-17 15:15:04 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-PRICE] new bar 2026-08-17 15:15:00 close=24339.80 vol=0 | latency=171.6ms
+2026-08-17 15:20:00 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-PRICE] new bar 2026-08-17 15:20:00 close=24339.80 vol=0 | latency=99.8ms
+2026-08-17 15:20:00 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-VOLUME] new bar 2026-08-17 15:20:00 close=24406.00 vol=1040 | latency=137.6ms
+2026-08-17 15:20:01 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-VOLUME] new bar 2026-08-17 15:20:00 close=24407.60 vol=1105 | latency=35.5ms
+2026-08-17 15:20:01 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-PRICE] new bar 2026-08-17 15:20:00 close=24339.80 vol=0 | latency=86.2ms
+2026-08-17 15:20:02 | DEBUG    | nifs5.base_script | [NIFTY] outside entry session (09:20–15:15 IST) — skip eval/audit
+2026-08-17 15:25:00 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-PRICE] new bar 2026-08-17 15:25:00 close=24339.80 vol=0 | latency=75.5ms
+2026-08-17 15:25:00 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-VOLUME] new bar 2026-08-17 15:25:00 close=24398.10 vol=0 | latency=88.3ms
+2026-08-17 15:25:00 | DEBUG    | nifs5.iifl_feed | [IIFLFeed-NIFTY-PRICE] new bar 2026-08-17 15:25:00 close=24339.80 vol=0 | latency=117.3ms
+2026-08-17 15:25:02 | DEBUG    | nifs5.base_script | [NIFTY] outside entry session (09:20–15:15 IST) — skip eval/audit
+2026-08-17 15:25:03 | DEBUG    | nifs5.kotak_feed | [KotakFeed-NIFTY-VOLUME] new bar 2026-08-17 15:25:00 close=24398.10 vol=0 | latency=29.6ms
+2026-08-17 15:30:00 | INFO     | nifs5.state_engine | MARKET CLOSE (15:30) — persisting candle history for next-morning warmup
+2026-08-17 15:30:00 | INFO     | nifs5.candle_history_store | [CandleHistory] saved 400 bars for NIFTY (5m) → NIFTY_5m.json
+2026-08-17 15:30:00 | INFO     | nifs5.candle_history_store | [CandleHistory] saved 400 bars for NIFTY (5m) → NIFTY_VOL_5m.json
+2026-08-17 15:30:00 | INFO     | nifs5.state_engine | Candle history persist complete
+2026-08-17 15:30:00 | INFO     | nifs5.script_registry | [ScriptRegistry] all script workers stop-signalled
+2026-08-17 15:30:00 | INFO     | nifs5.base_script | [NIFTY] script worker stopped
+2026-08-17 15:30:00 | INFO     | nifs5.kotak_feed | [KotakFeed-NIFTY-PRICE] Kotak feed worker stop requested
+2026-08-17 15:30:00 | INFO     | nifs5.iifl_feed | [IIFLFeed-NIFTY-PRICE] IIFL feed worker stop requested
+2026-08-17 15:30:00 | INFO     | nifs5.kotak_feed | [KotakFeed-NIFTY-VOLUME] Kotak feed worker stop requested
+2026-08-17 15:30:00 | INFO     | nifs5.self_heal | [SelfHeal:TimeAnchorMonitor] target returned cleanly
+2026-08-17 15:30:00 | INFO     | nifs5.kotak_feed | [KotakFeed-NIFTY-VOLUME] Kotak feed worker stopped
+2026-08-17 15:30:00 | INFO     | nifs5.self_heal | [SelfHeal:FeedFailoverMonitor] target returned cleanly
+2026-08-17 15:30:00 | INFO     | nifs5.self_heal | [SelfHeal:ScriptWorker-NIFTY] target returned cleanly
+2026-08-17 15:30:00 | INFO     | nifs5.iifl_feed | [IIFLFeed-NIFTY-VOLUME] IIFL feed worker stopped
+2026-08-17 15:30:00 | INFO     | nifs5.iifl_feed | [IIFLFeed-NIFTY-PRICE] IIFL feed worker stopped
+2026-08-17 15:30:00 | INFO     | nifs5.kotak_feed | [KotakFeed-NIFTY-PRICE] Kotak feed worker stopped
+2026-08-17 15:30:00 | INFO     | nifs5.iifl_feed | [IIFLFeed-NIFTY-VOLUME] IIFL feed worker stop requested
+2026-08-17 15:30:00 | INFO     | nifs5.feed_manager | FeedManager stopped
+2026-08-17 15:30:00 | INFO     | nifs5.state_engine | MARKET CLOSE — feeds stopped (session on disk for tomorrow warmup)
+2026-08-17 15:45:00 | INFO     | nifs5.state_engine | POST-MARKET RECORD DISPATCH STARTING (15:45)
+2026-08-17 15:45:00 | INFO     | nifs5.session_stats | [SessionStats] 2026-08-17 | trades=0 wins=0 losses=0 win_ratio=0.0% net_pnl=₹0.00
+2026-08-17 15:45:00 | INFO     | nifs5.ledger | [Ledger] appended 0 transactions to /root/nifs5/data/master_ledger.csv
+2026-08-17 15:45:01 | INFO     | nifs5.telegram_bot | [TelegramBot] daily summary dispatched
+2026-08-17 15:45:05 | INFO     | nifs5.email_dispatch | [EmailDispatch] daily summary emailed to skyadav13@yahoo.com
